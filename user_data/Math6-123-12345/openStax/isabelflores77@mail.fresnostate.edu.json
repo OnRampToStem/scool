@@ -1,0 +1,6386 @@
+[
+	{
+		"Index": 1,
+		"Name": "Functions",
+		"Access": "True",
+		"Introduction": {
+			"Name": "Chapter 1 Introduction",
+			"Description": "Toward the end of the twentieth century, the values of stocks of internet and technology companies rose dramatically. As a result, the Standard and Poors stock market average rose as well. Figure 1 tracks the value of that initial investment of just under $100 over the 40 years. It shows that an investment that was worth less than $500 until about 1995 skyrocketed up to about $1,100 by the beginning of 2000. That five-year period became known as the dot-com bubble because so many internet startups were formed. As bubbles tend to do, though, the dot-com bubble eventually burst. Many companies grew too fast and then suddenly went out of business. The result caused the sharp decline represented on the graph beginning at the end of 2000. Notice, as we consider this example, that there is a definite relationship between the year and stock market average. For any year we choose, we can determine the corresponding value of the stock market average. In this chapter, we will explore these kinds of relationships and their properties.",
+			"Document": "Chapter1Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 1 Review",
+			"Document": "Chapter1Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Functions and Function",
+				"Access": "True",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Determining Whether a Relation Represents a Function",
+						"Access": "True",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": "https://www.youtube.com/embed/bM2Yjq5JS9I",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding Input and Output Values of a Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Determining Whether a Function is One-to-One",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": "https://www.youtube.com/embed/vFngc5tMVLM",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using the Vertical Line Test",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": "https://www.youtube.com/embed/Pcah_KC8PS8",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using the Horizontal Line Test",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 14,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": "https://www.youtube.com/embed/vFngc5tMVLM?t=178",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Identifying Basic Toolkit Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.1.pdf",
+						"PageStart": 15,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-1-functions-and-function-notation",
+						"Video": "https://www.youtube.com/embed/dDLW-hIJcT0",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Domain and Range",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Domain of a Function Defined by an Equation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-2-domain-and-range",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Notations to Specify Domain and Range",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.2.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-2-domain-and-range",
+						"Video": "https://www.youtube.com/watch?v=NHfBsr8r1YI",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding Domain and Range from Graphs",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.2.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-2-domain-and-range",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding Domains and Ranges of the Toolkit Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.2.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-2-domain-and-range",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Graphing Piecewise-Defined Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.2.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-2-domain-and-range",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Rates of Change and Behavior of Graphs",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Average Rate of Change of a Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-3-rates-of-change-and-behavior-of-graphs",
+						"Video": "https://www.youtube.com/watch?v=4NDT4F6GJPM",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using a Graph to Determine Where a Function is Increasing, Decreasing, or Constant",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.3.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-3-rates-of-change-and-behavior-of-graphs",
+						"Video": "https://www.youtube.com/watch?v=wjiCus2J77o",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Analyze the Toolkit Functions for Increasing or Decreasing Intervals",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.3.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-3-rates-of-change-and-behavior-of-graphs",
+						"Video": "https://www.youtube.com/watch?v=wjiCus2J77o",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Use A Graph to Locate the Absolute Maximum and Absolute Minimum",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.3.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-3-rates-of-change-and-behavior-of-graphs",
+						"Video": "https://www.youtube.com/watch?v=wjiCus2J77o",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Composition of Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Combining Functions Using Algebraic Operations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-4-composition-of-functions",
+						"Video": "https://www.youtube.com/watch?v=3tpdnXod5Mo&t=",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Create a Function by Composition of Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.4.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-4-composition-of-functions",
+						"Video": " https://www.youtube.com/watch?v=yCQYvFVnNiA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Evaluating Composite Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-4-composition-of-functions",
+						"Video": " https://www.youtube.com/watch?v=yCQYvFVnNiA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding the Domain of a Composite Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.4.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-4-composition-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Decomposing a Composite Function into its Component Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.4.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-4-composition-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Transformation of Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Functions Using Vertical and Horizontal Shifts",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-5-transformation-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Functions Using Reflections about the Axes",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.5.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-5-transformation-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Determining Even and Odd Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.5.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-5-transformation-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Graphing Functions Using Stretches and Compressions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.5.pdf",
+						"PageStart": 13,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-5-transformation-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Performing a Sequence of Transformations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.5.pdf",
+						"PageStart": 19,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-5-transformation-of-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Absolute Value Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Understanding Absolute Value",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-6-absolute-value-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing an Absolute Value Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.6.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-6-absolute-value-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Solving an Absolute Value Equation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.6.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-6-absolute-value-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving an Absolute Value Inequality",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.6.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-6-absolute-value-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Inverse Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Verifying That Two Functions Are Inverse Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-7-inverse-functions",
+						"Video": "https://www.youtube.com/watch?v=lUKsRK1w7LA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding Domain and Range of Inverse Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.7.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-7-inverse-functions",
+						"Video": "https://www.youtube.com/watch?v=9xrrmjufBXE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding and Evaluating Inverse Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.7.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-7-inverse-functions",
+						"Video": "https://www.youtube.com/watch?v=ZqBGt-lAgBA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding Inverse Functions and Their Graphs",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "1.7.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/1-7-inverse-functions",
+						"Video": "https://www.youtube.com/watch?v=ZqBGt-lAgBA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 2,
+		"Name": "Linear Functions",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 2 Introduction",
+			"Description": "Imagine placing a plant in the ground one day and finding that it has doubled its height just a few days later. Although it may seem incredible, this can happen with certain types of bamboo species. These members of the grass family are the fastest-growing plants in the world. One species of bamboo has been observed to grow nearly 1.5 inches every hour. In a twenty-four hour period, this bamboo plant grows about 36 inches, or an incredible 3 feet! A constant rate of change, such as the growth cycle of this bamboo plant, is a linear function. Recall from Functions and Function Notation that a function is a relation that assigns to every element in the domain exactly one element in the range. Linear functions are a specific type of function that can be used to model many real-world applications, such as plant growth over time. In this chapter, we will explore linear functions, their graphs, and how to relate them to data.",
+			"Document": "Chapter2Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 2 Review",
+			"Document": "Chapter2Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Linear Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Representing Linear Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Determining Whether a Linear Function Is Increasing, Decreasing, or Constant",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Calculating and Interpreting Slope",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=YUKLs31HTok",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Writing the Point-Slope Form of a Linear Equation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=2qen4s_ncnI&t",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Writing and Interpreting an Equation for a Linear Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=paTPTDA7G_c",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Modeling Real-World Problems with Linear Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.1.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-1-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=WZ0pY61JLcA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Graphs of Linear Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Linear Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing the Equation for a Function from the Graph of a Line",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the x-intercept of a Line",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Describing Horizontal & Vertical Lines",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=WcJVhZb_5yQ&t",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Determining Whether Lines are Parallel or Perpendicular",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=tkYaLHwQHcs&t",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Writing the Euation of a Line Parallel or Perpendicular to a Given Line",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=tkYaLHwQHcs&t",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Solving a System of Linear Equations Using a Graph",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.2.pdf",
+						"PageStart": 15,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-2-graphs-of-linear-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Modeling with Linear Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying Steps to Model and Solve Problems/Building Linear Models",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-3-modeling-with-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=dVquSdUz5LY",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Building Systems of Linear Models",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.3.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-3-modeling-with-linear-functions",
+						"Video": "https://www.youtube.com/watch?v=WZ0pY61JLcA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Fitting Linear Models to Data",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Drawing and Interpreting Scatter Plots",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-4-fitting-linear-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding the Line of Best Fit",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.4.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-4-fitting-linear-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Distinguishing Between Linear and Non-Linear Models",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-4-fitting-linear-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Predicting with a Regression Line",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "2.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/2-4-fitting-linear-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 3,
+		"Name": "Polynomial and Rational Functions",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 3 Introduction",
+			"Description": "Digital photography has dramatically changed the nature of photography. No longer is an image etched in the emulsion on a roll of !lm. Instead, nearly every aspect of recording and manipulating images is now governed by mathematics. An image becomes a series of numbers, representing the characteristics of light striking an image sensor. When we open an image, software on a camera or computer interprets the numbers and converts them to a visual image. Photo editing software uses complex polynomials to transform images, allowing us to manipulate the image in order to crop details, change the color palette, and add special effects. Inverse functions make it possible to convert from one file format to another. In this chapter, we will learn about these concepts and discover how mathematics can be used in such applications.",
+			"Document": "Chapter3Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 3 Review",
+			"Document": "Chapter3Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Complex Numbers",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Expressing Sqare Roots of Negative Numbers as Multiples of i",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Plotting a Complex Number on the Complex Plane",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Adding and Subtracting Complex Numbers",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Multiplying Complex Numbers",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Dividing Complex Numbers",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Simplifying Powers of i",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-1-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Quadratic Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Recognizing Characteristics of Parabolas",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-2-quadratic-functions",
+						"Video": "https://www.youtube.com/watch?v=WINskLi26AE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Understanding How the Graphs of Parabolas are Related to Their Quadratic Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.2.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-2-quadratic-functions",
+						"Video": "https://www.youtube.com/watch?v=m7wLRKUCSh0",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Domain and Range of a Quadratic Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.2.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-2-quadratic-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Determining the Maximum and Minimum Values of Quadratic Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.2.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-2-quadratic-functions",
+						"Video": "https://www.youtube.com/watch?v=ZIv7nZIdsg0 ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Power Functions and Polynomial Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying Power Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-3-power-functions-and-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Identifying End Behavior of Power Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.3.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-3-power-functions-and-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=BZhhmue9qPQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Identifying Polynomial Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.3.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-3-power-functions-and-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=lgv4ajmS6uQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Identifying the Degree and Leading Coefficient of a Polynomial Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-3-power-functions-and-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Graphs of Polynomial Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Recognizing Characteristics of Graphs of Polynomial Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=fn9ivZJDfhY",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Factoring to Find Zeros of Polynomial Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Identifying Zeros and Their Multiplicities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=fn9ivZJDfhY",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Determining End Behavior",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=fn9ivZJDfhY",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Understanding the Relationship Between Degree and Turning Points",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Graphing Polynomial Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": "https://www.youtube.com/watch?v=fn9ivZJDfhY",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Using the Intermediate Value Theorem",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.4.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-4-graphs-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Dividing Polynomials",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Long Division to Divide Polynomials",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-5-dividing-polynomials",
+						"Video": "https://www.youtube.com/watch?v=vmo3aMi6yK0",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Synthetic Division to Divide Polynomials",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.5.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-5-dividing-polynomials",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Polynomial Division to Solve Application Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-5-dividing-polynomials",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Zeros of Polynomial Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Evaluating a Polynomial Using the Remainder Theorem",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Factor Theorem to Solve a Polynomial Equation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Rational Zero Theorem to Find Rational Zeros",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding the Zeros of Polynomial Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using the Fundamental Theorem of Algebra",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Using the Linear Factorization Theorem to find Polynomials with Given Zeros",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Using the Descartes' Rule of Signs",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 8,
+						"Name": "Solving Real-World Applications",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.6.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-6-zeros-of-polynomial-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Rational Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Aarow Notation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Applied Problems Involving Rational Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Domains of Rational Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": "https://www.youtube.com/watch?v=oVh-JafA0j4",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Identifying Vertical Asymptotes of Rational Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": "https://www.youtube.com/watch?v=6qtEV2v6pU0",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Identifying Horizontal Asymptotes of Rational Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": "https://www.youtube.com/watch?v=r5AKLB3ljhw",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Graphing Rational Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 13,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": "https://www.youtube.com/watch?v=31qsI846g-k",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Writing Rational Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.7.pdf",
+						"PageStart": 15,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-7-rational-functions",
+						"Video": "https://www.youtube.com/watch?v=oVh-JafA0j4",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 8,
+				"Name": "Inverses and Radical Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Inverse of a Polynomial Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.8.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-8-inverses-and-radical-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Restricting the Domain to Find the Inverse of a Polnomial Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.8.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-8-inverses-and-radical-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 9,
+				"Name": "Modeling Using Variation",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Solving Direct Variation Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.9.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-9-modeling-using-variation",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Inverse Variation Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.9.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-9-modeling-using-variation",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Solving Problems Involving Joint Variation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "3.9.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/3-9-modeling-using-variation",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 4,
+		"Name": "Exponential and Logarithmic Functions",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 4 Introduction",
+			"Description": "Focus on a square centimeter of your skin. Look closer. Closer still. If you could look closely enough, you would see hundreds of thousands of microscopic organisms. !ey are bacteria, and they are not only on your skin, but in your mouth, nose, and even your intestines. In fact, the bacterial cells in your body at any given moment outnumber your own cells. But that is no reason to feel bad about yourself. While some bacteria can cause illness, many are healthy and even essential to the body. Bacteria commonly reproduce through a process called binary fission, during which one bacterial cell splits into two. When conditions are right, bacteria can reproduce very quickly. Unlike humans and other complex organisms, the time required to form a new generation of bacteria is often a matter of minutes or hours, as opposed to days or years. For simplicityâs sake, suppose we begin with a culture of one bacterial cell that can divide every hour. Table 1 shows the number of bacterial cells at the end of each subsequent hour. We see that the single bacterial cell leads to over one thousand bacterial cells in just ten hours! And if we were to extrapolate the table to twenty-four hours, we would have over 16 million.",
+			"Document": "Chapter4Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 4 Review",
+			"Document": "Chapter4Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Exponential Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying Exponential Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=SJ7fUbGbJVM",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Evaluating Exponential Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=SJ7fUbGbJVM",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding Equations of Exponential Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=UjZayxQmn9U",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Applying the Compound-Interest Formula",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=1Ou5lZKYCbk",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Evaluating Functions with Base",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=SJ7fUbGbJVM",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Investigating Continuous Growth",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.1.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-1-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=CrQUN1U93wk",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Graphs of Exponential Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Exponential Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-2-graphs-of-exponential-functions",
+						"Video": "https://www.youtube.com/watch?v=cz0aUx4QeBc",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Transformations of Exponential Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.2.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-2-graphs-of-exponential-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Logarithmic Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Converting from Logarithmic to Exponential Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-3-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=MSxsnyVFYm4",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Converting from Exponential to Logarithmic Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-3-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=MSxsnyVFYm4",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Evaluating Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-3-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Common Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-3-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using Natural Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-3-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Graphs of Logarithmic Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Domain of a Logarithmic Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-4-graphs-of-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Logarithmic Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.4.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-4-graphs-of-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Graphing Transformations of Logarithmic Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-4-graphs-of-logarithmic-functions",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Logarithmic Properties",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using the Product Rule for Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Quotient Rule for Logairthms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Power Rule for Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=HLToiYCyBKE",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Expanding Logarithmic Expressions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=a-ezJKObyyQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Condensing Logarithmic Expressions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=gpSx8Nc6GEI",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Using the Change-of-Base Formula for Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.5.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-5-logarithmic-properties",
+						"Video": "https://www.youtube.com/watch?v=2VsCJ_mu6KQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Exponential and Logarithmic Equations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Like Bases to Solve Exponential Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-6-exponential-and-logarithmic-equations",
+						"Video": "https://www.youtube.com/watch?v=3JNLMy2cFXs",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Exponential Equations Using Logarithms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.6.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-6-exponential-and-logarithmic-equations",
+						"Video": "https://www.youtube.com/watch?v=8oBBl8HFL7Y",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Definition of a Logarithm to Solve Logarithmic Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.6.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-6-exponential-and-logarithmic-equations",
+						"Video": "https://www.youtube.com/watch?v=Rav1CykmR3A",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using the One-to-One Property of Logarithms to Solve Logarithmic Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.6.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-6-exponential-and-logarithmic-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Solving Applied Problems Using Exponential and Logarithmic Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.6.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-6-exponential-and-logarithmic-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Exponential and Logarithmic Models",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Modeling Exponential Growth and Decay",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-7-exponential-and-logarithmic-models",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Newton's Law of Cooling",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.7.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-7-exponential-and-logarithmic-models",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Logistic Growth Models",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.7.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-7-exponential-and-logarithmic-models",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Choosing an Appropriate Model for Data",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.7.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-7-exponential-and-logarithmic-models",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Expressing an Exponential Model in Base e",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.7.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-7-exponential-and-logarithmic-models",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 8,
+				"Name": "Fitting Exponential Models to Data",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Building an Exponential Model from Data",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.8.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-8-fitting-exponential-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Building a Logarithmic Model from Data",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.8.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-8-fitting-exponential-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Building a Logistic Model from Data",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "4.8.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/4-8-fitting-exponential-models-to-data",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 5,
+		"Name": "Trigonometric Functions",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 5 Introduction",
+			"Description": "Life is dense with phenomena that repeat in regular intervals. Each day, for example, the tides rise and fall in response to the gravitational pull of the moon. Similarly, the progression from day to night occurs as a result of Earthâs rotation, and the pattern of the seasons repeats in response to Earthâs revolution around the sun. Outside of nature, many stocks that mirror a companyâs profits are influenced by changes in the economic business cycle. In mathematics, a function that repeats its values in regular intervals is known as a periodic function. The graphs of such functions show a general shape reflective of a pattern that keeps repeating. This means the graph of the function has the same output at exactly the same place in every cycle. And this translates to all the cycles of the function having exactly the same length. So, if we know all the details of one full cycle of a true periodic function, then we know the state of the functionâs outputs at all times, future and past. In this chapter, we will investigate various examples of periodic functions.",
+			"Document": "Chapter5Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 5 Review",
+			"Document": "Chapter5Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Angles",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Drawing Angles in Standard Position",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-1-angles",
+						"Video": "https://www.youtube.com/watch?v=x8PGCKrk9_M",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Converting Between Degrees and Radians",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-1-angles",
+						"Video": "https://www.youtube.com/watch?v=bGYXYiaCEcQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding Coterminal Angles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-1-angles",
+						"Video": "https://www.youtube.com/watch?v=HGkoIA2rzUU",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Determining the Length of an Arc",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-1-angles",
+						"Video": "https://www.youtube.com/watch?v=d21A5-bBaNA",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Linear and Angular Speed to Descibe Motion on a Circular Path",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 13,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-1-angles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Unit Circle: Sine and Cosine Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding Function Values for the Sine and Cosine",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-2-unit-circle-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=W0ooGAd5Z50",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding Sines and Cosines of Special Angles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.1.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-2-unit-circle-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=85Hwi1LDttI",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Identifying the Domain and Range of Sine and Cosine Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.2.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-2-unit-circle-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=Hefc6xr8GG0",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding Reference Angles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.2.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-2-unit-circle-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=kSFU-BpjDfc",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using Reference Angles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.2.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-2-unit-circle-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=A7I7pqBF64w",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "The Other Trigonometric Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding Exact Values of the Trigonometric",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-3-the-other-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=eMBxM9h9XOw",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Reference Angles to Evaluate Tangent, Secant, Cosecant, and Cotangent",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-3-the-other-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=A7I7pqBF64w",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Even and Odd Trigonometric Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.3.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-3-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Recognizing and Using Fundamental Identities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-3-the-other-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=ERq_twG0XnI",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Evaluating Trigonometric Functions with a Calculator",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.3.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-3-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Right Triangle Trigonometry",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Right Triangles to Evaluate Trigonometric Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-4-right-triangle-trigonometry",
+						"Video": "https://www.youtube.com/watch?v=eMBxM9h9XOw",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Equal Cofunction of Complements",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-4-right-triangle-trigonometry",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Trigonometric Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-4-right-triangle-trigonometry",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Right Triangle Trigonometry to Solve Applied Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "5.4.pdf",
+						"PageStart": 74,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/5-4-right-triangle-trigonometry",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 6,
+		"Name": "Periodic Functions",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 6 Introduction",
+			"Description": "Each day, the sun rises in an easterly direction, approaches some maximum height relative to the celestial equator, and sets in a westerly direction. The celestial equator is an imaginary line that divides the visible universe into two halves in much the same way Earthâs equator is an imaginary line that divides the planet into two halves. The exact path the sun appears to follow depends on the exact location on Earth, but each location observes a predictable pattern over time. The pattern of the sunâs motion throughout the course of a year is a periodic function. Creating a visual representation of a periodic function in the form of a graph can help us analyze the properties of the function. In this chapter, we will investigate graphs of sine, cosine, and other trigonometric functions.",
+			"Document": "Chapter6Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 6 Review",
+			"Document": "Chapter6Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Graphs of the Sine and Cosine Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Sine and Cosine Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-1-graphs-of-the-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=0eP2NFSWDxw",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Investigating Sinusoidal Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-1-graphs-of-the-sine-and-cosine-functions",
+						"Video": "https://www.youtube.com/watch?v=ZYvhkfSCRcg",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Analyzing Graphs of Variations of y = sin x and y = cos x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.1.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-1-graphs-of-the-sine-and-cosine-functions",
+						"Video": " https://www.youtube.com/watch?v=dr7d9Z1J-OY&t=",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Graphing Variations of y = sin x and y = cos x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.1.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-1-graphs-of-the-sine-and-cosine-functions",
+						"Video": " https://www.youtube.com/watch?v=dr7d9Z1J-OY&t=",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using Transformations of Sine and Cosine Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.1.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-1-graphs-of-the-sine-and-cosine-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Graphs of the Other Trigonometric Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Analyzing the Graph of y = tan x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=7NWRd3tcTFU",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Variations of y = tan x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=pQv43HSBmnQ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Analyzing the Graph of y = sec x and y = csc x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Graphing Variations of y = sex x and y = csc x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Analyzing the Graph of y = cot x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Graphing Variations of y = cot x",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 13,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Using the Graphs of Trigonometric Functions to Solve Real-World Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.2.pdf",
+						"PageStart": 14,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-2-graphs-of-the-other-trigonometric-functions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Inverse Trigonometric Functions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Understanding and Using the Inverse Sine, Cosine, and Tangent Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-3-inverse-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=yRqiwvNdPKs",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding the Exact Value of Expressions Involving the Inverse Sine, Cosine, and Tangent Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-3-inverse-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=yRqiwvNdPKs",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using a Calculator to Evaluate Inverse Trigonometric Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-3-inverse-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=yRqiwvNdPKs",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding Exact Values of Compositi Functions with Inverse Trigonometric Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "6.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/6-3-inverse-trigonometric-functions",
+						"Video": "https://www.youtube.com/watch?v=2EYv0udmlHg",
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 7,
+		"Name": "Trigonometric Identities and Equations",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 7 Introduction",
+			"Description": "Math is everywhere, even in places we might not immediately recognize. For example, mathematical relationships describe the transmission of images, light, and sound. The sinusoidal graph models music playing on a phone, radio, or computer. Such graphs are described using trigonometric equations and functions. In this chapter, we discuss how to manipulate trigonometric equations algebraically by applying various formulas and trigonometric identities. We will also investigate some of the ways that trigonometric equations are used to model real-life phenomena.",
+			"Document": "Chapter7Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 7 Review",
+			"Document": "Chapter7Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Solving Trigonometric Equations with Identities",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Verifying the Fundamental Trigonometric Identities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-1-solving-trigonometric-equations-with-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Algebra to Simplify Trigonometric Expressions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-1-solving-trigonometric-equations-with-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Sum and Difference Identities",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using the Sum and Difference Formulas for Cosine",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-2-sum-and-difference-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Sum and Difference Formulas for Sine",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.2.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-2-sum-and-difference-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Sum and Difference Formulas for Tangent",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.2.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-2-sum-and-difference-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using the Sum and Difference Formulas for Cofunctions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.2.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-2-sum-and-difference-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using the Sum and Difference Formulas to Verify Identities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.2.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-2-sum-and-difference-identities",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Double-Angle, Half-Angle, and Reduction Formulas",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Double-Angle Formulas to Find Exact Values",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-3-double-angle-half-angle-and-reduction-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Double-Angle Formulas to Verify Identities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-3-double-angle-half-angle-and-reduction-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Use Reduction Formulas to Simplify an Expression",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.3.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-3-double-angle-half-angle-and-reduction-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Half-Angle Formulas to Find Exact Values",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-3-double-angle-half-angle-and-reduction-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Sum-to-Product and Product-to-Sum Formulas",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Expressing Products as Sums",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-4-sum-to-product-and-product-to-sum-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Expressing Sums as Products",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.4.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-4-sum-to-product-and-product-to-sum-formulas",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Solving Trigonometric Equations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Solving Linear Trigonometric Equations in Sine and Cosine",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": "https://www.youtube.com/watch?v=NGhfCxeDxww ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Equations Involving a Single Trigonometric Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 46,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": "https://www.youtube.com/watch?v=ZrHGzuZC6f",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Solve Trigonometric Equations Using a Calculator",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": "https://www.youtube.com/watch?v=5qEz04ZcSHw ",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving Trigonometric Equations in Quadratic Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Solving Trigonometric Equations Using Fundamental Identities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Solving Trigonometric Equations with Multiple Angles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": "https://www.youtube.com/watch?v=5qEz04ZcSHw",
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Solving Right Triangle Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.5.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-5-solving-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Modeling with Trigonometric Equations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Determining the Amplitrude and Period of a Sinusoidal Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-6-modeling-with-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding Equations and Graphing Sinusoidal Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.6.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-6-modeling-with-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Modeling Periodic Behavior",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.6.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-6-modeling-with-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Modeling Harmonic Motion Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "7.6.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/7-6-modeling-with-trigonometric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 8,
+		"Name": "Further Applications of Trigonometry",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 8 Introduction",
+			"Description": "The worldâs largest tree by volume, named General Sherman, stands 274.9 feet tall and resides in Northern California. Just how do scientists know it's true height? A common way to measure the height involves determining the angle of elevation, which is formed by the tree and the ground at a point some distance away from the base of the tree. This method is much more practical than climbing the tree and dropping a very long tape measure. In this chapter, we will explore applications of trigonometry that will enable us to solve many different kinds of problems, including finding the height of a tree. We extend topics we introduced in Trigonometric Functions and investigate applications more deeply and meaningfully.",
+			"Document": "Chapter8Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 8 Review",
+			"Document": "Chapter8Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Non-right Triangles: Law of Sines",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using the Law of Sines to Solve Oblique Triangles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-1-non-right-triangles-law-of-siness",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Law of Sines to Solve SSA Triangles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-1-non-right-triangles-law-of-siness",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Area of an Oblique Triangle",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-1-non-right-triangles-law-of-siness",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving Applied Problems Using the Law of Sines",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-1-non-right-triangles-law-of-siness",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Non-right Triangles: Law of Cosines",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using the Law of Cosines to Solve Oblique Triangles",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-2-non-right-triangles-law-of-cosines",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Applied Problems Using the Law of Cosines",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.2.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-2-non-right-triangles-law-of-cosines",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Heron's Formla to Find the Area of a Triangle",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.2.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-2-non-right-triangles-law-of-cosines",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Polar Coordinates",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Ploting Points Using Polar Coordinates",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-3-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Converting from Polar Coordinates to Rectangular Coordinates",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-3-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Converting from Rectangular Coordinates to Polar Coordinates",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-3-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Transforming Equations between Polar and Rectangular Forms",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-3-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Identify and Graph Polar Equations by converting to Rectangular Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.3.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-3-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Polar Coordinates: Graphs",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Testing Polar Equations for Symmetry",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-4-polar-coordinates-graphs",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Polar Equations by Plotting Points",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.4.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-4-polar-coordinates-graphs",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Summary of Curves (roses, cardioids, limacona, etc.)",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.4.pdf",
+						"PageStart": 14,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-4-polar-coordinates-graphs",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Polar Form of Complex Numbers",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Plotting Complex Numbers in the Complex Plane",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding the Absolute Value of a Complex Number",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Writing Complex Numbers in a Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Converting a Complex Number from Polar to Rectangular Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Finding Products of Complex Numbers in Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Finding Quotients of Complex Numbers in Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Finding Powers of Complex Numbers in Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 8,
+						"Name": "Finding Roots of Complex Numbers in Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.5.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-5-polar-form-of-complex-numbers",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Parametric Equations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Parameterizing a Curve",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-6-parametric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Eliminating the Parameter",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.6.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-6-parametric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding Cartesian Equations from Curves Defined Parametrically",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.6.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-6-parametric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding Parametric Equations for Curves Defined by Rectangular Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.6.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-6-parametric-equations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Parametric Equations: Graphs",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Parametric Equations by Plotting Points",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-7-parametric-equations-graphs",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Applications of Parametric Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.7.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-7-parametric-equations-graphs",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 8,
+				"Name": "Vectors",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "A Geometric View of Vectors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding Magnitude and Direction",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Performing Vector Addition and Scalar Multiplication",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Multiplying By a Scalar",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Finding Component Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Finding the Unit Vector in the Direction of v",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 7,
+						"Name": "Performing Operations with Vectors in Terms of i and j",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 8,
+						"Name": "Performing Operations on Vectors in Terms of i and j",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 9,
+						"Name": "Calculating the Component Form of a Vector: Direction",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 10,
+						"Name": "Finding the Dot Product of Two Vectors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "8.8.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/8-8-vectors",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 9,
+		"Name": "Systems of Equations and Inequalities",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 9 Introduction",
+			"Description": "At the start of the Second World War, British military and intelligence officers recognized that defeating Nazi Germany would require the Allies to know what the enemy was planning. This task was complicated by the fact that the German military transmitted all of its communications through a presumably uncrackable code created by a machine called Enigma. The Germans had been encoding their messages with this machine since the early 1930s. Not long after the war started, the British recruited a team of brilliant codebreakers to crack the Enigma code. The codebreakers used what they knew about the Enigma machine to build a mechanical computer that could crack the code. The Germans were so confident that the code could not be cracked, that they felt comfortable transmitting all manner of battlefield intelligence encoded with the machine. But the Allies had cracked it. And that knowledge of what the Germans were planning proved to be a key part of the ultimate Allied victory of Nazi Germany in 1945. The Enigma is perhaps the most famous cryptographic device ever known. It stands as an example of the pivotal role cryptography has played in society. Now, technology has moved cryptanalysis to the digital world. Many ciphers are designed using invertible matrices as the method of message transference, as finding the inverse of a matrix is generally part of the process of decoding. In addition to knowing the matrix and its inverse, the receiver must also know the key that, when used with the matrix inverse, will allow the message to be read. In this chapter, we will investigate matrices and their inverses, and various ways to use matrices to solve systems of equations. First, however, we will study systems of equations on their own: linear and nonlinear, and then partial fractions. We will not be breaking any secret codes here, but we will lay the foundation for future courses.",
+			"Document": "Chapter9Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 9 Review",
+			"Document": "Chapter9Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Systems of Linear Equations: Two Variables",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Solving Systems of Equations by Graphing",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving Systems of Equations by Substitution",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Solving Systems of Equations in Two Variables by the Addition Method ",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Identifying Inconsistent Systems of Equations Containing Two Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Expressing the Solution of a system of Dependent Equations Containing Two Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Using Systems of Equations to Investigate Profits",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.1.pdf",
+						"PageStart": 11,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-1-systems-of-linear-equations-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Systems of Linear Equations: Three Variables",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Solving Systems of Three Equations in Three Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-2-systems-of-linear-equations-three-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Identifying Inconsistent Systems of Equations Containing Three Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9,2.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-2-systems-of-linear-equations-three-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Expressing the Solution of a System of Dependent Equations Containing Three Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.2.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-2-systems-of-linear-equations-three-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Systems of Nonlinear Equations and Inequalities: Two Variables",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Solving a System of Nonlinear Equations Using Substitution",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-3-systems-of-nonlinear-equations-and-inequalities-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving a System of Nonlinear Equations Using Elimination",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-3-systems-of-nonlinear-equations-and-inequalities-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Graphing a Nonlinear Inequality",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-3-systems-of-nonlinear-equations-and-inequalities-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Graphing a System of Nonlinear Inequalities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.3.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-3-systems-of-nonlinear-equations-and-inequalities-two-variables",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Partial Fractions",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Decomposing P(x)/Q(x) Where Q(x) Has Only Nonrepeated Linear Factors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-4-partial-fractions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Decomposing P(x)/Q(x) Where Q(x) Has Repeated Linear Factors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.4.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-4-partial-fractions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Decomposing P(x)/Q(x) Where Q(x) Has Nonrepeated Irreducible QuadraticFactors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-4-partial-fractions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Decomposing P(x)/Q(x) Where Q(x) Has Repeated Irreducible Quadratic Factors",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.4.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-4-partial-fractions",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Matrices and Matrix Operations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Sum and Difference of Two Matrices",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-5-matrices-and-matrix-operations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding the Scalar Multiples of a Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.5.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-5-matrices-and-matrix-operations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Product of Two Matrices",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-5-matrices-and-matrix-operations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Solving Systems with Gaussian Elimination",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Writing the Augmented Matrix of a System of Equations",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-6-solving-systems-with-gaussian-elimination",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing a System of Equations from an Augmented Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.6.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-6-solving-systems-with-gaussian-elimination",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Performing Row Operations on a Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.6.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-6-solving-systems-with-gaussian-elimination",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving a System of Linear Equations Using Matrices",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.6.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-6-solving-systems-with-gaussian-elimination",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Solving Systems with Inverses",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Inverse of a Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-7-solving-systems-with-inverses",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Solving a System of Linear Equations Using the Inverse of a Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.7.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-7-solving-systems-with-inverses",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 8,
+				"Name": "Solving Systems with Cramer's Rule",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Evaluating the Determinant of a 2 x 2 Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.8.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-8-solving-systems-with-cramers-rule",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using Cramer's Rule to Solve a System of Two Equations in Two Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.8.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-8-solving-systems-with-cramers-rule",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Evaluating the Determinant of a 3 x 3 Matrix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.8.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-8-solving-systems-with-cramers-rule",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Cramer's Rule to Solve a System of Three Equations in Three Variables",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.8.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-8-solving-systems-with-cramers-rule",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Understanding Properties of Determinants",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "9.8.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/9-8-solving-systems-with-cramers-rule",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 10,
+		"Name": "Analytic Geometry",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 10 Introduction",
+			"Description": "The Greek mathematician Menaechmus (c. 380ï¿½c. 320 BCE) is generally credited with discovering the shapes formed by the intersection of a plane and a right circular cone. Depending on how he tilted the plane when it intersected the cone, he formed different shapes at the intersectionï¿½beautiful shapes with near-perfect symmetry. It was also said that Aristotle may have had an intuitive understanding of these shapes, as he observed the orbit of the planet to be circular. He presumed that the planets moved in circular orbits around Earth, and for nearly 2,000 years this was the commonly held belief. It was not until the Renaissance movement that Johannes Kepler noticed that the orbits of the planet were not circular in nature. His published law of planetary motion in the 1600s changed our view of the solar system forever. He claimed that the sun was at one end of the orbits, and the planets revolved around the sun in an oval-shaped path. In this chapter, we will investigate the two-dimensional #gures that are formed when a right circular cone is intersected by a plane. We will begin by studying each of three #gures created in this manner. We will develop de#ning equations for each #gure and then learn how to use these equations to solve a variety of problems.",
+			"Document": "Chapter10Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 10 Review",
+			"Document": "Chapter10Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "The Ellipse",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Writing Equations of Ellipses in Standard Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-1-the-ellipse",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing Ellipses Centered at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-1-the-ellipse",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Graphing Ellipses Not Centered at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-1-the-ellipse",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving Applied Problems Involving Ellipses",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.1.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-1-the-ellipse",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "The Hyperbola",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Locating the Vertices and Foci of a Hyperbola",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-2-the-hyperbola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing Equations of Hyperbols in Standard Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.2.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-2-the-hyperbola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Graphing Hyperbolas Centered at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.2.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-2-the-hyperbola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Graphing Hyperbolas Centered at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.2.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-2-the-hyperbola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Solving Applied Problems Involving Hyperbolas",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.2.pdf",
+						"PageStart": 12,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-2-the-hyperbola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "The Parabola",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Graphing Parabolas with Vertices at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-3-the-parabola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing Equations of Parabolas in Standard Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.3.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-3-the-parabola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Graphing Parabolas with Vertices Not at the Origin",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-3-the-parabola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Solving Applied Problems Involving Parabolas",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.3.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-3-the-parabola",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Rotation of Axes",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying Nondegenerate Conics in General Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-4-rotation-of-axes",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing Equations of Rotated Conics in Standard Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-4-rotation-of-axes",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Identifying Conics without Rotating Axes",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.4.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-4-rotation-of-axes",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Conic Sections in Polar Coordinates",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying a Conic in Polar Form",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-5-conic-sections-in-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Graphing the Polar Equations of Conics",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.5.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-5-conic-sections-in-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Defining Conics in Terms of a Focus and a Directix",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "10.5.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/10-5-conic-sections-in-polar-coordinates",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 11,
+		"Name": "Sequences, Probability and Counting Theory",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 11 Introduction",
+			"Description": "A lottery winner has some big decisions to make regarding what to do with the winnings. Buy a villa in Saint Barthï¿½lemy? A luxury convertible? A cruise around the world? !e likelihood of winning the lottery is slim, but we all love to fantasize about what we could buy with the winnings. One of the first things a lottery winner has to decide is whether to take the winnings in the form of a lump sum or as a series of regular payments, called an annuity, over the next 30 years or so. !is decision is o#en based on many factors, such as tax implications, interest rates, and investment strategies. !ere are also personal reasons to consider when making the choice, and one can make many arguments for either decision. However, most lottery winners opt for the lump sum. In this chapter, we will explore the mathematics behind situations such as these. We will take an in-depth look at annuities. We will also look at the branch of mathematics that would allow us to calculate the number of ways to choose lottery numbers and the probability of winning. ",
+			"Document": "Chapter11Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 11 Review",
+			"Document": "Chapter11Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Sequences and Their Notations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Writing the Terms of a Sequence Defined by an Explicit Formula",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-1-sequences-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing the Terms of a Sequence Defined y a Recursive Formula",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.1.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-1-sequences-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Factorial Notation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.1.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-1-sequences-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Arithmetic Sequences",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding Common Differences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.2.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-2-arithmetic-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing Terms of Arithmetic Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.2.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-2-arithmetic-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Recursive Formulas for Arithmetic Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.2.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-2-arithmetic-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Explicit Formulas for Arithmetic Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.2.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-2-arithmetic-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Geometric Sequences",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding Common Ratios",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-3-geometric-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Writing Terms of Geometric Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.3.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-3-geometric-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using Recursive Formulas for Geometric Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.3.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-3-geometric-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using Explicit Formulas for Geometric Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.3.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-3-geometric-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Solving Application Problems with Geometric Sequences",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-3-geometric-sequences",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Series and Their Notations",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using Summation Notation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-4-series-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Formula for Arithmetic Series",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.4.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-4-series-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Formula for Geometric Series",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.4.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-4-series-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Using the Formula for the Sum of an Infinite Geometric Series",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-4-series-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Solving Annuity Problems",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.4.pdf",
+						"PageStart": 9,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-4-series-and-their-notations",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 5,
+				"Name": "Counting Principles",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Using the Addition Principle",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Multiplication Principle",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Number of Permutations of n Distinct Objects",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Find the Number of Combinations Using the Formula",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Finding the Number of Subsets of a Set",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Finding the Number of Permutations of n Non-Distinct Objects",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.5.pdf",
+						"PageStart": 7,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-5-counting-principles",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 6,
+				"Name": "Binomial Theorem",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Identifying the Bionomial Coefficents",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.6.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-6-binomial-theorem",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Using the Binomial Theorem",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.6.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-6-binomial-theorem",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Using the Binomial Theorem to Find a Single Term",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.6.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-6-binomial-theorem",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 7,
+				"Name": "Probability",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Constructing Probability Models",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Computing Probabilities of Equally Likely Outcomes",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Computing the Probability of the Union of Two Events",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Computing the Probability of Mutually Exclusive Events",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Using the Complement Rule to Compute Probabilities",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 5,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 6,
+						"Name": "Computing Probability Using Counting Theory",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "11.7.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/11-7-probability",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	},
+	{
+		"Index": 12,
+		"Name": "Introduction to Calculus",
+		"Access": "False",
+		"Introduction": {
+			"Name": "Chapter 12 Introduction",
+			"Description": "The eight-time world champion and winner of six Olympic gold medals in sprinting, Usain Bolt has truly earned his nickname as the ï¿½fastest man on Earth.ï¿½ Also known as the ï¿½lightning bolt,ï¿½ he set the track on fire by running at a top speed of 27.79 mphï¿½the fastest time ever recorded by a human runner. Like the fastest land animal, a cheetah, Bolt does not run at his top speed at every instant. How then, do we approximate his speed at any given instant? We will find the answer to this and many related questions in this chapter.",
+			"Document": "Chapter12Intro.pdf",
+			"PageStart": 1
+		},
+		"Review": {
+			"Name": "Chapter 12 Review",
+			"Document": "Chapter12Review.pdf",
+			"PageStart": 1
+		},
+		"Sections": [
+			{
+				"Index": 1,
+				"Name": "Finding Limits: Numerical and Graphical Approaches",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Understanding Limit Notation",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.1.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-1-finding-limits-numerical-and-graphical-approaches",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding a Limit Using a Graph",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.1.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-1-finding-limits-numerical-and-graphical-approaches",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding a Limit Using a Table",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.1.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-1-finding-limits-numerical-and-graphical-approaches",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 2,
+				"Name": "Finding Limits: Properties of Limits",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Limit of a Sum, a Difference, and a Product",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.2.pdf",
+						"PageStart": 2,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-2-finding-limits-properties-of-limits",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Finding the Limit of a Polynomial",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.2.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-2-finding-limits-properties-of-limits",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Limit of a Power or a Root",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.2.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-2-finding-limits-properties-of-limits",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding the Limit of a Quotient",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.2.pdf",
+						"PageStart": 4,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-2-finding-limits-properties-of-limits",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 3,
+				"Name": "Continuity",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Determining Whether a Function is Continuous at a Number",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.3.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-3-continuity",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Recognizing Continuous and Discontinuous Real-Number Functions",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.3.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-3-continuity",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Determining the Input Values for Which Function is Discontinuous",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.3.pdf",
+						"PageStart": 8,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-3-continuity",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Determining Whether a Function is Continuous at a Number",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.3.pdf",
+						"PageStart": 10,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-3-continuity",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			},
+			{
+				"Index": 4,
+				"Name": "Derivatives",
+				"Access": "False",
+				"LearningOutcomes": [
+					{
+						"Index": 1,
+						"Name": "Finding the Average Rate of Change of a Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.4.pdf",
+						"PageStart": 1,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-4-derivatives",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 2,
+						"Name": "Understanding the Instantaneous Rate of Change",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.4.pdf",
+						"PageStart": 3,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-4-derivatives",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 3,
+						"Name": "Finding the Instantaneous Rates of Change",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.4.pdf",
+						"PageStart": 6,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-4-derivatives",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 4,
+						"Name": "Finding an Equation of a Line Tangent to the Graph of a Function",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.4.pdf",
+						"PageStart": 13,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-4-derivatives",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					},
+					{
+						"Index": 5,
+						"Name": "Finding the Instantaneous Speed of a Particle",
+						"Access": "False",
+						"MaxNumberAssessment": 5,
+						"Document": "12.4.pdf",
+						"PageStart": 15,
+						"PageEnd": 0,
+						"url": "https://openstax.org/books/precalculus/pages/12-4-derivatives",
+						"Video": [],
+						"score": [
+							0,
+							0,
+							0
+						]
+					}
+				],
+				"score": [
+					0,
+					0,
+					0
+				]
+			}
+		],
+		"score": [
+			0,
+			0,
+			0
+		]
+	}
+]
