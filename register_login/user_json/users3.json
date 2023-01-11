@@ -1,0 +1,35 @@
+[
+    {
+        "first_name" : "Test",
+        "last_name" : "Person1",
+        "email" : "t1@gmail.com",
+        "password" : "password",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12346",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Test",
+        "last_name" : "Person2",
+        "email" : "t2@gmail.com",
+        "password" : "password",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12346",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Test",
+        "last_name" : "Person3",
+        "email" : "t3@gmail.com",
+        "password" : "password",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12346",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    }
+]

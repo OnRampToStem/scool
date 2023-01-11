@@ -1,0 +1,440 @@
+[
+    {
+        "first_name" : "Oliver Jay",
+        "last_name" : "Aguilar",
+        "email" : "oliver_aguilar@mail.fresnostate.edu",
+        "password" : "Ez4Mv5qJ",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Jacqueline Margaret",
+        "last_name" : "Alvarez",
+        "email" : "jmalvarez28@mail.fresnostate.edu",
+        "password" : "jTrLns6a",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Barner",
+        "last_name" : "Caitlynn",
+        "email" : "caitlynn008@mail.fresnostate.edu",
+        "password" : "QjuaWgSj",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Adrian",
+        "last_name" : "Barojas",
+        "email" : "adrianb@mail.fresnostate.edu",
+        "password" : "92b8wD7F",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Alex",
+        "last_name" : "Bui",
+        "email" : "buialex724@mail.fresnostate.edu",
+        "password" : "9HuJWDqf",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Juliana",
+        "last_name" : "Cruz",
+        "email" : "julianacruz@mail.fresnostate.edu",
+        "password" : "TrP5qPf7",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Kassandra",
+        "last_name" : "Cuevas",
+        "email" : "kc0570@mail.fresnostate.edu",
+        "password" : "MzTDNWQu",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Lesly Melinda",
+        "last_name" : "Escobar Herrera",
+        "email" : "doctor2004@mail.fresnostate.edu",
+        "password" : "H5gJWSqT",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Leonel Alexander",
+        "last_name" : "Estrada Zavala",
+        "email" : "leoestrada10@mail.fresnostate.edu",
+        "password" : "nywtMAJn",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Rojeh",
+        "last_name" : "Farah",
+        "email" : "rfarah@mail.fresnostate.edu",
+        "password" : "a534SfdC",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Mauricio",
+        "last_name" : "Ferreyra Ruiz",
+        "email" : "ferreyra19@mail.fresnostate.edu",
+        "password" : "kBgjqyPy",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Isabel L",
+        "last_name" : "Flores",
+        "email" : "isabelflores77@mail.fresnostate.edu",
+        "password" : "Bu2RtyeB",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Jesus Alejandro",
+        "last_name" : "Flores",
+        "email" : "ya_man_yesus@mail.fresnostate.edu",
+        "password" : "gVU8ZnP6",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Alexa Keana",
+        "last_name" : "Gamez",
+        "email" : "alexakeana@mail.fresnostate.edu",
+        "password" : "d2sBETVz",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Alyssa Maxine",
+        "last_name" : "Garcia",
+        "email" : "pa1nt3dbutterfly@mail.fresnostate.edu",
+        "password" : "PREQRCNj",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Elena",
+        "last_name" : "Garcia",
+        "email" : "nena033@mail.fresnostate.edu",
+        "password" : "8CDCWvHU",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Emily Gwendolyn",
+        "last_name" : "Gartenlaub",
+        "email" : "emilyg281@mail.fresnostate.edu",
+        "password" : "yRsaTYQV",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Daniel Alexis",
+        "last_name" : "Giron",
+        "email" : "daniel22@mail.fresnostate.edu",
+        "password" : "LATEdpKw",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Humberto",
+        "last_name" : "Gomez",
+        "email" : "humbertog17@mail.fresnostate.edu",
+        "password" : "kKjTSKFj",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Lilianna Cecilia",
+        "last_name" : "Guzman",
+        "email" : "lilxnna@mail.fresnostate.edu",
+        "password" : "2TAb7ArS",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Vivianna Gaosheng",
+        "last_name" : "Her",
+        "email" : "viviowly6@mail.fresnostate.edu",
+        "password" : "ryYamnyh",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Naomi Esperanza",
+        "last_name" : "Herrera",
+        "email" : "naomih@mail.fresnostate.edu",
+        "password" : "Fvf5Wcq7",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Orlando",
+        "last_name" : "Lopez Fabian",
+        "email" : "thappo@mail.fresnostate.edu",
+        "password" : "guWnRV3Z",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Jaden Andrew",
+        "last_name" : "Luna",
+        "email" : "jadenluna5@mail.fresnostate.edu",
+        "password" : "Esm9mtAt",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Patrick Toste",
+        "last_name" : "Pimentel",
+        "email" : "patrickpimentel2022@mail.fresnostate.edu",
+        "password" : "wh6epURA",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Sarah Eileen",
+        "last_name" : "Porter",
+        "email" : "sarahbear3@mail.fresnostate.edu",
+        "password" : "g27BqM7P",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Daylon",
+        "last_name" : "Powell",
+        "email" : "dolphinwolf69@mail.fresnostate.edu",
+        "password" : "68E83HQu",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Juan",
+        "last_name" : "Ramos Lemus",
+        "email" : "jramoslemus@mail.fresnostate.edu",
+        "password" : "tCWmmEEC",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Crystal Ivette",
+        "last_name" : "Rivas Rodriguez",
+        "email" : "rodriguezcrystal1203@mail.fresnostate.edu",
+        "password" : "wnzXcfxt",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Johnny Fabian",
+        "last_name" : "Rivera",
+        "email" : "10jrivera98@mail.fresnostate.edu",
+        "password" : "vKd4EMJh",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Juan Miguel",
+        "last_name" : "Sanchez",
+        "email" : "juan_s@mail.fresnostate.edu",
+        "password" : "DxqRtYtZ",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Kevin",
+        "last_name" : "Sandoval Navarro",
+        "email" : "k3v1n@mail.fresnostate.edu",
+        "password" : "y25Xn6pn",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Noel",
+        "last_name" : "Sosa Cruz",
+        "email" : "noelsosa@mail.fresnostate.edu",
+        "password" : "RQHU7RvC",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Cailloo Chali",
+        "last_name" : "Vang",
+        "email" : "ccvang2640@mail.fresnostate.edu",
+        "password" : "q8RF8UjK",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Deissy",
+        "last_name" : "Vargas Rodriguez",
+        "email" : "deissyvargas@mail.fresnostate.edu",
+        "password" : "CHw82hj7",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Naylene Andrea",
+        "last_name" : "Velasquez",
+        "email" : "nayvela_14@mail.fresnostate.edu",
+        "password" : "sRF79Zhg",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Emmanuel",
+        "last_name" : "Verde",
+        "email" : "_emmanuelverde@mail.fresnostate.edu",
+        "password" : "DPPtLHw7",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Christine",
+        "last_name" : "Wayte",
+        "email" : "christinewayte@mail.fresnostate.edu",
+        "password" : "m3qKG9c9",
+        "type" : "student",
+        "course_name" : "Math6",
+        "course_id" : "123",
+        "section_id" : "12345",
+        "instructor" : "byendluri@mail.fresnostate.edu"
+    },
+    {
+        "first_name" : "Bianca",
+        "last_name" : "Lopez",
+        "email" : "byendluri@mail.fresnostate.edu",
+        "password" : "YGeZNuXy",
+        "type" : "instructor",
+        "course_name" : [
+            "Math6",
+            "Math Random"
+        ],
+        "course_id" : [
+            "123",
+            "559"
+        ],
+        "section_id" : [
+            "12345",
+            "55912"
+        ],
+        "instructor" : ""
+    }
+]
