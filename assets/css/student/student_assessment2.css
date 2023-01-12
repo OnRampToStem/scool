@@ -65,3 +65,16 @@ input[type="button"], input[type="submit"]{
 input[type="button"]:hover, input[type="submit"]:hover { 
     background-color: red;
 }
+
+main {
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid black;
+}
+#timerDiv {
+    padding: 5px;
+    border: 1px solid black;
+}
+.timer {
+    display: inline;
+}
