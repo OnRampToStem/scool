@@ -149,7 +149,6 @@ echo "\n";
                 <div id="form_div" hidden>
                     <form id="my_form" action="student_assessment2.php" method="POST">
                         <input id="pkey" name="pkey" type="number" required>
-                        <input type="submit"><!-- value="OK" name="submit"-->
                     </form>
                 </div>
             </main>
@@ -284,11 +283,12 @@ echo "\n";
                         // the open time of the assessment
                         if(currentTime >= open_assessments[pkey][4]) {
                             console.log("You are eligible to start the assessment.");
-                            // call nxt fxn
+                            goToAssessment(pkey);
                         }
                         else {
                             console.log("You are not eligible to start the assessment due to the time.");
                         }
+
                     }
                     else if(currentDate === open_assessments[pkey][5]) {
 
@@ -304,26 +304,31 @@ echo "\n";
                         // the close time of the assessment
                         if(currentTime < open_assessments[pkey][6]) {
                             console.log("You are eligible to start the assessment.");
-                            // call nxt fxn
+                            goToAssessment(pkey);
                         }
                         else {
                             console.log("You are not eligible to start the assessment due to the time.");
                         }
+
                     }
                     else {
                         console.log("You are eligible to start the assessment.");
+                        goToAssessment(pkey);
                     }
 
+                }
+                else {
+                    console.log("Error");
                 }
 
             }
 
 
-            let misc = () => {
-                                /*
+            // function to send the pkey of the clicked on open assessment and submit the form, so
+            // student will be redirected to another page where they will take the assessment
+            let goToAssessment = (pkey) => {
                 document.getElementById("pkey").value = pkey;
                 document.getElementById("my_form").submit();
-                */
             }
 
 
@@ -345,6 +350,7 @@ echo "\n";
                     }
                 }
             }
+
         </script>
     </body>
 </html>
