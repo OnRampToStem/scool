@@ -96,10 +96,10 @@ main {
 .assessments td {
     border: 1px solid black;
     padding: 4px;
-    cursor: pointer;
 }
 
 .tr_ele:hover {
     color: white;
     background-color: navy;
+    cursor: pointer;
 }
