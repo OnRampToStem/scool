@@ -1,5 +1,6 @@
 <?php
-// start the session (access to user: loggedIn, first_name, email, type, course_name, course_id, section_id)
+// start the session
+// (access to user: loggedIn, first_name, email, type, course_name, course_id, section_id)
 session_start();
 
 // if user is not logged in then redirect them to main page
@@ -110,8 +111,14 @@ if($_SESSION["type"] !== "student"){
         </div>
         
         <script type="text/javascript">
-            /* GLOBALS */
 
+            let redirectToStudentBrowse = () =>{
+                window.location.href = "student_browse.php";
+            }
+
+            let redirectToStudentAssessment = () =>{
+                window.location.href = "student_assessment1.php";
+            }
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
@@ -131,17 +138,7 @@ if($_SESSION["type"] !== "student"){
                     }
                 }
             }
-
-
-            let redirectToStudentBrowse = () =>{
-                window.location.href = "student_browse.php";
-            }
-
-            let redirectToStudentAssessment = () =>{
-                window.location.href = "student_assessment.php";
-            }
-
-
+        
         </script>
     </body>
 </html>
