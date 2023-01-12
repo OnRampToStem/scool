@@ -1,8 +1,6 @@
 <?php
-//for display purposes
-//header("Content-type: text/plain");
-
-// start the session (access to user: loggedIn, first_name, email, type, course_name, course_id, section_id)
+// start the session 
+// (access to user: loggedIn, first_name, email, type, course_name, course_id, section_id)
 session_start();
 
 // if user is not logged in then redirect them to main page
@@ -112,7 +110,7 @@ echo "\n";
     <head>
         <meta charset="UTF-8">
         <title>OR2STEM - Assessments</title>
-        <link rel="stylesheet" href="../assets/css/student/student_assessment.css" />
+        <link rel="stylesheet" href="../assets/css/student/student_assessment1.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
@@ -147,6 +145,12 @@ echo "\n";
                     <div id="past_assessments"></div>
                     <div id="open_assessments"></div>
                     <div id="future_assessments"></div>
+                </div>
+                <div id="form_div" hidden>
+                    <form id="my_form" action="student_assessment2.php" method="POST">
+                        <input id="pkey" name="pkey" type="number" required>
+                        <input type="submit"><!-- value="OK" name="submit"-->
+                    </form>
                 </div>
             </main>
 
@@ -195,6 +199,8 @@ echo "\n";
             const future_assessments = <?= json_encode($future_assessments); ?>;
 
 
+            // function to display past, open, and future assessments that were created by the student's 
+            // instructor for the student's 'course_name', 'course_id', and 'section_id'
             let displayAssessments = () => {
                 let str;
 
@@ -204,7 +210,7 @@ echo "\n";
                 str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
                 str += '<tbody>';
                 for (const key in past_assessments) {
-                    str += '<tr class="tr_ele" onclick=""><td>' + past_assessments[key][0] + '</td></tr>';
+                    str += '<tr><td>' + past_assessments[key][0] + '</td></tr>';
                 }
                 str += '</tbody>';
                 str += '</table>';
@@ -216,7 +222,7 @@ echo "\n";
                 str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
                 str += '<tbody>';
                 for (const key in open_assessments) {
-                    str += '<tr class="tr_ele" onclick=""><td>' + open_assessments[key][0] + '</td></tr>';
+                    str += '<tr class="tr_ele" onclick="checkIfOpen('+key+')"><td>' + open_assessments[key][0] + '</td></tr>';
                 }
                 str += '</tbody>';
                 str += '</table>';
@@ -228,11 +234,96 @@ echo "\n";
                 str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
                 str += '<tbody>';
                 for (const key in future_assessments) {
-                    str += '<tr class="tr_ele" onclick=""><td>' + future_assessments[key][0] + '</td></tr>';
+                    str += '<tr><td>' + future_assessments[key][0] + '</td></tr>';
                 }
                 str += '</tbody>';
                 str += '</table>';
                 document.getElementById("future_assessments").innerHTML = str;
+            }
+
+
+            let checkIfOpen = (pkey) => {
+
+                // assessment that is clicked on must be under the 'Open Assessments' list
+                if(open_assessments.hasOwnProperty(pkey)) {
+
+                    // create Date Object
+                    const DATE = new Date();
+                    console.log(`DATE: ${DATE}`);
+
+                    // get current date from Date object in format: YYYY-MM-DD
+                    let year = DATE.toLocaleString('en-US', {
+                        timeZone: 'America/Los_Angeles',
+                        year: "numeric"
+                    });
+                    let month = DATE.toLocaleString('en-US', {
+                        timeZone: 'America/Los_Angeles',
+                        month: "2-digit"
+                    });
+                    let day = DATE.toLocaleString('en-US', {
+                        timeZone: 'America/Los_Angeles',
+                        day: "2-digit"
+                    });
+                    let currentDate = `${year}-${month}-${day}`;
+                    console.log(`Current Date: ${currentDate}`);
+                    console.log(`Open Date: ${open_assessments[pkey][3]}`);
+                    console.log(`Close Date: ${open_assessments[pkey][5]}`);
+
+                    // time only matters if we are on the opening or closing date, anything in between does not matter
+                    if(currentDate === open_assessments[pkey][3]) {
+
+                        // get the current time
+                        let currentTime = DATE.toLocaleTimeString('en-US', { 
+                            timeZone: 'America/Los_Angeles',
+                            hour12: false
+                        });
+                        console.log(`Current Time: ${currentTime}`);
+                        console.log(`Open Time: ${open_assessments[pkey][4]}`);
+
+                        // student can only start the assessment if the current time is greater than or equal to 
+                        // the open time of the assessment
+                        if(currentTime >= open_assessments[pkey][4]) {
+                            console.log("You are eligible to start the assessment.");
+                            // call nxt fxn
+                        }
+                        else {
+                            console.log("You are not eligible to start the assessment due to the time.");
+                        }
+                    }
+                    else if(currentDate === open_assessments[pkey][5]) {
+
+                        // get the current time
+                        let currentTime = DATE.toLocaleTimeString('en-US', { 
+                            timeZone: 'America/Los_Angeles',
+                            hour12: false
+                        });
+                        console.log(`Current Time: ${currentTime}`);
+                        console.log(`Open Time: ${open_assessments[pkey][4]}`);
+
+                        // student can only start the assessment if the current time is less than
+                        // the close time of the assessment
+                        if(currentTime < open_assessments[pkey][6]) {
+                            console.log("You are eligible to start the assessment.");
+                            // call nxt fxn
+                        }
+                        else {
+                            console.log("You are not eligible to start the assessment due to the time.");
+                        }
+                    }
+                    else {
+                        console.log("You are eligible to start the assessment.");
+                    }
+
+                }
+
+            }
+
+
+            let misc = () => {
+                                /*
+                document.getElementById("pkey").value = pkey;
+                document.getElementById("my_form").submit();
+                */
             }
 
 
