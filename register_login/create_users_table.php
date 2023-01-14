@@ -21,6 +21,8 @@ $query = "CREATE TABLE IF NOT EXISTS users (
 pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
 echo "The 'users' table has been successfully created or was already there!\n";
 
+echo "Closing connection to PostgreSQL database.";
+pg_close($con);
 
 /* DESCRIPTION OF 'users' TABLE */
 
@@ -54,6 +56,5 @@ echo "The 'users' table has been successfully created or was already there!\n";
 // created_on -> represents the timestamp of when a user was first inserted into the PostgreSQL db
 
 // last_signed_in -> represents the timestamp of when a user was last logged into OR2STEM webpage
-
 
 ?>
