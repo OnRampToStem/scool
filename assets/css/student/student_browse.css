@@ -1,0 +1,304 @@
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+    color: navy;
+    font-weight: bold;
+    padding-left: 20px;
+}
+#OR2STEM-HEADER-A {
+    color: navy;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+#OR2STEM-HEADER-A:hover {
+    color: red;
+}
+#userProfile {
+    float: right;
+    margin-right: 15px;
+    position: relative;
+}
+#userButton {
+    width: auto;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    margin-right: 30px;
+}
+#user-picture {
+    width: 30px; 
+    height: 30px; 
+    position: absolute; 
+    right: 0; 
+    bottom: 0;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: 3px;
+    color: white;
+    background-color: navy;
+    width: 85px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content a {
+    color: white;
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+}
+.dropdown a:hover {
+    background-color: red;
+}
+.show {display: block;}
+
+
+
+/* GROUP1 STYLING */
+#group1 {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    /*border: 1px solid black;*/
+}
+#group1_1 {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+#group1_1_1, #group1_1_2, #group1_1_3 {
+    width: 30%;
+}
+#chapter_options, #section_options, #learningoutcome_options {
+    width: 90%;
+    padding: 4px;
+    cursor: pointer;
+}
+#go_btn {
+    width: 100px;
+    height: 40px;
+    margin: 15px;
+}
+
+
+
+main {
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+/* LO SELECTION INFO HEADER UNIQUE STYLING */
+#selectionInfoHeader{
+    width: 90%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: navy;
+    border: 3px solid red;
+}
+#selectionInfoHeader p {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+
+
+.clickable_li:hover {
+    color: red;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+
+/* BLUE LONG BUTTON HEADER STYLING */
+.blue_long_btn{
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: navy;
+    transition-duration: 0.5s;
+}
+.blue_long_btn:hover{
+    background-color: red;
+}
+.blue_long_content{
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    padding-left: 50px;
+}
+.blue_long_arrow{
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    padding-right: 25px;
+}
+
+
+
+/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
+button, #userButton {
+    transition-duration: 0.5s;
+}
+button:hover, #userButton:hover{
+    background-color: red;
+}
+input[type="button"], input[type="submit"]{
+    transition-duration: 0.5s;
+}
+input[type="button"]:hover, input[type="submit"]:hover { 
+    background-color: red;
+}
+
+
+
+/* MAIN QUESTION DISPLAY STYLING */
+#form{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+#questionMain{
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+}
+#leftButtonsDiv{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+#questionDisplay{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+#rightButtonsDiv{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+#previousButton{
+    width: 220px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: 25px;
+}
+#nextButton {
+    width: 220px;
+    height: 40px;
+    margin-right: auto;
+    margin-left: 25px;
+}
+#mainImg {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+#optionsForm {
+    text-align: center;
+    margin: auto;
+}
+#checkAnswerButton{
+    width: 150px;
+    height: 40px;
+}
+#label0, #label1, #label2, #label3, #label4, #label5, #label6, #label7, #label8 {
+    display: inline-block;
+    width: 250px;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+}
+#resultsDiv {
+    margin: 0 auto;
+    width: 60%;
+}
+#resultsTable {
+    width: 60%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: center;
+    border: 1px solid black;
+}
+.results_th {
+    width: 20%;
+    height: auto;
+    padding: 5px;
+    border: 1px solid black;
+}
+.results_td {
+    width: 20%;
+    height: auto;
+    padding: 5px;
+    border: 1px solid black;
+}
+#timerDiv {
+    float: right;
+    padding-top: 15px;
+    padding-right: 20px;
+}
+.timer {
+    display: inline;
+}
+
+
+
+/* CH & LO INFORMATION CONTENT STYLING */
+#myChapter, #myLO {
+    margin: 0 auto;
+    width: 80%;
+    text-align: left;
+    padding-left: 20px;
+    /*border: 1px solid black;*/
+}
+ul li a:hover{ /* works for both chapter info and lo info */
+    color: red;
+    background-color: white;
+    font-weight: 600;
+}
+
+
+
+/* CH, SEC, LO TABLE PROGRESS STYLING */
+.content_progress{
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+}
+.content_progress td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+.content_progress th{
+    text-align: center;
+}
+.content_progress td p {
+    text-align: center;
+}
+/*
+.refresh_button{
+    width: auto;
+    color: white;
+    background-color: navy;
+}
+*/

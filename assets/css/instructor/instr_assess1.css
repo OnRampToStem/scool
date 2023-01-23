@@ -1,0 +1,206 @@
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+    color: navy;
+    font-weight: bold;
+    padding-left: 20px;
+}
+#OR2STEM-HEADER-A {
+    color: navy;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+#OR2STEM-HEADER-A:hover {
+    color: red;
+}
+#userProfile {
+    float: right;
+    margin-right: 15px;
+    position: relative;
+}
+#userButton {
+    width: auto;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    margin-right: 30px;
+}
+#user-picture {
+    width: 30px; 
+    height: 30px; 
+    position: absolute; 
+    right: 0; 
+    bottom: 0;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: 3px;
+    color: white;
+    background-color: navy;
+    width: 85px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content a {
+    color: white;
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+}
+.dropdown a:hover {
+    background-color: red;
+}
+.show {display: block;}
+
+
+
+/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
+button, #userButton {
+    transition-duration: 0.5s;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+}
+button:hover, #userButton:hover {
+    background-color: red;
+}
+input[type="button"], input[type="submit"] {
+    transition-duration: 0.5s;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+}
+input[type="button"]:hover, input[type="submit"]:hover { 
+    background-color: red;
+}
+
+
+
+/* MAIN STYLING */
+#main {
+    margin: 0 auto;
+    width: 90%;
+    min-height: 300px;
+    /*border: 1px solid black;*/
+}
+
+#ss_tab {
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.th1 {
+    text-align: center;
+    font-size: 20px;
+    width: 5%;
+    height: auto;
+    border: 1px solid black;
+}
+.th2 {
+    text-align: center;
+    font-size: 20px;
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+}
+.th3 {
+    text-align: center;
+    font-size: 20px;
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+}
+.th4 {
+    text-align: center;
+    font-size: 20px;
+    width: 15%;
+    height: auto;
+    border: 1px solid black;
+}
+.th5 {
+    text-align: center;
+    font-size: 20px;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.td1 {
+    text-align: center;
+    width: 5%;
+    height: auto;
+    border: 1px solid black;
+}
+.td2 {
+    text-align: left;
+    padding-left: 10px;
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+}
+.td3 {
+    text-align: left;
+    padding-left: 10px;
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+}
+.td4 {
+    text-align: center;
+    width: 15%;
+    height: auto;
+    border: 1px solid black;
+}
+.td5 {
+    text-align: center;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.myCharts {
+    width: 200px;
+    height: 150px;
+}
+.open_btn_1 {
+    width: 65px;
+    height: 40px;
+    font-size: 16px;
+}
+
+
+
+/* CH, SEC, LO TABLE PROGRESS STYLING */
+.content_progress{
+    margin: 0 auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+.content_progress td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+.content_progress th{
+    text-align: center;
+}
+.content_progress td{
+    text-align: center;
+}
+.open_btn_2 {
+    width: 60px;
+    height: 35px;
+    font-size: 15px;
+}
+.open_btn_3 {
+    width: 55px;
+    height: 30px;
+    font-size: 14px;
+}

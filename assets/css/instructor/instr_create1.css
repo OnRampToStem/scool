@@ -1,0 +1,220 @@
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+    color: navy;
+    font-weight: bold;
+    padding-left: 20px;
+}
+#OR2STEM-HEADER-A {
+    color: navy;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+#OR2STEM-HEADER-A:hover {
+    color: red;
+}
+#userProfile {
+    float: right;
+    margin-right: 15px;
+    position: relative;
+}
+#userButton {
+    width: auto;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    margin-right: 30px;
+}
+#user-picture {
+    width: 30px; 
+    height: 30px; 
+    position: absolute; 
+    right: 0; 
+    bottom: 0;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: 3px;
+    color: white;
+    background-color: navy;
+    width: 85px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content a {
+    color: white;
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+}
+.dropdown a:hover {
+    background-color: red;
+}
+.show {display: block;}
+
+
+
+/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
+button, #userButton {
+    transition-duration: 0.5s;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+}
+button:hover, #userButton:hover {
+    background-color: red;
+}
+input[type="button"], input[type="submit"] {
+    transition-duration: 0.5s;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+}
+input[type="button"]:hover, input[type="submit"]:hover { 
+    background-color: red;
+}
+
+
+
+/* MAIN STYLING */
+main {
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid black;
+    text-align: center;
+}
+
+/* GROUP1 STYLING */
+#group1 {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+#group1_1, #group1_2 {
+    width: 40%;
+}
+.group1_1_1, .group1_2_1 {
+    text-align: left;
+    margin-left: 20%;
+}
+#name {
+    width: 200px;
+    padding: 4px;
+}
+#public_yes_label, #public_no_label {
+    font-size: 15px;
+}
+#duration {
+    width: 45px;
+    padding: 4px;
+}
+#open_date, #open_time, #close_date, #close_time {
+    padding: 4px;
+}
+
+/* GROUP2 STYLING */
+#group2{
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+#group2_1 {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+#group2_1_1, #group2_1_2, #group2_1_3 {
+    width: 30%;
+}
+#ch_select, #sec_select, #lo_select{
+    width: 90%;
+    padding: 4px;
+    cursor: pointer;
+}
+
+/* GROUP3 STYLING */
+#group3{
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 5px;
+}
+#sel_table_res{
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#th1{
+    text-align: center;
+    font-size: 16px;
+    width: 40%;
+    height: auto;
+    border: 1px solid black;
+}
+#th2, #th3, #th4{
+    text-align: center;
+    font-size: 16px;
+    width: 13.33%;
+    height: auto;
+    border: 1px solid black;
+}
+#th5{
+    text-align: center;
+    font-size: 16px;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.td1{
+    text-align: center;
+    font-size: 15px;
+    width: 40%;
+    height: auto;
+    border: 1px solid black;
+}
+.td2, .td3, .td4{
+    text-align: center;
+    font-size: 15px;
+    width: 13.33%;
+    height: auto;
+    border: 1px solid black;
+}
+.td5{
+    text-align: center;
+    font-size: 15px;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.lonum_inputs, .points_inputs{
+    width: 45px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.questions_inputs{
+    width: 60px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.delete_button{
+    width: 33px;
+    height: 33px;
+    font-size: 18px;
+}
+
+/* GROUP4 STYLING */
+#submit_button{
+    width: 200px;
+    height: 35px;
+    font-size: 16px;
+}
