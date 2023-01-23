@@ -8,8 +8,8 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
-if($_SESSION["type"] !== "Instructor"){
+// if user account type is not 'Instructor' or 'Observer' then force logout
+if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Observer") {
     header("location: ../register_login/logout.php");
     exit;
 }
@@ -21,19 +21,39 @@ $students_data = array(); // php assoc arr holding "email" => [los complete, los
 // connect to the PGSQL db
 require_once "../register_login/config.php";
 
-// first query - get all students that belong to the instructor logged in, but are also in the current selected
-// course name and course id
-$query = "SELECT * FROM users WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION["selected_course_name"]}'
-          AND course_id = '{$_SESSION["selected_course_id"]}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+if ($_SESSION["type"] === "Instructor") {
+    // get all students that belong to the instructor logged in, but are also in the current selected
+    // course name and course id
+    $query = "SELECT * FROM users WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION["selected_course_name"]}'
+              AND course_id = '{$_SESSION["selected_course_id"]}'";
+    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
 
-while($row = pg_fetch_row($res)){
-    $students[$row[1]] = $row[2];
+    while($row = pg_fetch_row($res)){
+        $students[$row[1]] = $row[2];
+    }
+}
+elseif ($_SESSION["type"] === "Observer") {
+    // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
+    $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
+              AND course_id LIKE '%{$obj->context->id}%'";
+    $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+
+    // get the instructor's email
+    $instr_email = pg_fetch_result($res, 0, 0);
+
+    // get all students that belong to the instructor logged in, but are also in the current selected
+    // course name and course id
+    $query = "SELECT * FROM users WHERE instructor = '{$instr_email}' AND course_name = '{$_SESSION["selected_course_name"]}'
+              AND course_id = '{$_SESSION["selected_course_id"]}'";
+    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+
+    while($row = pg_fetch_row($res)){
+        $students[$row[1]] = $row[2];
+    }
 }
 
 // close connection to PGSQL db
 pg_close($con);
-
 
 // loop through students php assoc arr
 foreach($students as $key => $value){

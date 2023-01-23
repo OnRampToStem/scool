@@ -8,6 +8,12 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
+// if user account type is 'Observer' redirect to main page
+if ($_SESSION["type"] === "Observer") {
+    header("location: instr_index1.php");
+    exit;
+}
+
 // if user account type is not 'Instructor' then force logout
 if($_SESSION["type"] !== "Instructor"){
     header("location: ../register_login/logout.php");

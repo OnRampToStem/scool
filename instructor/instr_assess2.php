@@ -8,8 +8,8 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
-if($_SESSION["type"] !== "Instructor"){
+// if user account type is not 'Instructor' or 'Observer' then force logout
+if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Observer") {
     header("location: ../register_login/logout.php");
     exit;
 }
