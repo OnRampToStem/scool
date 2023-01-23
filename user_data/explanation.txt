@@ -1,0 +1,1 @@
+user_data will contain all of the progress for a class and the students in it.
