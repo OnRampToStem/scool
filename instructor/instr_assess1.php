@@ -34,8 +34,8 @@ if ($_SESSION["type"] === "Instructor") {
 }
 elseif ($_SESSION["type"] === "Observer") {
     // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
-    $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
-              AND course_id LIKE '%{$obj->context->id}%'";
+    $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%'
+              AND course_id LIKE '%{$_SESSION["selected_course_id"]}%'";
     $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
 
     // get the instructor's email
