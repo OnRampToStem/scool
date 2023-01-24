@@ -197,16 +197,30 @@ echo "\n";
                 document.getElementById("past_assessments").innerHTML = str;
 
                 // open assessments
-                str = '<h1>Open Assessments</h1>';
-                str += '<table class="assessments">';
-                str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
-                str += '<tbody>';
-                for (const key in open_assessments) {
-                    str += '<tr class="tr_ele"><td>' + open_assessments[key][0] + '</td></tr>'; /*onclick="checkIfOpen('+key+')"*/
+                if ('<?= $_SESSION['email']; ?>' === 'test_student@canvas.instructure.com') {
+                    str = '<h1>Open Assessments</h1>';
+                    str += '<table class="assessments">';
+                    str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
+                    str += '<tbody>';
+                    for (const key in open_assessments) {
+                        str += '<tr class="tr_ele" onclick="checkIfOpen('+key+')"><td>' + open_assessments[key][0] + '</td></tr>'; 
+                    }
+                    str += '</tbody>';
+                    str += '</table>';
+                    document.getElementById("open_assessments").innerHTML = str;
                 }
-                str += '</tbody>';
-                str += '</table>';
-                document.getElementById("open_assessments").innerHTML = str;
+                else {
+                    str = '<h1>Open Assessments</h1>';
+                    str += '<table class="assessments">';
+                    str += '<thead><tr><th scope="col">Assessment Name</th></tr></thead>';
+                    str += '<tbody>';
+                    for (const key in open_assessments) {
+                        str += '<tr class="tr_ele"><td>' + open_assessments[key][0] + '</td></tr>';
+                    }
+                    str += '</tbody>';
+                    str += '</table>';
+                    document.getElementById("open_assessments").innerHTML = str;
+                }
 
                 // future assessments
                 str = '<h1>Future Assessments</h1>';
@@ -331,7 +345,6 @@ echo "\n";
                     }
                 }
             }
-
         </script>
     </body>
 </html>

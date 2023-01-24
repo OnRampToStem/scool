@@ -1,15 +1,18 @@
 <?php
+// for display purposes
+//header('Content-type: text/plain');
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
 // if user is not logged in then redirect them back to Fresno State Canvas
-if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
 // if user account type is not 'Learner' then force logout
-if($_SESSION["type"] !== "Learner"){
+if ($_SESSION["type"] !== "Learner") {
     header("location: ../register_login/logout.php");
     exit;
 }
@@ -19,9 +22,11 @@ $query;
 $res;
 $pkey;
 $assessment = [];
+$assessment_json;
+$dynamic_ids = [];
 
 // processing client form data when it is submitted
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // accept $_POST input
     $pkey = $_POST['pkey'];
@@ -29,14 +34,33 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     // connect to the db
     require_once "../register_login/config.php";
 
-    // query - grab the correct assessment
+    // grab the assessment from 'assessments' table
     $query = "SELECT * FROM assessments WHERE pkey = {$pkey}";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
-
+    $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
     $row = pg_fetch_row($res);
     array_push($assessment, $row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12]);
-    //print_r($assessment);
 
+    // get assessment json content
+    $assessment_json = json_decode($row[9], TRUE); //print_r($assessment_json);
+
+    // create list of randomly chosen dynamic questions
+    for ($i = 0; $i < count($assessment_json); $i++) {
+        // set key in array
+        //$dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]] = [];
+
+        // get rows at random with selected lo
+        $query = "SELECT id FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
+                  order by random() limit '{$assessment_json[$i]["NumberQuestions"]}';";
+        $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+
+        // push data into array
+        while ($row = pg_fetch_row($res)) {
+            array_push($dynamic_ids, $row[0]);
+            //$dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]]
+        }
+    }
+    //print_r($dynamic_ids);
+    
 }
 
 ?>
@@ -51,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <link rel="stylesheet" href="../assets/css/global/global.css" />
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
     </head>
-    <body>
+    <body onload="buildiFrame();">
         <div id="app">
             <header>
                 <nav class="container">
@@ -78,27 +102,38 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             <br>
 
             <main>
-                <div id="timerDiv">
-                    <h4 class="timer">Timer:</h4>
-                    <h4 class="timer" id="minutes">00</h4> : <h4 class="timer" id="seconds">00</h4>
+                <div id="assessment-info">
+                    <div class="assessment-info-row">
+                        <h2><?= $assessment[2]; ?></h2>
+                    </div>
+                    <div class="assessment-info-row">
+                        <h4>Minutes allowed: <?= $assessment[4]; ?></h4>
+                    </div>
+                    <div class="assessment-info-row">
+                        <h4>Closes (auto submit) on: <?= $assessment[8]; ?> <?= $assessment[7]; ?> </h4>
+                    </div>
+                    <div class="assessment-info-row">
+                        <h4 class="timer">Timer:</h4>
+                        <h4 class="timer" id="minutes">00</h4> : <h4 class="timer" id="seconds">00</h4>
+                    </div>
                 </div>
 
                 <div id="contentDiv">
-                    <p>Hello</p>
+                    <!--
                     <section>
                         <iframe
-                            style="
-                            overflow: visible;
-                            width: 100%;
-                            height: 900px;
-                            border: 1px solid black;
-                            "
-                            id="frame"
-                            src="https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
-                            title="LibreTexts"
-                            scrolling="yes"
+                            id = "frame"
+                            src = "https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
+                            title = "LibreTexts"
+                            scrolling = "yes"
+                            style = "overflow: visible;
+                                     width: 100%;
+                                     height: 900px;
+                                     border: 1px solid black;"
+                                     
                         />
                     </section>
+                    -->
                 </div>
             </main>
 
@@ -139,12 +174,41 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </div>
             </footer>
         </div>
-        
+
         <script type="text/javascript">
             /* GLOBALS */
+            let idx = 0;
             const assessment = <?= json_encode($assessment); ?>;
             console.log(assessment);
+            const dynamic_ids = <?= json_encode($dynamic_ids); ?>;
+            console.log(dynamic_ids);
             let timerID; // holds the ID of the timer, used to stop the timer
+
+
+            const buildiFrame = () => {
+                /*
+                <iframe
+                            id = "frame"
+                            src = "https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
+                            title = "LibreTexts"
+                            scrolling = "yes"
+                            style = "overflow: visible;
+                                     width: 100%;
+                                     height: 900px;
+                                     border: 1px solid black;"
+                                     
+                />
+                */
+
+                let iframe = document.createElement('iframe');
+                iframe.id = "frame";
+                iframe.title = "LibreTexts";
+                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + dynamic_ids[idx];
+                iframe.width = "100%";
+                iframe.height = "900px";
+                iframe.scrolling = "yes";
+                document.getElementById('contentDiv').appendChild(iframe)
+            }
 
 
             /* TIMER PORTION */
@@ -170,9 +234,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 clearInterval(timerID);
             }
 
+            // initialize assessment
+            //document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + dynamic_ids[idx]);
+
+
             // start timer
             timerID = startTimer();
-
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
@@ -192,7 +259,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     }
                 }
             }
-
         </script>
     </body>
 </html>
