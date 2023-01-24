@@ -76,16 +76,22 @@ input[type="button"]:hover, input[type="submit"]:hover {
     background-color: red;
 }
 
+
+
 main {
     margin: 0 auto;
     width: 90%;
     border: 1px solid black;
     min-height: 300px;
 }
-#timerDiv {
+#assessment_info {
     padding: 5px;
     border: 1px solid black;
 }
+#timer-info-row {
+    padding: 3px;
+}
 .timer {
     display: inline;
+    padding: 3px;
 }
