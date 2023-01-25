@@ -117,79 +117,92 @@ if ($obj->roles[0] === "Instructor") {
 	else {
         echo "'Instructor' is already in the 'users' table. <br>";
 
-		// However, Instructor may be coming in with 3 different possibilities:
-        // 1. Instructor is coming in with the same course_name and course_id that is already stored
-        // 2. Instructor is coming in with the same course_name, but different course_id from what is stored
-        // 3. Instructor is coming in with different course_name and different course_id from what is stored
+		// However, Instructor may be coming in with 4 different possibilities:
+        // 1. Instructor already has their email in the db associated with a different user type
+        // 2. Instructor is coming in with the same course_name and course_id that is already stored
+        // 3. Instructor is coming in with the same course_name, but different course_id from what is stored
+        // 4. Instructor is coming in with different course_name and different course_id from what is stored
 
-		// compare current course name & course id to the one that is stored in the db
-		$query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
-		$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-		$course_name = json_decode(pg_fetch_result($res, 0, 0));
-		$course_id = json_decode(pg_fetch_result($res, 0, 1));
+        // handle case 1 here
+        $query = "SELECT type FROM users WHERE email='{$obj->email}'";
+        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $stored_type = pg_fetch_result($res, 0, 0);
 
-		if (!in_array($obj->context->title, $course_name) || !in_array($obj->context->id, $course_id)) {
-            // cases 2 and 3 are handled here
-            echo "'Instructor' either has a different course name or course id from what was already stored. <br>";
+        if ($stored_type !== $obj->roles[0]) {
+            echo "An account already exists with the current email, that is not of type 'Instructor'. <br>";
+            exit;
+        }
+        else {
+            // handle cases 2 - 4 here
+            // compare current course name & course id to the one that is stored in the db
+            $query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
+            $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            $course_name = json_decode(pg_fetch_result($res, 0, 0));
+            $course_id = json_decode(pg_fetch_result($res, 0, 1));
 
-			// insert new values into existing arrays
-			array_push($course_name, $obj->context->title);
-			array_push($course_id, $obj->context->id);
+            if (!in_array($obj->context->title, $course_name) || !in_array($obj->context->id, $course_id)) {
+                // cases 3 and 4 are handled here
+                echo "'Instructor' either has a different course name or course id from what was already stored. <br>";
 
-			// update data into the db
-			$query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
-					  . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-			pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-			echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Instructor'. <br>";
+                // insert new values into existing arrays
+                array_push($course_name, $obj->context->title);
+                array_push($course_id, $obj->context->id);
 
-            // create the new directories that will keep track of the student progress in 'user_data'
-            echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions <br>";
-            $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions";
-            mkdir($directory_path, 0777, true) or die("Failed to create directory.");
-        
-            echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax <br>";
-            $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax";
-            mkdir($directory_path, 0777, true) or die("Failed to create directory.");
+                // update data into the db
+                $query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
+                        . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
+                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Instructor'. <br>";
 
-            echo "Starting Session. <br>";
-            session_start();
+                // create the new directories that will keep track of the student progress in 'user_data'
+                echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions <br>";
+                $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions";
+                mkdir($directory_path, 0777, true) or die("Failed to create directory.");
+            
+                echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax <br>";
+                $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax";
+                mkdir($directory_path, 0777, true) or die("Failed to create directory.");
 
-            echo "Setting required session variables. <br>";
-            $_SESSION["loggedIn"] = true;
-            $_SESSION["name"] = $obj->name;
-            $_SESSION["email"] = $obj->email;
-            $_SESSION["type"] = $obj->roles[0];
-            $_SESSION["pic"] = $obj->picture;
-            $_SESSION["course_name"] = json_encode($course_name);
-            $_SESSION["course_id"] = json_encode($course_id);
+                echo "Starting Session. <br>";
+                session_start();
 
-            echo "Redirecting to Instructor Home Page. <br>";
-			header("location: ../scale/instructor/instr_index1.php");
-		}
-		else {
-            // case 1 is handled here
-            echo "'Instructor' has the same course name and course id from what was already stored. <br>";
+                echo "Setting required session variables. <br>";
+                $_SESSION["loggedIn"] = true;
+                $_SESSION["name"] = $obj->name;
+                $_SESSION["email"] = $obj->email;
+                $_SESSION["type"] = $obj->roles[0];
+                $_SESSION["pic"] = $obj->picture;
+                $_SESSION["course_name"] = json_encode($course_name);
+                $_SESSION["course_id"] = json_encode($course_id);
 
-			// query to update Instructor's 'last_signed_in' field
-			$query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-			pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-			echo "Updated 'last_signed_in' of 'Instructor'. <br>";
+                echo "Redirecting to Instructor Home Page. <br>";
+                header("location: ../scale/instructor/instr_index1.php");
+            }
+            else {
+                // case 2 is handled here
+                echo "'Instructor' has the same course name and course id from what was already stored. <br>";
 
-            echo "Starting Session. <br>";
-            session_start();
+                // query to update Instructor's 'last_signed_in' field
+                $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
+                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                echo "Updated 'last_signed_in' of 'Instructor'. <br>";
 
-            echo "Setting required session variables. <br>";
-            $_SESSION["loggedIn"] = true;
-            $_SESSION["name"] = $obj->name;
-            $_SESSION["email"] = $obj->email;
-            $_SESSION["type"] = $obj->roles[0];
-            $_SESSION["pic"] = $obj->picture;
-            $_SESSION["course_name"] = json_encode($course_name);
-            $_SESSION["course_id"] = json_encode($course_id);
+                echo "Starting Session. <br>";
+                session_start();
 
-            echo "Redirecting to Instructor Home Page. <br>";
-			header("location: ../scale/instructor/instr_index1.php");
-		}
+                echo "Setting required session variables. <br>";
+                $_SESSION["loggedIn"] = true;
+                $_SESSION["name"] = $obj->name;
+                $_SESSION["email"] = $obj->email;
+                $_SESSION["type"] = $obj->roles[0];
+                $_SESSION["pic"] = $obj->picture;
+                $_SESSION["course_name"] = json_encode($course_name);
+                $_SESSION["course_id"] = json_encode($course_id);
+
+                echo "Redirecting to Instructor Home Page. <br>";
+                header("location: ../scale/instructor/instr_index1.php");
+            }
+        }
 	}
 }
 /** 
@@ -200,7 +213,7 @@ if ($obj->roles[0] === "Instructor") {
 elseif ($obj->roles[0] === "Learner") {
     echo "User is of type 'Learner'. <br>";
 
-	// check to see if Learner already exists in the 'users' table
+	// check to see if Learner's email already exists in the 'users' table
 	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
 	$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
 
@@ -713,42 +726,57 @@ elseif ($obj->roles[0] === "Learner") {
 	else {
         echo "'Learner' is already in the 'users' table. <br>";
 
-		// prepare and execute query to update Learner's 'last_signed_in' field
-		$query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-		pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-		echo "Updated 'last_signed_in' of 'Learner'. <br>";
+        // check that the Learner has the same course_name, course_id from what is stored
+        $query = "SELECT course_name, course_id FROM users WHERE email = '{$obj->email}'";
+        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $temp_course_name = pg_fetch_result($res, 0, 0);
+        $temp_course_id = pg_fetch_result($res, 0, 1);
 
-        echo "Starting Session. <br>";
-        session_start();
+        if ($temp_course_name === $obj->context->title && $temp_course_id === $obj->context->id) {
+            // Learner is just trying to login
+            // prepare and execute query to update Learner's 'last_signed_in' field
+            $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
+            pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            echo "Updated 'last_signed_in' of 'Learner'. <br>";
 
-        echo "Setting required session variables. <br>";
-        $_SESSION["loggedIn"] = true;
-        $_SESSION["name"] = $obj->name;
-        $_SESSION["email"] = $obj->email;
-        $_SESSION["type"] = $obj->roles[0];
-        $_SESSION["pic"] = $obj->picture;
-        $_SESSION["course_name"] = $obj->context->title;
-        $_SESSION["course_id"] = $obj->context->id;
+            echo "Starting Session. <br>";
+            session_start();
 
-        echo "Redirecting to Student Home Page. <br>";
-        header("location: ../scale/student/student_index.php");
+            echo "Setting required session variables. <br>";
+            $_SESSION["loggedIn"] = true;
+            $_SESSION["name"] = $obj->name;
+            $_SESSION["email"] = $obj->email;
+            $_SESSION["type"] = $obj->roles[0];
+            $_SESSION["pic"] = $obj->picture;
+            $_SESSION["course_name"] = $obj->context->title;
+            $_SESSION["course_id"] = $obj->context->id;
+
+            echo "Redirecting to Student Home Page. <br>";
+            header("location: ../scale/student/student_index.php");
+        }
+        else {
+            // Learner is using the same email in another Canvas course to try to work on OR2STEM
+            // (not currently allowed)
+            echo "You can only join OR2STEM in a single course if you are a 'Learner'. <br>";
+            exit;
+        }
 	}
 }
 /** 
  * 
- * OBSERVER HANDLER 
+ * MENTOR HANDLER 
  * 
  */
-elseif ($obj->roles[0] === "Observer") {
-    echo "User is of type 'Observer'. <br>";
-    // An Observer can be in many different classes (based on class name, class id)
+elseif ($obj->roles[0] === "Mentor") {
+    echo "User is of type 'Mentor'. <br>";
+    // A Mentor can be in many different classes (based on class name, class id)
     
-    // check to see if Observer's email already exists in the 'users' table
+    // check to see if Mentor's email already exists in the 'users' table
 	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
 	$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
 
 	if (pg_num_rows($res) === 0) {
-        echo "'Observer' is not in the 'users' table. <br>";
+        echo "'Mentor' is not in the 'users' table. <br>";
 
         // query to get data of the instructor that corresponds to the course_name & course_id
 		$query = "SELECT * FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
@@ -757,23 +785,23 @@ elseif ($obj->roles[0] === "Observer") {
 
         // check to make sure Instructor has created their account
         if (pg_num_rows($res) === 0) {
-            echo "Can not create 'Observer' account if corresponding Instructor has not created their account. <br>";
+            echo "Can not create 'Mentor' account if corresponding Instructor has not created their account. <br>";
             exit;
         }
         else {
-            // insert the Observer
+            // insert the Mentor
 
-            // putting course name and course id into their own arrays, bc an observer can be an observer for multiple
-            // courses, so we can add to this array if the Observer enters OR2STEM from a different course
+            // putting course name and course id into their own arrays, bc a Mentor can be a Mentor for multiple
+            // courses, so we can add to this array if the Mentor enters OR2STEM from a different course
             $course_name = [$obj->context->title];
             $course_id = [$obj->context->id];
 
-            // prepare and execute query for inserting Observer in the 'users' table
+            // prepare and execute query for inserting Mentor in the 'users' table
             $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
                       VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
                       . "', '" . json_encode($course_id) . "', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
             pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-            echo "Inserted 'Observer' into 'users' table successfully! <br>";
+            echo "Inserted 'Mentor' into 'users' table successfully! <br>";
 
             echo "Starting Session. <br>";
             session_start();
@@ -792,72 +820,85 @@ elseif ($obj->roles[0] === "Observer") {
         }
     }
     else {
-        echo "'Observer' already exists in the 'users' table. <br>";
+        echo "'Mentor' already exists in the 'users' table. <br>";
 
-		// However, Observer may be coming in with 3 different possibilities:
-        // 1. Observer is coming in with the same course_name and course_id that is already stored
-        // 2. Observer is coming in with the same course_name, but different course_id from what is stored
-        // 3. Observer is coming in with different course_name and different course_id from what is stored
+		// However, Mentor may be coming in with 4 different possibilities:
+        // 1. Mentor already has their email in the db associated with a different user type
+        // 2. Mentor is coming in with the same course_name and course_id that is already stored
+        // 3. Mentor is coming in with the same course_name, but different course_id from what is stored
+        // 4. Mentor is coming in with different course_name and different course_id from what is stored
 
-		// compare current course_name & course_id to the one that is stored in the db
-		$query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
-		$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-		$course_name = json_decode(pg_fetch_result($res, 0, 0));
-		$course_id = json_decode(pg_fetch_result($res, 0, 1));
+        // handle case 1 here
+        $query = "SELECT type FROM users WHERE email='{$obj->email}'";
+        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $stored_type = pg_fetch_result($res, 0, 0);
 
-		if (!in_array($obj->context->title, $course_name) || !in_array($obj->context->id, $course_id)) {
-            // cases 2 and 3 are handled here
-            echo "'Observer' either has a different course name or course id from what was already stored. <br>";
+        if ($stored_type !== $obj->roles[0]) {
+            echo "An account already exists with the current email, that is not of type 'Mentor'. <br>";
+            exit;
+        }
+        else {
+            // handle cases 2 - 4 here
+            // compare current course_name & course_id to the one that is stored in the db
+            $query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
+            $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            $course_name = json_decode(pg_fetch_result($res, 0, 0));
+            $course_id = json_decode(pg_fetch_result($res, 0, 1));
 
-			// insert new values into existing arrays
-			array_push($course_name, $obj->context->title);
-			array_push($course_id, $obj->context->id);
+            if (!in_array($obj->context->title, $course_name) || !in_array($obj->context->id, $course_id)) {
+                // cases 3 and 4 are handled here
+                echo "'Mentor' either has a different course name or course id from what was already stored. <br>";
 
-			// update data for the Observer
-			$query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
-					  . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-			pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-			echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Observer'. <br>";
+                // insert new values into existing arrays
+                array_push($course_name, $obj->context->title);
+                array_push($course_id, $obj->context->id);
 
-            echo "Starting Session. <br>";
-            session_start();
+                // update data for the Mentor
+                $query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
+                        . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
+                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Mentor'. <br>";
 
-            echo "Setting required session variables. <br>";
-            $_SESSION["loggedIn"] = true;
-            $_SESSION["name"] = $obj->name;
-            $_SESSION["email"] = $obj->email;
-            $_SESSION["type"] = $obj->roles[0];
-            $_SESSION["pic"] = $obj->picture;
-            $_SESSION["course_name"] = json_encode($course_name);
-            $_SESSION["course_id"] = json_encode($course_id);
+                echo "Starting Session. <br>";
+                session_start();
 
-            echo "Redirecting to Instructor Home Page. <br>";
-			header("location: ../scale/instructor/instr_index1.php");
-		}
-		else {
-            // case 1 is handled here
-            echo "'Observer' has the same course name and course id from what was already stored. <br>";
+                echo "Setting required session variables. <br>";
+                $_SESSION["loggedIn"] = true;
+                $_SESSION["name"] = $obj->name;
+                $_SESSION["email"] = $obj->email;
+                $_SESSION["type"] = $obj->roles[0];
+                $_SESSION["pic"] = $obj->picture;
+                $_SESSION["course_name"] = json_encode($course_name);
+                $_SESSION["course_id"] = json_encode($course_id);
 
-			// update Observer's 'last_signed_in' field
-			$query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-			pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
-			echo "Updated 'last_signed_in' of 'Observer'. <br>";
+                echo "Redirecting to Instructor Home Page. <br>";
+                header("location: ../scale/instructor/instr_index1.php");
+            }
+            else {
+                // case 2 is handled here
+                echo "'Mentor' has the same course name and course id from what was already stored. <br>";
 
-            echo "Starting Session. <br>";
-            session_start();
+                // update Mentor's 'last_signed_in' field
+                $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
+                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                echo "Updated 'last_signed_in' of 'Mentor'. <br>";
 
-            echo "Setting required session variables. <br>";
-            $_SESSION["loggedIn"] = true;
-            $_SESSION["name"] = $obj->name;
-            $_SESSION["email"] = $obj->email;
-            $_SESSION["type"] = $obj->roles[0];
-            $_SESSION["pic"] = $obj->picture;
-            $_SESSION["course_name"] = json_encode($course_name);
-            $_SESSION["course_id"] = json_encode($course_id);
+                echo "Starting Session. <br>";
+                session_start();
 
-            echo "Redirecting to Instructor Home Page. <br>";
-			header("location: ../scale/instructor/instr_index1.php");
-		}
+                echo "Setting required session variables. <br>";
+                $_SESSION["loggedIn"] = true;
+                $_SESSION["name"] = $obj->name;
+                $_SESSION["email"] = $obj->email;
+                $_SESSION["type"] = $obj->roles[0];
+                $_SESSION["pic"] = $obj->picture;
+                $_SESSION["course_name"] = json_encode($course_name);
+                $_SESSION["course_id"] = json_encode($course_id);
+
+                echo "Redirecting to Instructor Home Page. <br>";
+                header("location: ../scale/instructor/instr_index1.php");
+            }
+        }
     }
 }
 /** 
