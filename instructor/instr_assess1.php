@@ -8,8 +8,8 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
-// if user account type is not 'Instructor' or 'Observer' then force logout
-if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Observer") {
+// if user account type is not 'Instructor' or 'Mentor' then force logout
+if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../register_login/logout.php");
     exit;
 }
@@ -32,7 +32,7 @@ if ($_SESSION["type"] === "Instructor") {
         $students[$row[1]] = $row[2];
     }
 }
-elseif ($_SESSION["type"] === "Observer") {
+elseif ($_SESSION["type"] === "Mentor") {
     // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
     $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%'
               AND course_id LIKE '%{$_SESSION["selected_course_id"]}%'";

@@ -8,8 +8,8 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
-// if user account type is 'Observer' redirect to main page
-if ($_SESSION["type"] === "Observer") {
+// if user account type is 'Mentor' redirect to main page
+if ($_SESSION["type"] === "Mentor") {
     header("location: instr_index1.php");
     exit;
 }
