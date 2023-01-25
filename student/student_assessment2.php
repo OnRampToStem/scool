@@ -118,23 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                 </div>
 
-                <div id="contentDiv">
-                    <!--
-                    <section>
-                        <iframe
-                            id = "frame"
-                            src = "https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
-                            title = "LibreTexts"
-                            scrolling = "yes"
-                            style = "overflow: visible;
-                                     width: 100%;
-                                     height: 900px;
-                                     border: 1px solid black;"
-                                     
-                        />
-                    </section>
-                    -->
+                <div id="controls">
+                    <button onclick="next()">Next Question</button>
                 </div>
+
+                <div id="contentDiv"></div>
             </main>
 
             <br>
@@ -199,7 +187,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                      
                 />
                 */
-
                 let iframe = document.createElement('iframe');
                 iframe.id = "frame";
                 iframe.title = "LibreTexts";
@@ -207,8 +194,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 iframe.width = "100%";
                 iframe.height = "900px";
                 iframe.scrolling = "yes";
-                document.getElementById('contentDiv').appendChild(iframe)
+                document.getElementById('contentDiv').appendChild(iframe);
+
+                // start timer
+                timerID = startTimer();
             }
+
+
+            let next = () => {
+                idx++;
+                document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + dynamic_ids[idx]);
+            }
+
+
 
 
             /* TIMER PORTION */
@@ -236,10 +234,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // initialize assessment
             //document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + dynamic_ids[idx]);
-
-
-            // start timer
-            timerID = startTimer();
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
