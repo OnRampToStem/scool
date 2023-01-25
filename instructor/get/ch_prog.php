@@ -3,14 +3,14 @@
 session_start();
 
 // if user is not logged in then redirect them back to Fresno State Canvas
-if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
-if($_SESSION["type"] !== "Instructor"){
-    header("location: ../../register_login/logout.php");
+// if user account type is not 'Instructor' or 'Mentor' then force logout
+if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
+    header("location: ../register_login/logout.php");
     exit;
 }
 
