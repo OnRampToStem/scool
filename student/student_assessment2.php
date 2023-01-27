@@ -1,7 +1,4 @@
 <?php
-// for display purposes
-//header('Content-type: text/plain');
-
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
@@ -18,12 +15,11 @@ if ($_SESSION["type"] !== "Learner") {
 }
 
 /* GLOBALS */
-$query;
-$res;
+$query; $res;
 $pkey;
-$assessment = [];
-$assessment_json;
-$dynamic_ids = [];
+$assessment = []; // will hold the data from the selected assessment
+$assessment_json; // will hold the json content data from the selected assessment
+$dynamic_ids = []; // list of all dynamic question ids extracted from db
 
 // processing client form data when it is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -45,22 +41,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // create list of randomly chosen dynamic questions
     for ($i = 0; $i < count($assessment_json); $i++) {
-        // set key in array
-        //$dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]] = [];
-
         // get rows at random with selected lo
-        $query = "SELECT id FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
+        $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
                   order by random() limit '{$assessment_json[$i]["NumberQuestions"]}';";
         $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
 
         // push data into array
         while ($row = pg_fetch_row($res)) {
+            // add 0s to the front of the problem number if the length of the problem number is not 8
+            if (strlen($row[0]) !== 8) {
+                switch (strlen($row[0])) {
+                    case 1:
+                        $row[0] = "0000000" . $row[0];
+                        break;
+                    case 2:
+                        $row[0] = "000000" . $row[0];
+                        break;
+                    case 3:
+                        $row[0] = "00000" . $row[0];
+                        break;
+                    case 4:
+                        $row[0] = "0000" . $row[0];
+                        break;
+                    case 5:
+                        $row[0] = "000" . $row[0];
+                        break;
+                    case 6:
+                        $row[0] = "00" . $row[0];
+                        break;
+                    case 7:
+                        $row[0] = "0" . $row[0];
+                        break;
+                }
+            }
             array_push($dynamic_ids, $row[0]);
-            //$dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]]
         }
     }
+
+    // shuffle dynamic_ids once more to mix the los
+    shuffle($dynamic_ids);
+
     //print_r($dynamic_ids);
-    
 }
 
 ?>
@@ -74,8 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
+        <!-- for dynamic questions -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
-    <body onload="buildiFrame();">
+    <body onload="initialize();">
         <div id="app">
             <header>
                 <nav class="container">
@@ -118,9 +141,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                 </div>
 
+                <br>
+
                 <div id="controls">
-                    <button onclick="next()">Next Question</button>
+                    <button id="btn1" onclick="startTest()">Start Assessment</button>
+                    <button id="btn2" onclick="next()">Next Question</button>
+                    <button id="btn3" onclick="saveResults()">Submit Assessment</button>
                 </div>
+
+                <br>
 
                 <div id="contentDiv"></div>
             </main>
@@ -165,49 +194,178 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <script type="text/javascript">
             /* GLOBALS */
-            let idx = 0;
-            const assessment = <?= json_encode($assessment); ?>;
-            console.log(assessment);
-            const dynamic_ids = <?= json_encode($dynamic_ids); ?>;
-            console.log(dynamic_ids);
+            const assessment = <?= json_encode($assessment); ?>; console.log(assessment);
+            const sequence_question = <?= json_encode($dynamic_ids); ?>; console.log(sequence_question);
+            let src, response;
+            let counter = 0;
             let timerID; // holds the ID of the timer, used to stop the timer
+            let questionsObjectList = []; // sequence of questions with answers  
 
+
+            const initialize = () => {
+                buildiFrame();
+                hideElements();
+                initListQuestions();
+            }
 
             const buildiFrame = () => {
-                /*
-                <iframe
-                            id = "frame"
-                            src = "https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
-                            title = "LibreTexts"
-                            scrolling = "yes"
-                            style = "overflow: visible;
-                                     width: 100%;
-                                     height: 900px;
-                                     border: 1px solid black;"
-                                     
-                />
-                */
+                let p = document.createElement('p');
+                p.id = "questionCount";
+                document.getElementById('contentDiv').appendChild(p);
                 let iframe = document.createElement('iframe');
                 iframe.id = "frame";
                 iframe.title = "LibreTexts";
-                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + dynamic_ids[idx];
+                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + sequence_question[counter];
                 iframe.width = "100%";
                 iframe.height = "900px";
                 iframe.scrolling = "yes";
                 document.getElementById('contentDiv').appendChild(iframe);
+            }
 
+            const hideElements = () => {
+                // hide next and submit button
+                document.getElementById("btn2").style.display = "none";
+                document.getElementById("btn3").style.display = "none";
+                // hide i frame
+                document.getElementById("contentDiv").style.display = "none";
+            }
+
+            const initListQuestions = () => {
+                for (let i = 0; i < sequence_question.length; i++) {
+                    let questionObject = {
+                        id: sequence_question[i], // to be extracted from the assessment
+                        lo: "1.1.1", // to be extracted from the assessment
+                        time_submit: 0,
+                        result: -1,
+                        max_score: 1, // to be extracted from the assessment
+                        timeStamp: "",
+                    };	
+                    questionsObjectList.push(questionObject);	
+                }
+            }
+
+            const startTest = () => {
                 // start timer
-                timerID = startTimer();
+                timerID = startTimer();	
+                // hide start btn
+                document.getElementById("btn1").style.display = "none";
+                // unhide next and submit btn & iframe
+                document.getElementById("btn2").style.display = "";
+                document.getElementById("btn3").style.display = "";
+                document.getElementById("contentDiv").style.display = "";
+                // display question number
+                document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
+            }   
+
+            const next = () => {
+                if (counter + 1 < sequence_question.length) {
+                    // update counter
+                    counter++;
+                    // update iframe
+                    document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + sequence_question[counter]);
+                    // update question number
+                    document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
+                }
+                else {
+                    alert("No more questions.");
+                }
+            }
+       
+            const saveResults = () => {
+                alert("Submit the results");
+                let str_results=JSON.stringify(questionsObjectList);	   
+                console.log(str_results);
+            }
+            
+
+            /////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////
+            
+
+            function getSrc() {
+                axios
+                    .get("/imathas-api/imathas")
+                    .then((response) => {
+                        const data = JSON.stringify(response.data);
+                        if (data.type !== "success") {
+                            // this.$noty.message(data.message);
+                            return false;
+                        }
+                        src = data.src;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             }
 
+            
+            /*
+            window.onload = (event) => {
+                getSrc();
+                //start();
+            };
+            window.addEventListener("message", this.receiveMessage, false);
+            
+            
+            // Callback funtion to receive the value of the score
+            function receiveMessage(event) {
+                event = JSON.stringify(event.data);
+                event = JSON.parse(event);
 
-            let next = () => {
-                idx++;
-                document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + dynamic_ids[idx]);
+                if (JSON.parse(event).subject === "lti.ext.imathas.result") 
+                {
+                    //response = JSON.parse(event);
+                    var iMathResult = JSON.parse(parseJwt(JSON.parse(event).jwt));
+                    // console.log("iMathResult: " + iMathResult);
+                    var score = JSON.parse(iMathResult).score;		
+                    // To remove for the final version
+                    document.getElementById("response").innerHTML = score;     
+                    pushObj(score);
+                }
             }
 
+            // Add the information when the student has answered a question
+            function pushObj(score) {
+                // Object that contains the information about the answer	  
+                old_score=questionsObjectList[counter].result;
+                if (old_score==-1) // not answered yet
+                {	  
+                    questionsObjectList[counter].result=score;
+                }
+                questionsObjectList[counter].time_submit= minute * 60 + second;
+                questionsObjectList[counter].timeStamp=Date.now();
+                //ResetTime();
+            }
 
-
+            // Parse the JWT
+            function parseJwt(token) {
+                console.log("Token", token);
+                var base64Url = token.split(".")[1];
+                var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+                var jsonPayload = decodeURIComponent(
+                    window
+                    .atob(base64)
+                    .split("")
+                    .map(function (c) {
+                        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                    })
+                    .join("")
+                );
+                return JSON.stringify(jsonPayload);
+            }
+            */
+            
+            
+            /*
+            function getId() {
+                var i = document.getElementById("qID").value;
+                console.log(i);
+                var result = "0000000" + i.toString();
+                document.getElementById("frame").src =
+                    "https://imathas.libretexts.org/imathas/embedq2.php?id=" + result;
+            }
+            */
+           
 
             /* TIMER PORTION */
             let startTimer = () => {
@@ -232,8 +390,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 clearInterval(timerID);
             }
 
-            // initialize assessment
-            //document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + dynamic_ids[idx]);
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
