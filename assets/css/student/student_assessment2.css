@@ -64,6 +64,9 @@
 
 /* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
 button, #userButton {
+    color: white;
+    background-color: navy;
+    cursor: pointer;
     transition-duration: 0.5s;
 }
 button:hover, #userButton:hover{
