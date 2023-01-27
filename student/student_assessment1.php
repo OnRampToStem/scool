@@ -14,31 +14,25 @@ if($_SESSION["type"] !== "Learner"){
     exit;
 }
 
-/* GLOBALS */
-$query;
-$res;
-$instr_email;
-$curr_date;
-$past_assessments = array();
-$open_assessments = array();
-$future_assessments = array();
+// setting to CA timezone
+date_default_timezone_set('America/Los_Angeles');
+$curr_date = date_create();
+$curr_date = date_format($curr_date, "Y-m-d"); //echo $curr_date, "\n";
 
 // connect to the db
 require_once "../register_login/config.php";
 
-// first query - grab instructor's email
+
+// 1
+// grab instructor's email
 $query = "SELECT instructor FROM users WHERE email = '{$_SESSION["email"]}'";
 $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
-
 $instr_email = pg_fetch_result($res, 0);
 
-// setting to CA timezone
-date_default_timezone_set('America/Los_Angeles');
-$curr_date = date_create();
-$curr_date = date_format($curr_date, "Y-m-d");
-//echo $curr_date, "\n";
 
-// second query - grab all past assessments that belong to the Learner's course_name and course_id
+// 2
+// grab all past assessments that belong to the Learner's instructor, course_name, and course_id
+$past_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND close_date < '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
 $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
@@ -50,19 +44,41 @@ while($row = pg_fetch_row($res)){
     }
 }
 
-// third query - grab all current assessments that belong to the Learner's course_name and course_id
-$query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date <= '{$curr_date}' AND close_date >= '{$curr_date}'
-          AND course_name = '{$_SESSION['course_name']}' AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
 
-while($row = pg_fetch_row($res)){
-    if(!isset($open_assessments[$row[0]])) {
-        $open_assessments[$row[0]] = [];
-        array_push($open_assessments[$row[0]], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
+// 3
+// before getting and displaying all current assessments, get the list of all assessments completed by the student
+$complete_assessments = array();
+$query = "SELECT assessment_name FROM assessments_results WHERE instructor_email = '{$instr_email}' AND student_email = '{$_SESSION['email']}'
+          AND course_name = '{$_SESSION['course_name']}' AND course_id = '{$_SESSION['course_id']}'";
+$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+if (pg_num_rows($res) !== 0) {
+    // loop through possible rows
+    while ($row = pg_fetch_row($res)) {
+        array_push($complete_assessments, $row[0]);
     }
 }
 
-// fourth query - grab all future assessments that belong to user's course_name, course_id, section_id
+// 4
+// grab all current assessments that belong to the Learner's instructor, course_name, and course_id
+$open_assessments = array();
+$query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date <= '{$curr_date}' AND close_date >= '{$curr_date}'
+          AND course_name = '{$_SESSION['course_name']}' AND course_id = '{$_SESSION['course_id']}'";
+$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+// filter out the complete current assessments
+while($row = pg_fetch_row($res)){
+    // filter by assessment_name
+    if (!in_array($row[2], $complete_assessments)) {
+        if(!isset($open_assessments[$row[0]])) {
+            $open_assessments[$row[0]] = [];
+            array_push($open_assessments[$row[0]], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
+        }
+    }
+}
+
+
+// 5
+// grab all future assessments that belong to the Learner's instructor, course_name, and course_id
+$future_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date > '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
 $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
@@ -76,6 +92,8 @@ while($row = pg_fetch_row($res)){
 
 /*
 print_r($past_assessments);
+echo "\n";
+print_r($complete_assessments);
 echo "\n";
 print_r($open_assessments);
 echo "\n";
