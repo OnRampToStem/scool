@@ -206,6 +206,8 @@ pg_close($con);
                     <p id="error_p" style="color:red"></p>
                     <button class="action_btn" onclick="editAssessment()">Edit Assessment</button>
                     <button class="action_btn" onclick="deleteAssessment()">Delete Assessment</button>
+                    <button class="action_btn" onclick="viewResults()">View Student's Results</button>
+                    <br>
                     <button class="action_btn" onclick="cancel()">Return</button>
                 </div>
 
@@ -667,6 +669,26 @@ pg_close($con);
                     document.getElementById("error_p").innerHTML = "You do not own this assessment.";
                 }
             }
+
+
+
+            /* GET AND DISPLAY STUDENT ASSESSMENT RESULTS */
+            let req4;
+            let viewResults = () => {
+                // XMLHttpRequest
+                req4 = new XMLHttpRequest();
+                req4.open('POST', 'pgsql/get_assessment_results.php', true);
+                req4.onreadystatechange = viewResultsResponse;
+                req4.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req4.send(`assessment_name=${assessment[2]}`);
+            }
+            let viewResultsResponse = () => {
+                if (req4.readyState == 4 && req4.status == 200) {
+                    console.log(req4.responseText);
+                }
+            }
+
+
 
 
             // cancelling action
