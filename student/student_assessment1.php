@@ -26,7 +26,7 @@ require_once "../register_login/config.php";
 // 1
 // grab instructor's email
 $query = "SELECT instructor FROM users WHERE email = '{$_SESSION["email"]}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
 $instr_email = pg_fetch_result($res, 0);
 
 
@@ -35,7 +35,7 @@ $instr_email = pg_fetch_result($res, 0);
 $past_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND close_date < '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
 
 while($row = pg_fetch_row($res)){
     if(!isset($past_assessments[$row[0]])) {
@@ -57,6 +57,7 @@ if (pg_num_rows($res) !== 0) {
         array_push($complete_assessments, $row[0]);
     }
 }
+
 
 // 4
 // grab all current assessments that belong to the Learner's instructor, course_name, and course_id
@@ -81,7 +82,7 @@ while($row = pg_fetch_row($res)){
 $future_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date > '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
 
 while($row = pg_fetch_row($res)){
     if(!isset($future_assessments[$row[0]])) {
