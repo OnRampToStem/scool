@@ -13,7 +13,7 @@ $query = "CREATE TABLE IF NOT EXISTS assessments_results (
     course_name TEXT NOT NULL,
     course_id TEXT NOT NULL,
     date_time_submitted TIMESTAMP NOT NULL,
-    score INT NOT NULL,
+    score DECIMAL NOT NULL,
     content JSON NOT NULL
 )";
 pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
