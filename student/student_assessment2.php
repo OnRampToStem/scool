@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // create list of randomly chosen dynamic questions
     for ($i = 0; $i < count($assessment_json); $i++) {
+
         // get rows at random with selected lo
         $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
                   order by random() limit '{$assessment_json[$i]["NumberQuestions"]}';";
@@ -74,13 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         break;
                 }
             }
-            array_push($dynamic_ids, $row[0]);
+
+            if (!isset($dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]])) {
+                $dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]] = [$assessment_json[$i]["NumberPoints"], $row[0]];
+            }
+            else {
+                array_push($dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]], $row[0]);
+            }
         }
+
     }
-
-    // shuffle dynamic_ids once more to mix the los
-    shuffle($dynamic_ids);
-
     //print_r($dynamic_ids);
 }
 
@@ -98,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- for dynamic questions -->
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
-    <body onload="initialize();">
+    <body>
         <div id="app">
             <header>
                 <nav class="container">
@@ -152,6 +156,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <br>
 
                 <div id="contentDiv"></div>
+
+                <div id="resultsDiv"></div>
             </main>
 
             <br>
@@ -194,18 +200,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <script type="text/javascript">
             /* GLOBALS */
-            const assessment = <?= json_encode($assessment); ?>; console.log(assessment);
-            const sequence_question = <?= json_encode($dynamic_ids); ?>; console.log(sequence_question);
             let src, response;
             let counter = 0;
             let timerID; // holds the ID of the timer, used to stop the timer
+            const assessment = <?= json_encode($assessment); ?>; console.log(assessment);
+            const dynamic_ids = <?= json_encode($dynamic_ids); ?>; console.log(dynamic_ids);
+            const sequence_question = [];
             let questionsObjectList = []; // sequence of questions with answers  
 
 
+            //////////////////////////////////
+            // initialization functionalities
+            //////////////////////////////////
+
             const initialize = () => {
+                initListQuestions();
                 buildiFrame();
                 hideElements();
-                initListQuestions();
+            }
+
+            const initListQuestions = () => {
+                // loop through each key value pair in dynamic_ids
+                // each key represents a learning outcome
+                // each value contains an array containing the numPoints value, and ids of each question for the lo
+                for (const [key, value] of Object.entries(dynamic_ids)) {
+                    // get the numPoints
+                    const numPoints = value[0];
+
+                    // loop through each id in value arr
+                    for (let i = 1; i < value.length; i++) {
+                        // create the obj
+                        let questionObject = {
+                            id: value[i], // to be extracted from the assessment
+                            lo: key, // to be extracted from the assessment
+                            result: -1,
+                            max_score: numPoints // to be extracted from the assessment
+                        };	
+                        // push obj into main arr
+                        questionsObjectList.push(questionObject);
+
+                        // push just the id into sequence_question (arr of only the ids)
+                        sequence_question.push(value[i]);
+                    }
+                }
             }
 
             const buildiFrame = () => {
@@ -228,30 +265,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById("btn3").style.display = "none";
                 // hide i frame
                 document.getElementById("contentDiv").style.display = "none";
+                // hide results div
+                document.getElementById("resultsDiv").style.display = "none";
+                // testing
+                console.log(sequence_question);
             }
 
-            const initListQuestions = () => {
-                for (let i = 0; i < sequence_question.length; i++) {
-                    let questionObject = {
-                        id: sequence_question[i], // to be extracted from the assessment
-                        lo: "1.1.1", // to be extracted from the assessment
-                        time_submit: 0,
-                        result: -1,
-                        max_score: 1, // to be extracted from the assessment
-                        timeStamp: "",
-                    };	
-                    questionsObjectList.push(questionObject);	
-                }
-            }
+
+            //////////////////////////
+            // button functionalities
+            //////////////////////////
 
             const startTest = () => {
                 // start timer
                 timerID = startTimer();	
                 // hide start btn
                 document.getElementById("btn1").style.display = "none";
-                // unhide next and submit btn & iframe
+                // unhide next btn & iframe
                 document.getElementById("btn2").style.display = "";
-                document.getElementById("btn3").style.display = "";
                 document.getElementById("contentDiv").style.display = "";
                 // display question number
                 document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
@@ -259,6 +290,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             const next = () => {
                 if (counter + 1 < sequence_question.length) {
+                    // hide next button and unhide submit button if user is on last question
+                    if (counter + 1 === sequence_question.length - 1) {
+                        document.getElementById("btn2").style.display = "none";
+                        document.getElementById("btn3").style.display = "";
+                    }
                     // update counter
                     counter++;
                     // update iframe
@@ -272,16 +308,60 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
        
             const saveResults = () => {
-                alert("Submit the results");
-                let str_results=JSON.stringify(questionsObjectList);	   
-                console.log(str_results);
+                // stop the timer
+                stopTimer();
+
+                // get the sum of all individual scores
+                let score_sum = 0;
+                for (let i = 0; i < questionsObjectList.length; i++) {
+                    score_sum += questionsObjectList[i].result;
+                }
+
+                // get the max score possible
+                let max_sum = 0;
+                for (let i = 0; i < questionsObjectList.length; i++) {
+                    max_sum += questionsObjectList[i].max_score;
+                }
+
+                // append data into the results div
+                let str = '<div><h1>You have completed the assessment.</h1>';
+                str += `<h3>You scored: ${score_sum} / ${max_sum}</h3>`;
+                str += '<a href="student_index.php">Click here to go Home</a></div>';
+                document.getElementById("resultsDiv").innerHTML = str;
+
+                // stringify the array of objects
+                let str_results = JSON.stringify(questionsObjectList); //console.log(str_results);
+
+                // create new date
+                let date = new Date();
+                // submit date will be in format (yyyy-mm-dd hh:mm:ss)
+                let submit_date_time = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + ("0" + date.getHours() ).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
+                //console.log(submit_date_time);
+
+                // start XMLHttpRequest
+                let req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if(req.readyState == 4 && req.status == 200){
+                        // log the response
+                        console.log(req.responseText);
+                        // hide key elements
+                        document.getElementById("assessment-info").style.display = "none";
+                        document.getElementById("controls").style.display = "none";
+                        document.getElementById("contentDiv").style.display = "none";
+                        // unhide results div
+                        document.getElementById("resultsDiv").style.display = "";
+                    }
+                }
+                req.open('POST', 'js-php/submit_assessment_results.php', true);
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.send(`assessment_name=${assessment[2]}&instructor_email=${assessment[1]}&date_time_submitted=${submit_date_time}&score=${score_sum}&content=${str_results}`);
             }
             
 
             /////////////////////////////////////////////////////
+            // axios functionality - to get api response
             /////////////////////////////////////////////////////
             
-
             function getSrc() {
                 axios
                     .get("/imathas-api/imathas")
@@ -298,14 +378,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     });
             }
 
-            
-            /*
             window.onload = (event) => {
                 getSrc();
-                //start();
             };
             window.addEventListener("message", this.receiveMessage, false);
-            
             
             // Callback funtion to receive the value of the score
             function receiveMessage(event) {
@@ -319,7 +395,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     // console.log("iMathResult: " + iMathResult);
                     var score = JSON.parse(iMathResult).score;		
                     // To remove for the final version
-                    document.getElementById("response").innerHTML = score;     
+                    //document.getElementById("response").innerHTML = score;     
                     pushObj(score);
                 }
             }
@@ -327,14 +403,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Add the information when the student has answered a question
             function pushObj(score) {
                 // Object that contains the information about the answer	  
-                old_score=questionsObjectList[counter].result;
-                if (old_score==-1) // not answered yet
-                {	  
-                    questionsObjectList[counter].result=score;
+                let old_score = questionsObjectList[counter].result;
+                // not answered yet
+                if (old_score == -1) {	  
+                    // score is mult by the stored max score to get the accurate score
+                    questionsObjectList[counter].result = score * questionsObjectList[counter].max_score;
                 }
-                questionsObjectList[counter].time_submit= minute * 60 + second;
-                questionsObjectList[counter].timeStamp=Date.now();
-                //ResetTime();
+
             }
 
             // Parse the JWT
@@ -353,19 +428,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 );
                 return JSON.stringify(jsonPayload);
             }
-            */
             
-            
-            /*
-            function getId() {
-                var i = document.getElementById("qID").value;
-                console.log(i);
-                var result = "0000000" + i.toString();
-                document.getElementById("frame").src =
-                    "https://imathas.libretexts.org/imathas/embedq2.php?id=" + result;
-            }
-            */
-           
+        
+            ///////////////////////////////
+            // background functionalities 
+            ///////////////////////////////
 
             /* TIMER PORTION */
             let startTimer = () => {
@@ -380,16 +447,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 return timer;
             }
             // clearTimer stops the timer and resets the clock back to 0
-            let clearTimer = (timerID) => {
+            let clearTimer = () => {
                 document.getElementById("seconds").innerHTML= "00";
                 document.getElementById("minutes").innerHTML= "00";
                 clearInterval(timerID);
             } 
             // stopTimer just stops the timer
-            let stopTimer = (timerID) => {
+            let stopTimer = () => {
                 clearInterval(timerID);
             }
-
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
@@ -409,6 +475,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
             }
+
+
+            ///////////
+            // DRIVER
+            ///////////
+            initialize();
+
         </script>
     </body>
 </html>
