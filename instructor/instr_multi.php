@@ -226,7 +226,7 @@ pg_close($con);
 
             <div id="students_results_div" style="display:none"></div>
 
-            <br><br>
+            <br>
 
             <footer>
                 <div class="container">
@@ -694,36 +694,46 @@ pg_close($con);
                     console.log(req4.responseText);
                     resultsObj = JSON.parse(req4.responseText);
 
-                    // creating student results table to display data
-                    let str = '<h1>Student Results</h1>';
-                    str += '<table id="student_results_table">';
-                    str += '<thead><tr>';
-                    str += '<th class="th_res_1" scope="col">#</th>';
-                    str += '<th class="th_res_2" scope="col">Student Name</th>';
-                    str += '<th class="th_res_3" scope="col">Student Email</th>';
-                    str += '<th class="th_res_4" scope="col">Score</th>';
-                    str += '<th class="th_res_5" scope="col">Content</th>';
-                    str += '<th class="th_res_6" scope="col">Date Time Submitted</th>';
-                    str += '</tr></thead>';
+                    let str;
 
-                    str += '<tbody><tr>';
+                    // if no one has completed the assessment yet
+                    if (resultsObj.length === 0) {
+                        str = '<h1>No Student has Completed the Assessment</h1>';
 
-                    // loop through the array of objects
-                    resultsObj.forEach(function(element) {
-                        str += `<td class="td_res_1">${student_res_row_num}</td>`;
-                        str += `<td class="td_res_2">${element.student_name}</td>`;
-                        str += `<td class="td_res_3">${element.student_email}</td>`;
-                        str += `<td class="td_res_4" title="${Math.round((element.score / element.max_score) * 100)}%"> ${element.score} / ${element.max_score} </td>`;
-                        str += `<td class="td_res_5"><pre><code>${JSON.stringify(JSON.parse(element.content), undefined, 2)}</code></pre></td>`;
-                        str += `<td class="td_res_6">${element.date_time_submitted}</td>`;
-                        student_res_row_num++;
-                    });
+                    }
+                    // at least 1 student has completed the assessment
+                    else {
+                        // creating student results table to display data
+                        str = '<h1>Student Results</h1>';
+                        str += '<table id="student_results_table">';
+                        str += '<thead><tr>';
+                        str += '<th class="th_res_1" scope="col">#</th>';
+                        str += '<th class="th_res_2" scope="col">Student Name</th>';
+                        str += '<th class="th_res_3" scope="col">Student Email</th>';
+                        str += '<th class="th_res_4" scope="col">Score</th>';
+                        str += '<th class="th_res_5" scope="col">Content</th>';
+                        str += '<th class="th_res_6" scope="col">Date Time Submitted</th>';
+                        str += '</tr></thead>';
 
-                    str += '</tr></tbody>'
-                    str += '</table>';
+                        str += '<tbody><tr>';
 
+                        // loop through the array of objects
+                        resultsObj.forEach(function(element) {
+                            str += `<td class="td_res_1">${student_res_row_num}</td>`;
+                            str += `<td class="td_res_2">${element.student_name}</td>`;
+                            str += `<td class="td_res_3">${element.student_email}</td>`;
+                            str += `<td class="td_res_4" title="${Math.round((element.score / element.max_score) * 100)}%"> ${element.score} / ${element.max_score} </td>`;
+                            str += `<td class="td_res_5"><pre><code>${JSON.stringify(JSON.parse(element.content), undefined, 2)}</code></pre></td>`;
+                            str += `<td class="td_res_6">${element.date_time_submitted}</td>`;
+                            student_res_row_num++;
+                        });
+
+                        str += '</tr></tbody>'
+                        str += '</table>';
+                    }
+
+                    // display data
                     document.getElementById("students_results_div").innerHTML = str;
-                    //drawAllCharts();
                     document.getElementById("students_results_div").style.display = "";
                 }
             }
