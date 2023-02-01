@@ -275,3 +275,69 @@ main {
     font-size: 16px;
     margin: 5px;
 }
+
+
+
+/* STUDENT RESULTS TABLE STYLING */
+#students_results_div {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+#student_results_table {
+    margin: 0 auto;
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.th_res_1 {
+    text-align: center;
+    font-size: 16px;
+    width: 5%;
+    height: auto;
+    border: 1px solid black;
+}
+.th_res_4, .th_res_6 {
+    text-align: center;
+    font-size: 16px;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.th_res_2, .th_res_3, .th_res_5{
+    text-align: center;
+    font-size: 16px;
+    width: 21.67%;
+    height: auto;
+    border: 1px solid black;
+}
+.td_res_1 {
+    text-align: center;
+    font-size: 15px;
+    width: 5%;
+    height: auto;
+    border: 1px solid black;
+}
+.td_res_4, .td_res_6 {
+    text-align: center;
+    font-size: 15px;
+    width: 10%;
+    height: auto;
+    border: 1px solid black;
+}
+.td_res_2, .td_res_3 {
+    text-align: center;
+    font-size: 15px;
+    width: 21.67%;
+    height: auto;
+    border: 1px solid black;
+}
+.td_res_5 {
+    text-align: left;
+    font-size: 12px;
+    width: 21.67%;
+    height: auto;
+    border: 1px solid black;
+}
