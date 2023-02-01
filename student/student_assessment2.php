@@ -354,7 +354,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
                 req.open('POST', 'js-php/submit_assessment_results.php', true);
                 req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                req.send(`assessment_name=${assessment[2]}&instructor_email=${assessment[1]}&date_time_submitted=${submit_date_time}&score=${score_sum}&content=${str_results}`);
+                req.send(`assessment_name=${assessment[2]}&instructor_email=${assessment[1]}&date_time_submitted=${submit_date_time}&score=${score_sum}&max_score=${max_sum}&content=${str_results}`);
             }
             
 
