@@ -58,6 +58,7 @@ pg_close($con);
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
+        <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
     </head>
     <body onload="loadJSON1();loadJSON2();displayAssessments();getChapterOptions();">
         <div id="app">
@@ -223,6 +224,10 @@ pg_close($con);
 
             <br>
 
+            <div id="students_results_div" style="display:none"></div>
+
+            <br><br>
+
             <footer>
                 <div class="container">
                     <div class="footer-top flex">
@@ -267,6 +272,7 @@ pg_close($con);
             const public_assessments = <?= json_encode($public_assessments); ?>;
             let assessment; // used to hold entire row from pgsql db
             let assessment_content; // used to hold content json for row
+            let student_res_row_num = 1;
 
 
             let displayAssessments = () => {
@@ -671,9 +677,9 @@ pg_close($con);
             }
 
 
-
             /* GET AND DISPLAY STUDENT ASSESSMENT RESULTS */
             let req4;
+            let resultsObj;
             let viewResults = () => {
                 // XMLHttpRequest
                 req4 = new XMLHttpRequest();
@@ -684,11 +690,43 @@ pg_close($con);
             }
             let viewResultsResponse = () => {
                 if (req4.readyState == 4 && req4.status == 200) {
+                    // receive response
                     console.log(req4.responseText);
+                    resultsObj = JSON.parse(req4.responseText);
+
+                    // creating student results table to display data
+                    let str = '<h1>Student Results</h1>';
+                    str += '<table id="student_results_table">';
+                    str += '<thead><tr>';
+                    str += '<th class="th_res_1" scope="col">#</th>';
+                    str += '<th class="th_res_2" scope="col">Student Name</th>';
+                    str += '<th class="th_res_3" scope="col">Student Email</th>';
+                    str += '<th class="th_res_4" scope="col">Score</th>';
+                    str += '<th class="th_res_5" scope="col">Content</th>';
+                    str += '<th class="th_res_6" scope="col">Date Time Submitted</th>';
+                    str += '</tr></thead>';
+
+                    str += '<tbody><tr>';
+
+                    // loop through the array of objects
+                    resultsObj.forEach(function(element) {
+                        str += `<td class="td_res_1">${student_res_row_num}</td>`;
+                        str += `<td class="td_res_2">${element.student_name}</td>`;
+                        str += `<td class="td_res_3">${element.student_email}</td>`;
+                        str += `<td class="td_res_4" title="${Math.round((element.score / element.max_score) * 100)}%"> ${element.score} / ${element.max_score} </td>`;
+                        str += `<td class="td_res_5"><pre><code>${JSON.stringify(JSON.parse(element.content), undefined, 2)}</code></pre></td>`;
+                        str += `<td class="td_res_6">${element.date_time_submitted}</td>`;
+                        student_res_row_num++;
+                    });
+
+                    str += '</tr></tbody>'
+                    str += '</table>';
+
+                    document.getElementById("students_results_div").innerHTML = str;
+                    //drawAllCharts();
+                    document.getElementById("students_results_div").style.display = "";
                 }
             }
-
-
 
 
             // cancelling action
