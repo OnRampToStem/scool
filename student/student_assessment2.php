@@ -252,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 let iframe = document.createElement('iframe');
                 iframe.id = "frame";
                 iframe.title = "LibreTexts";
-                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + sequence_question[counter];
+                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter];
                 iframe.width = "100%";
                 iframe.height = "900px";
                 iframe.scrolling = "yes";
@@ -298,7 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     // update counter
                     counter++;
                     // update iframe
-                    document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=000" + sequence_question[counter]);
+                    document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter]);
                     // update question number
                     document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
                 }
