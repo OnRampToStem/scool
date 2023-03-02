@@ -62,20 +62,13 @@
 
 
 
-/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
-button, #userButton {
+#userButton {
     color: white;
     background-color: navy;
     cursor: pointer;
     transition-duration: 0.5s;
 }
-button:hover, #userButton:hover{
-    background-color: red;
-}
-input[type="button"], input[type="submit"]{
-    transition-duration: 0.5s;
-}
-input[type="button"]:hover, input[type="submit"]:hover { 
+#userButton:hover{
     background-color: red;
 }
 
@@ -84,13 +77,97 @@ input[type="button"]:hover, input[type="submit"]:hover {
 main {
     margin: 0 auto;
     width: 90%;
-    border: 1px solid black;
     min-height: 300px;
-}
-#assessment_info {
-    padding: 5px;
     border: 1px solid black;
 }
+
+#assessment-info {
+    width: 100%;
+    padding: 10px;
+}
+#assessment-info h1 {
+    margin: 0;
+}
+#assessment-info h3 {
+    margin: 10px;
+}
+#ul-list-div {
+    margin: 0;
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    padding: 5px;
+    /*border: 1px solid black;*/
+}
+#ul-list-div ul li {
+    padding: 3px;
+    margin-left: 100px;
+    list-style-type: square;
+}
+#btn1 {
+    flex: auto;
+    margin: 0 auto;
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600px;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#btn1:hover {
+    background-color: red;
+}
+table {
+    margin: 0 auto;
+    width: 50%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+
+
+#controls-div {
+    margin: 10px;
+}
+#questionCount {
+    margin: 0;
+}
+#ul-div {
+    margin: 0;
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    padding: 5px;
+    /*border: 1px solid black;*/
+}
+#ul-div ul li {
+    padding: 10px;
+    margin-left: 125px;
+    list-style-type: square;
+}
+#controls-div button {
+    margin: 5px;
+    width: 130px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 500px;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#controls-div button:hover {
+    background-color: red;
+}
+
+
+
 #timer-info-row {
     padding: 3px;
 }

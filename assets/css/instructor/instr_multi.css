@@ -285,59 +285,211 @@ main {
     text-align: center;
     border: 1px solid black;
 }
-
 #student_results_table {
     margin: 0 auto;
-    width: 100%;
+    margin-bottom: 20px;
+    width: 95%;
     border: 1px solid black;
     border-collapse: collapse;
 }
-.th_res_1 {
+.th_res_1, .th_res_2 {
     text-align: center;
     font-size: 16px;
-    width: 5%;
+    width: 25%;
     height: auto;
     border: 1px solid black;
 }
-.th_res_4, .th_res_6 {
+.th_res_3 {
     text-align: center;
     font-size: 16px;
     width: 10%;
     height: auto;
     border: 1px solid black;
 }
-.th_res_2, .th_res_3, .th_res_5{
+.th_res_4 {
     text-align: center;
     font-size: 16px;
-    width: 21.67%;
+    width: 30%;
     height: auto;
     border: 1px solid black;
 }
-.td_res_1 {
+.th_res_5 {
     text-align: center;
-    font-size: 15px;
-    width: 5%;
-    height: auto;
-    border: 1px solid black;
-}
-.td_res_4, .td_res_6 {
-    text-align: center;
-    font-size: 15px;
+    font-size: 16px;
     width: 10%;
     height: auto;
     border: 1px solid black;
 }
-.td_res_2, .td_res_3 {
+.td_res_1, .td_res_2 {
     text-align: center;
     font-size: 15px;
-    width: 21.67%;
-    height: auto;
+    width: 25%;
+    height: 150px;
+    border: 1px solid black;
+}
+.td_res_3 {
+    text-align: center;
+    font-size: 15px;
+    width: 10%;
+    height: 150px;
+    border: 1px solid black;
+}
+.td_res_4 {
+    text-align: center;
+    font-size: 15px;
+    width: 30%;
+    height: 150px;
     border: 1px solid black;
 }
 .td_res_5 {
-    text-align: left;
-    font-size: 12px;
-    width: 21.67%;
-    height: auto;
+    text-align: center;
+    font-size: 15px;
+    width: 10%;
+    height: 150px;
     border: 1px solid black;
+}
+
+#score-breakdown-div {
+    margin: 0 auto;
+    width: 100%;
+    height: 150px;
+    overflow-y: auto;
+    text-align: center;
+}
+.score-breakdown-inner-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 90%;
+    height: 50px;
+    background-color: navy;
+    cursor: pointer;
+    border: 1px solid white;
+}
+.score-breakdown-inner-div:hover {
+    background-color: red;
+}
+#score-breakdown-div a {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+
+
+
+#assessment-info-div {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid black;
+}
+#assessment-info-div h1 {
+    margin: 0;
+}
+#assessment-info-div h3 {
+    margin: 10px;
+}
+#ul-list-div {
+    margin: 0;
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    padding: 5px;
+    /*border: 1px solid black;*/
+}
+#ul-list-div ul li {
+    padding: 3px;
+    margin-left: 100px;
+    list-style-type: square;
+}
+#btn1 {
+    flex: auto;
+    margin: 0 auto;
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600px;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#btn1:hover {
+    background-color: red;
+}
+#assessment-preview-tbl {
+    margin: 0 auto;
+    width: 50%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#assessment-preview-tbl th, #assessment-preview-tbl td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+
+
+
+
+#content-div {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid black;
+}
+#controls-div {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+}
+#questionCount {
+    margin: 0;
+}
+#ul-div {
+    margin: 0;
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    padding: 5px;
+    /*border: 1px solid black;*/
+}
+#ul-div ul li {
+    padding: 10px;
+    margin-left: 125px;
+    list-style-type: square;
+}
+#buttons-div {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#controls-div button {
+    margin: 5px;
+    width: 150px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 500px;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#controls-div button:hover {
+    background-color: red;
+}
+
+
+
+#timer-info-row {
+    padding: 3px;
+}
+.timer {
+    display: inline;
+    padding: 3px;
 }

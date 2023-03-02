@@ -18,6 +18,10 @@
     background-color: navy;
     cursor: pointer;
     margin-right: 30px;
+    transition-duration: 0.5s;
+}
+#userButton:hover {
+    background-color: red;
 }
 #user-picture {
     width: 30px; 
@@ -54,50 +58,60 @@
 
 
 
-/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
-button, #userButton {
-    transition-duration: 0.5s;
-}
-button:hover, #userButton:hover{
-    background-color: red;
-}
-input[type="button"], input[type="submit"]{
-    transition-duration: 0.5s;
-}
-input[type="button"]:hover, input[type="submit"]:hover { 
-    background-color: red;
-}
-
-
-
+/* MAIN CONTENT STYLING */
 main {
     margin: 0 auto;
-    width: 90%;
-    min-height: 300px;
-    /*border: 1px solid black;*/
+    width: 100%;
 }
-#classListTable {
+
+#header-div {
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+#loading-div {
+    margin: 0 auto;
+    width: 200px;
+    height: 40px;
+    padding: 5px;
+    color: navy;
+    font-size: 22px;
+    font-weight: 600;
+    border: 2px solid navy;
+    margin-bottom: 40px;
+}
+
+#class-list-div {
     margin: 0 auto;
     width: 60%;
-    border: 2px solid black;
-    border-collapse: collapse;
+    margin-bottom: 50px;
 }
-#classListTable th {
+#class-list-div h2 {
+    margin: 10px;
+}
+
+#static-dynamic-div {
+    margin: 0 auto;
+    width: 60%;
+    margin-bottom: 40px;
+}
+#static-dynamic-div h2 {
+    margin: 10px;
+}
+
+.q-btn {
     width: 100%;
-    height: auto;
-    font-size: 28px;
-    padding: 5px;
-    border: 2px solid black;
-}
-#classListTable td {
-    width: 100%;
-    height: auto;
-    font-size: 22px;
-    padding: 5px;
-    border: 2px solid black;
-    cursor: pointer;
-}
-#classListTable td:hover {
+    height: 40px;
+    margin-bottom: 5px;
     color: white;
     background-color: navy;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.q-btn:hover {
+    transform: scale(1.01);
+    background-color: red;
 }

@@ -4,14 +4,6 @@
     font-weight: bold;
     padding-left: 20px;
 }
-#OR2STEM-HEADER-A {
-    color: navy;
-    text-decoration: none;
-    transition-duration: 0.5s;
-}
-#OR2STEM-HEADER-A:hover {
-    color: red;
-}
 #userProfile {
     float: right;
     margin-right: 15px;
@@ -66,15 +58,11 @@
 
 
 
-/* MAIN STYLING */
-#main {
+/* CH, SEC, LO SELECTION STYLING */
+#group1 {
     margin: 0 auto;
-    margin-bottom: 40px;
     width: 100%;
-}
-
-#header-div {
-    width: 100%;
+    text-align: center;
 }
 
 #loading-div {
@@ -89,97 +77,112 @@
     margin-bottom: 40px;
 }
 
-#student_table {
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: 80%;
-    border: 2px solid black;
-    border-collapse: collapse;
+#group1_1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
 }
-.intro_th {
-    text-align: center;
+#group1_1_1, #group1_1_2, #group1_1_3 {
+    width: 33.33%;
+
+}
+#chapter_options, #section_options, #learningoutcome_options {
+    width: 90%;
+    padding: 4px;
+    cursor: pointer;
+
+}
+#go_btn {
+    width: 120px;
+    height: 45px;
+    margin-bottom: 30px;
+    color: white;
+    background-color: navy;
     font-size: 20px;
-    width: 26.67%;
-    height: auto;
-    border: 2px solid black;
+    font-weight: 600;
+    cursor: pointer;
+    transition-duration: 0.5s;
 }
-.intro_td {
-    text-align: center;
-    width: 26.67%;
-    height: auto;
-    border: 2px solid black;
-}
-#myChart {
-    margin: 0 auto;
-    width: 200px;
-    height: 150px;
+#go_btn:hover {
+    background-color: red;
 }
 
-/* CHAPTER PROGRESS TABLE STYLING */
-#ch_table {
+
+
+/* SELECTED LEARNING OUTCOME HEADER STYLING */
+#selected-lo-header-div {
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 90%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: navy;
+    border: 3px solid red;
+}
+#selected-lo-header-div p {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+
+
+/* CONTROLS & CONTENT STYLING */
+#question-display-div {
     margin: 0 auto;
     width: 95%;
-    border-collapse: collapse;
-    border: 2px solid black;
-}
-#ch_table tr th,  #ch_table tr td {
-    border: 2px solid black;
+    display: flex;
     text-align: center;
-    padding: 5px;
 }
-.open_btn_1 {
-    width: 65px;
+
+#prev-btn-div {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+#prev-btn {
+    width: 220px;
     height: 40px;
-    font-size: 16px;
+    margin-left: auto;
+    margin-right: 25px;
+    font-size: 18px;
     font-weight: 500;
     color: white;
     background-color: navy;
     cursor: pointer;
     transition-duration: 0.5s;
 }
-.open_btn_1:hover {
+#prev-btn:hover {
     background-color: red;
 }
 
-/* SECTION PROGRESS TABLE STYLING */
-#sec_table {
-    margin: 0 auto;
-    width: 97%;
-    border-collapse: collapse;
-    border: 2px solid blue;
-    margin-top: 15px;
-    margin-bottom: 15px;
+#content-div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
-#sec_table tr th, #sec_table tr td {
-    border: 2px solid blue;
-    text-align: center;
-    padding: 5px;
+
+#next-btn-div {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
 }
-.open_btn_2 {
-    width: 60px;
-    height: 35px;
-    font-size: 15px;
+#next-btn {
+    width: 220px;
+    height: 40px;
+    margin-right: auto;
+    margin-left: 25px;
+    font-size: 18px;
     font-weight: 500;
     color: white;
     background-color: navy;
     cursor: pointer;
     transition-duration: 0.5s;
 }
-.open_btn_2:hover {
+#next-btn:hover {
     background-color: red;
-}
-
-/* LEARNING OUTCOME PROGRESS TABLE STYLING */
-#lo_table {
-    margin: 0 auto;
-    width: 97%;
-    border-collapse: collapse;
-    border: 2px solid red;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-#lo_table tr th, #lo_table tr td {
-    border: 2px solid red;
-    text-align: center;
-    padding: 5px;
 }

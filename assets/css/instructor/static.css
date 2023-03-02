@@ -1,0 +1,218 @@
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+    color: navy;
+    font-weight: bold;
+    padding-left: 20px;
+}
+#userProfile {
+    float: right;
+    margin-right: 15px;
+    position: relative;
+}
+#userButton {
+    width: auto;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    margin-right: 30px;
+    transition-duration: 0.5s;
+}
+#userButton:hover {
+    background-color: red;
+}
+#user-picture {
+    width: 30px; 
+    height: 30px; 
+    position: absolute; 
+    right: 0; 
+    bottom: 0;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: 3px;
+    color: white;
+    background-color: navy;
+    width: 85px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content a {
+    color: white;
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+}
+.dropdown a:hover {
+    background-color: red;
+}
+.show {display: block;}
+
+
+
+/* CH, SEC, LO SELECTION STYLING */
+#group1 {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+#loading-div {
+    margin: 0 auto;
+    width: 200px;
+    height: 40px;
+    padding: 5px;
+    color: navy;
+    font-size: 22px;
+    font-weight: 600;
+    border: 2px solid navy;
+    margin-bottom: 40px;
+}
+
+#group1_1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+}
+#group1_1_1, #group1_1_2, #group1_1_3 {
+    width: 33.33%;
+
+}
+#chapter_options, #section_options, #learningoutcome_options {
+    width: 90%;
+    padding: 4px;
+    cursor: pointer;
+
+}
+#go_btn {
+    width: 120px;
+    height: 45px;
+    margin-bottom: 30px;
+    color: white;
+    background-color: navy;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#go_btn:hover {
+    background-color: red;
+}
+
+
+
+/* SELECTED LEARNING OUTCOME HEADER STYLING */
+#selected-lo-header-div {
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 90%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: navy;
+    border: 3px solid red;
+}
+#selected-lo-header-div p {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+
+
+/* STATIC QUESTIONS STYLING */
+#question-display-div {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    text-align: center;
+}
+#prev-btn-div {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+#question-content-div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+#next-btn-div {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+#prev-btn {
+    width: 220px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#prev-btn:hover {
+    background-color: red;
+}
+#next-btn {
+    width: 220px;
+    height: 40px;
+    margin-right: auto;
+    margin-left: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#next-btn:hover {
+    background-color: red;
+}
+#mainImg {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+#optionsForm {
+    text-align: center;
+    margin: auto;
+}
+#checkAnswerButton{
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+#checkAnswerButton:hover {
+    background-color: red;
+}
+#label0, #label1, #label2, #label3, #label4, #label5, #label6, #label7, #label8 {
+    display: inline-block;
+    width: 250px;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+}

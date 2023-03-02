@@ -18,6 +18,10 @@
     background-color: navy;
     cursor: pointer;
     margin-right: 30px;
+    transition-duration: 0.5s;
+}
+#userButton:hover {
+    background-color: red;
 }
 #user-picture {
     width: 30px; 
@@ -54,36 +58,32 @@
 
 
 
-/* REGULAR BUTTON STYLING */
-.regular_button{
-    width: 350px;
-    height: 50px;
-    color: white;
-    background-color: navy;
-    cursor: pointer;
-    text-align: center;
-    transition-duration: 0.5s;
-    font-size: 16px;
-}
-
-
-
-/* BUTTONS / INPUT[TYPE="SUBMIT"] STYLING */
-button, #userButton {
-    transition-duration: 0.5s;
-}
-button:hover, #userButton:hover{
-    background-color: red;
-}
-input[type="button"], input[type="submit"]{
-    transition-duration: 0.5s;
-}
-input[type="button"]:hover, input[type="submit"]:hover { 
-    background-color: red;
-}
-
 main {
     width: 100%;
     text-align: center;
-    min-height: 300px;
+}
+
+#header-div {
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.btn-div {
+    margin-bottom: 40px;
+}
+.regular_button{
+    width: 350px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    background-color: navy;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.regular_button:hover {
+    background-color: red;
+    transform: scale(1.01);
 }
