@@ -7,12 +7,12 @@
 header('Content-type: text/plain');
 
 // read and decode the JSON file (text => PHP assoc array)
-$json_filename = "../../assets/json_data/final.json";
+$json_filename = "../assets/json_data/new_final.json";
 $json = file_get_contents($json_filename);
 $json_data = json_decode($json, true);
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../register_login/config.php";
 
 // create the table questions if it does not exist in the PostgreSQL database
 //echo "Attempting to create table questions.\n";

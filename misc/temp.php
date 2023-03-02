@@ -12,8 +12,10 @@ $name = 'Temp Observer';
 $email = 't@gmail.com';
 $type = 'Observer';
 $pic = 'https://canvas.instructure.com/images/messages/avatar-50.png';
-$course_name = ["Development MATH6 Pilot"];
-$course_id = ["cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef"];
+$course_name = ["MATH 6 (03) - Precalculus"];
+$course_id = ["2d32d562af7298330c3c5b20d3a2b88506e0fc0b"];
+
+//MATH 6 (03) - Precalculus-2d32d562af7298330c3c5b20d3a2b88506e0fc0b
 
 echo "Starting Session. <br>";
 session_start();
