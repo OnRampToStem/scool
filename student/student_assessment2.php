@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // accept $_POST input
     $pkey = $_POST['pkey'];
+    $json_data = json_decode($_POST['json_data']); //print_r($json_data);
 
     // connect to the db
     require_once "../register_login/config.php";
@@ -130,34 +131,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <main>
                 <div id="assessment-info">
-                    <div class="assessment-info-row">
-                        <h2><?= $assessment[2]; ?></h2>
+                    <h1><u><?= $assessment[2]; ?></u></h1>
+                    <div id="ul-list-div">
+                        <ul>
+                            <li><h3>You have a total duration of <?= $assessment[4]; ?> minutes to complete this assessment.</h3></li>
+                            <li><h3>This assessment closes on: <?= $assessment[7]; ?> <?= $assessment[8]; ?></h3></li>
+                            <li><h3 id="q-info-count"></h3></li>
+                            <li><h3>The table below contains the learning outcomes that you will be assessed on. As well as the break-down on number of questions and points per question for each learning outcome.</h3></li>
+                        </ul>
                     </div>
-                    <div class="assessment-info-row">
-                        <h4>Minutes allowed: <?= $assessment[4]; ?></h4>
-                    </div>
-                    <div class="assessment-info-row">
-                        <h4>Closes (auto submit) on: <?= $assessment[8]; ?> <?= $assessment[7]; ?> </h4>
-                    </div>
-                    <div class="assessment-info-row">
-                        <h4 class="timer">Timer:</h4>
-                        <h4 class="timer" id="minutes">00</h4> : <h4 class="timer" id="seconds">00</h4>
+                    <div id="assessment-info-lo"></div>
+                    <h3>To start the test, click on the 'Start' button.</h3>
+                    <button id="btn1" onclick="startTest()">Start</button>
+                </div>
+
+                <div id="content-div">
+                    <div id="controls-div">
+                        <h2 id="questionCount"></h2>
+                        <div id="ul-div">
+                            <ul>
+                                <li><b>Please make sure to 'Submit' your answer before clicking on the 'Next Question' button.</b></li>
+                                <li><b>Do not click on the 'Try a similar question' button.</b></li>
+                                <li><b>After submitting your last question, you must click on the 'Submit Assessment' button.</b></li>
+                            </ul>
+                        </div>
+                        <button id="btn2" onclick="next()">Next Question</button>
+                        <button id="btn3" onclick="saveResults()">Submit Assessment</button>
+                        <div class="timer-div">
+                            <h4 class="timer">Timer:</h4>
+                            <h4 class="timer" id="minutes">00</h4> : <h4 class="timer" id="seconds">00</h4>
+                        </div>
                     </div>
                 </div>
 
-                <br>
-
-                <div id="controls">
-                    <button id="btn1" onclick="startTest()">Start Assessment</button>
-                    <button id="btn2" onclick="next()">Next Question</button>
-                    <button id="btn3" onclick="saveResults()">Submit Assessment</button>
-                </div>
-
-                <br>
-
-                <div id="contentDiv"></div>
-
-                <div id="resultsDiv"></div>
+                <div id="results-div"></div>
             </main>
 
             <br>
@@ -166,15 +173,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href="student_index.php"><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="student_index.php" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="student_index.php">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -192,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -201,12 +208,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <script type="text/javascript">
             /* GLOBALS */
             let src, response;
-            let counter = 0;
+            let counter = 0; // used as index for each question
             let timerID; // holds the ID of the timer, used to stop the timer
-            const assessment = <?= json_encode($assessment); ?>; console.log(assessment);
-            const dynamic_ids = <?= json_encode($dynamic_ids); ?>; console.log(dynamic_ids);
-            const sequence_question = [];
+            const assessment = <?= json_encode($assessment); ?>; // contains main assessment data
+            const dynamic_ids = <?= json_encode($dynamic_ids); ?>; // contains los with data for each lo, produced from assessment
+            const sequence_question = []; // list of problem numbers fed to the imathas
             let questionsObjectList = []; // sequence of questions with answers  
+            const json_data = <?= json_encode($json_data); ?>
 
 
             //////////////////////////////////
@@ -214,9 +222,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //////////////////////////////////
 
             const initialize = () => {
+                hideElements();
                 initListQuestions();
                 buildiFrame();
-                hideElements();
+                displayLoInfo();
+            }
+
+            const hideElements = () => {
+                // hide content-div & results-div
+                document.getElementById("content-div").style.display = "none";
+                document.getElementById("results-div").style.display = "none";
+                // hide btn3
+                document.getElementById("btn3").style.display = "none";
             }
 
             const initListQuestions = () => {
@@ -246,30 +263,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             const buildiFrame = () => {
-                let p = document.createElement('p');
-                p.id = "questionCount";
-                document.getElementById('contentDiv').appendChild(p);
                 let iframe = document.createElement('iframe');
                 iframe.id = "frame";
                 iframe.title = "LibreTexts";
                 iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter];
                 iframe.width = "100%";
-                iframe.height = "900px";
-                iframe.scrolling = "yes";
-                document.getElementById('contentDiv').appendChild(iframe);
+                iframe.height = "1600px"; // was 900pc
+                document.getElementById('content-div').appendChild(iframe);
             }
 
-            const hideElements = () => {
-                // hide next and submit button
-                document.getElementById("btn2").style.display = "none";
-                document.getElementById("btn3").style.display = "none";
-                // hide i frame
-                document.getElementById("contentDiv").style.display = "none";
-                // hide results div
-                document.getElementById("resultsDiv").style.display = "none";
-                // testing
-                console.log(sequence_question);
+            const displayLoInfo = () => {
+                let str = '<table><thead><tr>';
+                str += '<th scope="col">Chapter<br>Section<br>Learning Outcome</th>';
+                str += '<th scope="col">Number of Questions</th>';
+                str += '<th scope="col">Points per Question</th>';
+                str += '</tr></thead>';
+                str += '<tbody>';
+                let lo_info = JSON.parse(assessment[9]);
+                let sums = [0, 0];
+                lo_info.forEach(function(arrItem) {
+                    // sums
+                    sums[0] += arrItem.NumberQuestions;
+                    sums[1] += arrItem.NumberQuestions * arrItem.NumberPoints;
+
+                    str += '<tr>';
+                    // chapter mod
+                    let idx = arrItem.LearningOutcomeNumber.indexOf(".");
+                    let ch = parseInt(arrItem.LearningOutcomeNumber.slice(0, idx));
+                    // section mod
+                    let idx2 = arrItem.LearningOutcomeNumber.indexOf(".", idx + 1);
+                    let sec = parseInt(arrItem.LearningOutcomeNumber.slice(idx + 1, idx2));
+                    str += '<td>';
+                    str += `${ch}. ` + json_data[ch] + '<br>';
+                    str += `${ch}.${sec}. ` + json_data[ch + "." + sec] + '<br>';
+                    str += `${arrItem.LearningOutcomeNumber}. ${json_data[arrItem.LearningOutcomeNumber]}`;
+                    str += '</td>';
+                    str += `<td>${arrItem.NumberQuestions}</td>`;
+                    str += `<td>${arrItem.NumberPoints}</td>`;
+                    str += '<tr>';
+                });
+                document.getElementById("q-info-count").innerHTML = `This assessment contains a total of ${sums[0]} questions and ${sums[1]} points possible.`;
+                str += '</tbody>';
+                str += '<tfoot><tr>';
+                str += '<td><b>Totals</b></td>';
+                str += `<td>${sums[0]}</td>`;
+                str += `<td>${sums[1]}</td>`;
+                str += '</tr></tfoot>';
+                str += '</table>';
+                document.getElementById("assessment-info-lo").innerHTML = str;
             }
+
 
 
             //////////////////////////
@@ -279,17 +322,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const startTest = () => {
                 // start timer
                 timerID = startTimer();	
-                // hide start btn
-                document.getElementById("btn1").style.display = "none";
+                // hide assessment-info display
+                document.getElementById("assessment-info").style.display = "none";
                 // unhide next btn & iframe
-                document.getElementById("btn2").style.display = "";
-                document.getElementById("contentDiv").style.display = "";
+                document.getElementById("content-div").style.display = "";
                 // display question number
                 document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
             }   
 
             const next = () => {
-                if (counter + 1 < sequence_question.length) {
+                // making sure we are in the valid range and that the question has been answered before moving on
+                if (counter + 1 < sequence_question.length && questionsObjectList[counter].result !== -1) {
                     // hide next button and unhide submit button if user is on last question
                     if (counter + 1 === sequence_question.length - 1) {
                         document.getElementById("btn2").style.display = "none";
@@ -303,58 +346,61 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
                 }
                 else {
-                    alert("No more questions.");
+                    alert("You must submit the current question, before moving on.");
                 }
             }
        
             const saveResults = () => {
-                // stop the timer
-                stopTimer();
+                if (questionsObjectList[counter].result !== -1) {
+                    // stop the timer
+                    stopTimer();
 
-                // get the sum of all individual scores
-                let score_sum = 0;
-                for (let i = 0; i < questionsObjectList.length; i++) {
-                    score_sum += questionsObjectList[i].result;
-                }
-
-                // get the max score possible
-                let max_sum = 0;
-                for (let i = 0; i < questionsObjectList.length; i++) {
-                    max_sum += questionsObjectList[i].max_score;
-                }
-
-                // append data into the results div
-                let str = '<div><h1>You have completed the assessment.</h1>';
-                str += `<h3>You scored: ${score_sum} / ${max_sum}</h3>`;
-                str += '<a href="student_index.php">Click here to go Home</a></div>';
-                document.getElementById("resultsDiv").innerHTML = str;
-
-                // stringify the array of objects
-                let str_results = JSON.stringify(questionsObjectList); //console.log(str_results);
-
-                // create new date
-                let date = new Date();
-                // submit date will be in format (yyyy-mm-dd hh:mm:ss)
-                let submit_date_time = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + ("0" + date.getHours() ).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
-                //console.log(submit_date_time);
-
-                // start XMLHttpRequest
-                let req = new XMLHttpRequest();
-                req.onreadystatechange = function() {
-                    if(req.readyState == 4 && req.status == 200){
-                        // log the response
-                        console.log(req.responseText);
-                        // hide key elements
-                        document.getElementById("assessment-info").style.display = "none";
-                        document.getElementById("controls").style.display = "none";
-                        document.getElementById("contentDiv").style.display = "none";
-                        // unhide results div
-                        document.getElementById("resultsDiv").style.display = "";
+                    // get the sum of all individual scores
+                    let score_sum = 0;
+                    for (let i = 0; i < questionsObjectList.length; i++) {
+                        score_sum += questionsObjectList[i].result;
                     }
+
+                    // get the max score possible
+                    let max_sum = 0;
+                    for (let i = 0; i < questionsObjectList.length; i++) {
+                        max_sum += questionsObjectList[i].max_score;
+                    }
+
+                    // append data into the results div
+                    let str = '<div><h1>You have completed <?= $assessment[2]; ?>!</h1>';
+                    str += `<h3>You scored: ${score_sum} / ${max_sum}</h3>`;
+                    str += '<a href="student_index.php">Click here to go Home</a></div>';
+                    document.getElementById("results-div").innerHTML = str;
+
+                    // stringify the array of objects
+                    let str_results = JSON.stringify(questionsObjectList); //console.log(str_results);
+
+                    // create new date
+                    let date = new Date();
+                    // submit date will be in format (yyyy-mm-dd hh:mm:ss)
+                    let submit_date_time = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + ("0" + date.getHours() ).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
+                    //console.log(submit_date_time);
+
+                    // start XMLHttpRequest
+                    let req = new XMLHttpRequest();
+                    req.onreadystatechange = function() {
+                        if(req.readyState == 4 && req.status == 200){
+                            // log the response
+                            console.log(req.responseText);
+                            // hide content div
+                            document.getElementById("content-div").style.display = "none";
+                            // unhide results div
+                            document.getElementById("results-div").style.display = "";
+                        }
+                    }
+                    req.open('POST', 'js-php/submit_assessment_results.php', true);
+                    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    req.send(`assessment_name=${assessment[2]}&instructor_email=${assessment[1]}&date_time_submitted=${submit_date_time}&score=${score_sum}&max_score=${max_sum}&content=${str_results}`);
                 }
-                req.open('POST', 'js-php/submit_assessment_results.php', true);
-                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                req.send(`assessment_name=${assessment[2]}&instructor_email=${assessment[1]}&date_time_submitted=${submit_date_time}&score=${score_sum}&max_score=${max_sum}&content=${str_results}`);
+                else {
+                    alert("You must submit the current question, before submitting the assessment.");
+                }
             }
             
 
@@ -476,12 +522,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             }
 
-
             ///////////
             // DRIVER
-            ///////////
             initialize();
-
+            ///////////
         </script>
     </body>
 </html>
