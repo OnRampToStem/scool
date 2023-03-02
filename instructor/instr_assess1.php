@@ -14,41 +14,60 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     exit;
 }
 
-// globals
-$students = array(); // php assoc arr holding "name" => "email" of students belonging to instr
-$students_data = array(); // php assoc arr holding "email" => [los complete, los incomplete] of students belonging to instr
+$students = array();      // Associative array holding ("name" => "email") of students
+$students_data = array(); // Associative array holding ("email" => [los complete, los incomplete]) of students
 
 // connect to the PGSQL db
 require_once "../register_login/config.php";
 
 if ($_SESSION["type"] === "Instructor") {
-    // get all students that belong to the instructor logged in, but are also in the current selected
-    // course name and course id
+    // get all students that belong to the instructor logged in, but are also in the current selected course name and course id
     $query = "SELECT * FROM users WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION["selected_course_name"]}'
               AND course_id = '{$_SESSION["selected_course_id"]}'";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
-
-    while($row = pg_fetch_row($res)){
-        $students[$row[1]] = $row[2];
+    $res = pg_query($con, $query);
+    // error check the pg query
+    if (!$res) {
+        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+        exit;
+    }
+    else {
+        // loop through each row
+        while ($row = pg_fetch_row($res)) {
+            // insert data into the array
+            $students[$row[1]] = $row[2];
+        }
     }
 }
 elseif ($_SESSION["type"] === "Mentor") {
     // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
     $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%'
               AND course_id LIKE '%{$_SESSION["selected_course_id"]}%'";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+    $res = pg_query($con, $query);
+    // error check the pg query
+    if (!$res) {
+        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+        exit;
+    }
+    else {
+        // get the instructor's email
+        $instr_email = pg_fetch_result($res, 0, 0);
 
-    // get the instructor's email
-    $instr_email = pg_fetch_result($res, 0, 0);
-
-    // get all students that belong to the instructor logged in, but are also in the current selected
-    // course name and course id
-    $query = "SELECT * FROM users WHERE instructor = '{$instr_email}' AND course_name = '{$_SESSION["selected_course_name"]}'
-              AND course_id = '{$_SESSION["selected_course_id"]}'";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
-
-    while($row = pg_fetch_row($res)){
-        $students[$row[1]] = $row[2];
+        // get all students that belong to the instructor logged in, but are also in the current selected course name and course id
+        $query = "SELECT * FROM users WHERE instructor = '{$instr_email}' AND course_name = '{$_SESSION["selected_course_name"]}'
+                  AND course_id = '{$_SESSION["selected_course_id"]}'";
+        $res = pg_query($con, $query);
+        // error check the pg query
+        if (!$res) {
+            echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+            exit;
+        }
+        else {
+            // loop through each row
+            while ($row = pg_fetch_row($res)) {
+                // insert data into the array
+                $students[$row[1]] = $row[2];
+            }
+        }
     }
 }
 
@@ -144,7 +163,7 @@ foreach($students as $key => $value){
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Assess Students</title>
+        <title>Students Overview</title>
         <link rel="stylesheet" href="../assets/css/instructor/instr_assess1.css" />
         <link rel="stylesheet" href="../assets/css/global/or2stem.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
@@ -152,7 +171,7 @@ foreach($students as $key => $value){
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
-    <body onload="displayStudents();drawAllCharts();">
+    <body onload="initialize();">
         <div id="app">
             <header>
                 <nav class="container">
@@ -176,25 +195,30 @@ foreach($students as $key => $value){
                 </nav>
             </header>
 
-            <br>
+            <main id="main">
+                <div id="header-div">
+                    <h1><?= $_SESSION["selected_course_name"]; ?> <br> Students Overview</h1>
+                </div>
 
-            <main id="main"></main>
+                <div id="loading-div">
+                    LOADING...
+                </div>
+            </main>
 
-            <br><br>
 
             <footer>
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href="instr_index1.php"><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="instr_index1.php" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="instr_index1.php">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -212,7 +236,7 @@ foreach($students as $key => $value){
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -225,25 +249,29 @@ foreach($students as $key => $value){
             const students_data = <?= json_encode($students_data); ?>;
 
 
+            let initialize = () => {
+                displayStudents();
+                drawAllCharts();
+                document.getElementById("loading-div").style.display = "none";
+            }
+
+
             // table creation of all students, displaying learning outcome progress
             let displayStudents = () => {
-                let str = '<h1>Students Overview</h1>';
-                str += '<table id="ss_tab">';
+                let str = '<table id="ss_tab">';
                 str += '<thead><tr>';
-                str += '<th class="th1" scope="col">#</th>';
+                str += '<th class="th1" scope="col">Name</th>';
                 str += '<th class="th2" scope="col">Email</th>';
-                str += '<th class="th3" scope="col">Name</th>';
-                str += '<th class="th4" scope="col">Progress</th>';
-                str += '<th class="th5" scope="col">Details</th>';
+                str += '<th class="th3" scope="col">Progress</th>';
+                str += '<th class="th4" scope="col">Details</th>';
                 str += '</tr></thead>';
                 str += '<tbody>';
                 for (const key in students) {
-                    str += '<tr>';
-                    str += `<td class="td1">${rows}</td>`;
+                    str += `<tr data-internalid="${rows}">`;
+                    str += `<td class="td1">${key}</td>`;
                     str += `<td class="td2">${students[key]}</td>`;
-                    str += `<td class="td3">${key}</td>`;
-                    str += `<td class="td4"><div id="myChart${rows}" class="myCharts"></div></td>`;
-                    str += '<td class="td5">';
+                    str += `<td class="td3"><div id="myChart${rows}" class="myCharts"></div></td>`;
+                    str += '<td class="td4">';
                     str += '<form action="instr_assess2.php" method="POST">';
                     str += '<input class="amt_students" name="amt_students" type="number" style="display:none" required>';
                     str += `<input id="student_email_${rows}" name="student_email_${rows}" type="text" style="display:none" required>`;
@@ -257,16 +285,19 @@ foreach($students as $key => $value){
                     rows++;
                 }
                 str += '</tbody></table>';
-                document.getElementById("main").innerHTML = str;
+                document.getElementById("main").insertAdjacentHTML("beforeend", str);  
             }
 
 
             let setFormData = (ele) => {
                 // grab list of <td> elements from input <tr> element
+                //console.log(ele);
+                const idx = ele.getAttribute("data-internalid");
+                //console.log(idx);
                 let tdList = ele.children;
-                const idx = tdList[0].innerHTML;
+                //const idx = tdList[0].innerHTML;
+                const student_name = tdList[0].innerHTML;
                 const student_email = tdList[1].innerHTML;
-                const student_name = tdList[2].innerHTML;
                 // set form data
                 for(let i = 0; i < rows - 1; i++){
                     // set all input html elements with a class of 'amt_students' to correct amount of students in the table

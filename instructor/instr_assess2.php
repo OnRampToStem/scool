@@ -23,7 +23,6 @@ $student_incomplete; // holds number of student's incomplete los
 
 // processing client form data when it is submitted
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-
     // receive post inputs
     $amt_students = $_POST["amt_students"];
     for($i = 1; $i <= $amt_students; $i++){
@@ -34,7 +33,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $student_incomplete = $_POST["student_incomplete_$i"];
         }
     }
-
 }
 
 ?>
@@ -43,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Assess Student</title>
+        <title>Student Evaluation</title>
         <link rel="stylesheet" href="../assets/css/instructor/instr_assess2.css" />
         <link rel="stylesheet" href="../assets/css/global/or2stem.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
@@ -51,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
-    <body onload='getChapterData("<?= $student_email; ?>");drawChart();'>
+    <body onload='initialize();'>
         <div id="app">
             <header>
                 <nav class="container">
@@ -75,44 +73,46 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </nav>
             </header>
 
-            <br>
-
             <main id="main">
-                <h1>Student Evaluation</h1>
-                <table id="student_table">
+                <div id="header-div">
+                    <h1><?= $_SESSION["selected_course_name"]; ?> <br> Student Evaluation</h1>
+                </div>
+
+                <div id="loading-div">
+                    LOADING...
+                </div>
+
+                <table id="student_table" style="display:none;">
                     <thead>
                         <tr>
-                            <th class="intro_th" scope="col">Email</th>
                             <th class="intro_th" scope="col">Name</th>
+                            <th class="intro_th" scope="col">Email</th>
                             <th class="intro_th" scope="col">Progress</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="intro_td"><?= $student_email; ?></td>
                             <td class="intro_td"><?= $student_name; ?></td>
+                            <td class="intro_td"><?= $student_email; ?></td>
                             <td class="intro_td"><div id="myChart"></div></td>
                         </tr>
                     </tbody>
                 </table>
-                <br><br>
             </main>
-
-            <br>
 
             <footer>
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href="instr_index1.php"><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="instr_index1.php" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="instr_index1.php">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -130,7 +130,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -141,6 +141,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let ch_count = 1; // global count of chapters displayed on table on load
             let chapter_clicked = []; // boolean pointers for each chapter button on table
             let section_clicked = []; // boolean pointers for each section button on table
+
+
+            let initialize = () => {
+                getChapterData("<?= $student_email; ?>");
+                drawChart();
+                document.getElementById("student_table").style.display = "";
+                document.getElementById("loading-div").style.display = "none";
+            }
 
 
             // fxn to pad a number for display purposes (time spent)

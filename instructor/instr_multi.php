@@ -8,12 +8,6 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     exit;
 }
 
-// if user account type is 'Mentor' redirect to main page
-if ($_SESSION["type"] === "Mentor") {
-    header("location: instr_index1.php");
-    exit;
-}
-
 // if user account type is not 'Instructor' then force logout
 if($_SESSION["type"] !== "Instructor"){
     header("location: ../register_login/logout.php");
@@ -53,7 +47,7 @@ pg_close($con);
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>View / Edit / Delete Assessments</title>
+        <title>Assessments</title>
         <link rel="stylesheet" href="../assets/css/instructor/instr_multi.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
@@ -84,14 +78,14 @@ pg_close($con);
                 </nav>
             </header>
 
-            <br>
+            <div>
+                <h1><?= $_SESSION["selected_course_name"]; ?></h1>
+            </div>
 
             <div id="assessments_div">
                 <div id="instr_div"></div>
                 <div id="public_div"></div>
             </div>
-
-            <br>
 
             <main id="main" style="display:none">
 
@@ -207,7 +201,9 @@ pg_close($con);
                     <p id="error_p" style="color:red"></p>
                     <button class="action_btn" onclick="editAssessment()">Edit Assessment</button>
                     <button class="action_btn" onclick="deleteAssessment()">Delete Assessment</button>
+                    <br>
                     <button class="action_btn" onclick="viewResults()">View Student's Results</button>
+                    <button class="action_btn" onclick="beginAssessmentProcess()">Preview Assessment</button>
                     <br>
                     <button class="action_btn" onclick="cancel()">Return</button>
                 </div>
@@ -225,6 +221,28 @@ pg_close($con);
             <br>
 
             <div id="students_results_div" style="display:none"></div>
+            <div id="assessment-info-div" style="display:none"></div>
+            <div id="content-div" style="display:none">
+                <div id="controls-div">
+                    <h2 id="questionCount"></h2>
+                    <div id="ul-div">
+                        <ul>
+                            <li><b>Please note that the questions are displayed in order, from what is displayed on the table from top to bottom.</b></li>
+                            <li><b>For example, row 1 might have learning outcome 1.2.3 & 2 questions total.</b></li>
+                            <li><b>For example, row 2 might have learning outcome 1.2.4 & 3 questions total.</b></li>
+                            <li><b>This means you will first see 2 questions of learning outcome 1.2.3, followed by 3 questions of learning outcome 1.2.4</b></li>
+                        </ul>
+                    </div>
+                    <div id="buttons-div">
+                        <button id="btn2" onclick="previous()">Previous Question</button>
+                        <button id="btn2" onclick="next()">Next Question</button>
+                    </div>
+                    <div class="timer-div">
+                        <h4 class="timer">Timer:</h4>
+                        <h4 class="timer" id="minutes">00</h4> : <h4 class="timer" id="seconds">00</h4>
+                    </div>
+                </div>
+            </div>
 
             <br>
 
@@ -232,15 +250,15 @@ pg_close($con);
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href="instr_index1.php"><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="instr_index1.php" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="instr_index1.php">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -258,7 +276,7 @@ pg_close($con);
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -272,7 +290,9 @@ pg_close($con);
             const public_assessments = <?= json_encode($public_assessments); ?>;
             let assessment; // used to hold entire row from pgsql db
             let assessment_content; // used to hold content json for row
-            let student_res_row_num = 1;
+
+            let counter = 0; // used as index for each question
+            let timerID; // holds the ID of the timer, used to stop the timer
 
 
             let displayAssessments = () => {
@@ -578,7 +598,6 @@ pg_close($con);
             let editAssessment = () => {
                 // check that current displayed assessment belongs to current logged-in instructor
                 if(assessment[1] === "<?= $_SESSION["email"]; ?>") {
-
                     // change header
                     document.getElementById("header").innerHTML = "Assessment Edit";
 
@@ -681,17 +700,23 @@ pg_close($con);
             let req4;
             let resultsObj;
             let viewResults = () => {
-                // XMLHttpRequest
-                req4 = new XMLHttpRequest();
-                req4.open('POST', 'pgsql/get_assessment_results.php', true);
-                req4.onreadystatechange = viewResultsResponse;
-                req4.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                req4.send(`assessment_name=${assessment[2]}`);
+                // check that current displayed assessment belongs to current logged-in instructor
+                if(assessment[1] === "<?= $_SESSION["email"]; ?>") {
+                    // XMLHttpRequest
+                    req4 = new XMLHttpRequest();
+                    req4.open('POST', 'pgsql/get_assessment_results.php', true);
+                    req4.onreadystatechange = viewResultsResponse;
+                    req4.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    req4.send(`assessment_name=${assessment[2]}`);
+                }
+                else {
+                    document.getElementById("error_p").innerHTML = "You do not own this assessment.";
+                }
             }
             let viewResultsResponse = () => {
                 if (req4.readyState == 4 && req4.status == 200) {
                     // receive response
-                    console.log(req4.responseText);
+                    //console.log(req4.responseText);
                     resultsObj = JSON.parse(req4.responseText);
 
                     let str;
@@ -707,34 +732,183 @@ pg_close($con);
                         str = '<h1>Student Results</h1>';
                         str += '<table id="student_results_table">';
                         str += '<thead><tr>';
-                        str += '<th class="th_res_1" scope="col">#</th>';
-                        str += '<th class="th_res_2" scope="col">Student Name</th>';
-                        str += '<th class="th_res_3" scope="col">Student Email</th>';
-                        str += '<th class="th_res_4" scope="col">Score</th>';
-                        str += '<th class="th_res_5" scope="col">Content</th>';
-                        str += '<th class="th_res_6" scope="col">Date Time Submitted</th>';
+                        str += '<th class="th_res_1" scope="col">Name</th>';
+                        str += '<th class="th_res_2" scope="col">Email</th>';
+                        str += '<th class="th_res_3" scope="col">Score</th>';
+                        str += '<th class="th_res_4" scope="col">Score Breakdown</th>';
+                        str += '<th class="th_res_5" scope="col">Date & Time Submitted</th>';
                         str += '</tr></thead>';
-
-                        str += '<tbody><tr>';
-
+                        str += '<tbody>';
                         // loop through the array of objects
                         resultsObj.forEach(function(element) {
-                            str += `<td class="td_res_1">${student_res_row_num}</td>`;
-                            str += `<td class="td_res_2">${element.student_name}</td>`;
-                            str += `<td class="td_res_3">${element.student_email}</td>`;
-                            str += `<td class="td_res_4" title="${Math.round((element.score / element.max_score) * 100)}%"> ${element.score} / ${element.max_score} </td>`;
-                            str += `<td class="td_res_5"><pre><code>${JSON.stringify(JSON.parse(element.content), undefined, 2)}</code></pre></td>`;
-                            str += `<td class="td_res_6">${element.date_time_submitted}</td>`;
-                            student_res_row_num++;
+                            str += '<tr>';
+                            str += `<td class="td_res_1">${element.student_name}</td>`;
+                            str += `<td class="td_res_2">${element.student_email}</td>`;
+                            str += `<td class="td_res_3" title="${Math.round((element.score / element.max_score) * 100)}%"> ${element.score} / ${element.max_score} </td>`;
+                            str += '<td class="td_res_4">';
+
+                            str += '<div id="score-breakdown-div">';
+                            const content = JSON.parse(element.content);
+                            for (let i = 0; i < content.length; i++) {
+                                str += '<div class="score-breakdown-inner-div">';
+                                str += `<a href="https://imathas.libretexts.org/imathas/embedq2.php?id=${content[i].id}" target="_blank">`;
+                                str += `LO: ${content[i].lo} &nbsp; Result: ${content[i].result} &nbsp; Max Score: ${content[i].max_score}`;
+                                str += '</a>';
+                                str += '</div>';
+                            }
+                            str += '</div>'
+
+                            str += '</td>';
+                            str += `<td class="td_res_5">${element.date_time_submitted}</td></tr>`;
                         });
 
-                        str += '</tr></tbody>'
+                        str += '</tbody>'
                         str += '</table>';
                     }
 
                     // display data
                     document.getElementById("students_results_div").innerHTML = str;
                     document.getElementById("students_results_div").style.display = "";
+                }
+            }
+
+
+            /* GET AND DISPLAY STUDENT ASSESSMENT RESULTS */
+            let req5;
+            let dynamic_ids;
+            const sequence_question = []; // list of problem numbers fed to the imathas
+            let beginAssessmentProcess = () => {
+                // check that current displayed assessment belongs to current logged-in instructor
+                if(assessment[1] === "<?= $_SESSION["email"]; ?>") {
+                    let str = `<h1><u>${assessment[2]}</u></h1>`;
+                    str += '<div id="ul-list-div">';
+                    str += '<ul>';
+                    str += `<li><h3>You have a total duration of ${assessment[4]} minutes to complete this assessment.</h3></li>`;
+                    str += `<li><h3>This assessment closes on: ${assessment[7]} ${assessment[8]}</h3></li>`;
+                    str += '<li><h3>The table below contains the learning outcomes that you will be assessed on. As well as the break-down on number of questions and points per question for each learning outcome.</h3></li>';
+                    str += '</ul>';
+                    str += '</div>';
+                    str += '<div id="assessment-info-lo"></div>';
+                    str += '<h3>To preview the test, click on the \'Preview\' button.</h3>';
+                    str += '<button id="btn1" onclick="previewAssessment()">Preview</button>';
+                    document.getElementById("assessment-info-div").innerHTML = str;
+                    document.getElementById("assessment-info-div").style.display = "";
+
+                    getDynamicIds();
+                }
+                else {
+                    document.getElementById("error_p").innerHTML = "You do not own this assessment.";
+                }
+            }
+            let getDynamicIds = () => {
+                    req5 = new XMLHttpRequest();
+                    req5.open('POST', 'pgsql/dynamic_ids.php', true);
+                    req5.onreadystatechange = getDynamicIdsResponse;
+                    req5.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    req5.send(`assessment_json=${JSON.stringify(assessment_content)}`);
+            }
+            let getDynamicIdsResponse = () => {
+                if (req5.readyState == 4 && req5.status == 200) {
+                    //console.log(req5.responseText);
+                    dynamic_ids = JSON.parse(req5.responseText);
+                    //console.log(dynamic_ids);
+                    initListQuestions();
+                    displayLoInfo();
+                    buildiFrame();
+                }
+            }
+            let initListQuestions = () => {
+                // loop through each key value pair in dynamic_ids
+                // each key represents a learning outcome
+                // each value contains an array containing the numPoints value, and ids of each question for the lo
+                for (const [key, value] of Object.entries(dynamic_ids)) {
+                    // loop through each id in value arr
+                    for (let i = 1; i < value.length; i++) {
+                        // push just the id into sequence_question (arr of only the ids)
+                        sequence_question.push(value[i]);
+                    }
+                }
+            }
+            const displayLoInfo = () => {
+                let str = '<table id="assessment-preview-tbl"><thead><tr>';
+                str += '<th scope="col">Chapter<br>Section<br>Learning Outcome</th>';
+                str += '<th scope="col">Number of Questions</th>';
+                str += '<th scope="col">Points per Question</th>';
+                str += '</tr></thead>';
+                str += '<tbody>';
+                let sums = [0, 0];
+                assessment_content.forEach(function(arrItem) {
+                    // sums
+                    sums[0] += arrItem.NumberQuestions;
+                    sums[1] += arrItem.NumberQuestions * arrItem.NumberPoints;
+
+                    str += '<tr>';
+                    // chapter mod
+                    let idx = arrItem.LearningOutcomeNumber.indexOf(".");
+                    let ch = parseInt(arrItem.LearningOutcomeNumber.slice(0, idx));
+                    // section mod
+                    let idx2 = arrItem.LearningOutcomeNumber.indexOf(".", idx + 1);
+                    let sec = parseInt(arrItem.LearningOutcomeNumber.slice(idx + 1, idx2));
+                    str += '<td>';
+                    str += `${ch}. ` + json_data_1[ch] + '<br>';
+                    str += `${ch}.${sec}. ` + json_data_1[ch + "." + sec] + '<br>';
+                    str += `${arrItem.LearningOutcomeNumber}. ${json_data_1[arrItem.LearningOutcomeNumber]}`;
+                    str += '</td>';
+                    str += `<td>${arrItem.NumberQuestions}</td>`;
+                    str += `<td>${arrItem.NumberPoints}</td>`;
+                    str += '<tr>';
+                });
+                str += '</tbody>';
+                str += '<tfoot><tr>';
+                str += '<td><b>Totals</b></td>';
+                str += `<td>${sums[0]}</td>`;
+                str += `<td>${sums[1]}</td>`;
+                str += '</tr></tfoot>';
+                str += '</table>';
+                str += `<h3 id="q-info-count">This assessment contains a total of ${sums[0]} questions and ${sums[1]} points possible.</h3>`;
+                document.getElementById("assessment-info-lo").innerHTML = str;
+            }
+            const buildiFrame = () => {
+                let iframe = document.createElement('iframe');
+                iframe.id = "frame";
+                iframe.title = "LibreTexts";
+                iframe.src = "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter];
+                iframe.width = "100%";
+                iframe.height = "1600px"; // was 900pc
+                document.getElementById('content-div').appendChild(iframe);
+            }
+            let previewAssessment = () => {
+                // start timer
+                timerID = startTimer();	
+                // clear and hide assessment-info display
+                document.getElementById("assessment-info-div").innerHTML= "";
+                document.getElementById("assessment-info-div").style.display = "none";
+                // unhide next btn & iframe
+                document.getElementById("content-div").style.display = "";
+                // display question number
+                document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
+            }
+
+            const previous = () => {
+                // making sure we are in the valid range and that the question has been answered before moving on
+                if (counter > 0) {
+                    // update counter
+                    counter--;
+                    // update iframe
+                    document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter]);
+                    // update question number
+                    document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
+                }
+            }
+            const next = () => {
+                // making sure we are in the valid range and that the question has been answered before moving on
+                if (counter + 1 < sequence_question.length) {
+                    // update counter
+                    counter++;
+                    // update iframe
+                    document.getElementById("frame").setAttribute("src", "https://imathas.libretexts.org/imathas/embedq2.php?id=" + sequence_question[counter]);
+                    // update question number
+                    document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
                 }
             }
 
@@ -882,6 +1056,30 @@ pg_close($con);
                 }
                 load_json_req_2.open("GET", "get/dynamic.json", true);
                 load_json_req_2.send();  
+            }
+
+
+            /* TIMER PORTION */
+            let startTimer = () => {
+                var sec = 0;
+                let pad = (val) => {
+                    return val > 9 ? val : "0" + val;
+                }
+                var timer = setInterval( function() {
+                    document.getElementById("seconds").innerHTML=pad(++sec%60);
+                    document.getElementById("minutes").innerHTML=pad(parseInt(sec/60,10));
+                }, 1000);
+                return timer;
+            }
+            // clearTimer stops the timer and resets the clock back to 0
+            let clearTimer = () => {
+                document.getElementById("seconds").innerHTML= "00";
+                document.getElementById("minutes").innerHTML= "00";
+                clearInterval(timerID);
+            } 
+            // stopTimer just stops the timer
+            let stopTimer = () => {
+                clearInterval(timerID);
             }
             
 

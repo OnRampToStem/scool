@@ -20,7 +20,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Instructor Course Page</title>
+        <title><?= $_SESSION['selected_course_name']; ?></title>
         <link rel="stylesheet" href="../assets/css/instructor/instr_index2.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
@@ -50,44 +50,37 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
                 </nav>
             </header>
 
-            <br>
-
             <main>
-                <h1><?= $_SESSION['selected_course_name']; ?> - <?= $_SESSION['selected_course_id'] ?></h1>
+                <div id="header-div">
+                    <h1><?= $_SESSION['selected_course_name']; ?></h1>
+                </div>
 
-                <button class="regular_button" onclick="redirectToInstrAssess()">
-                    Students Overview
-                </button>
+                <div class="btn-div">
+                    <button class="regular_button" onclick="redirectToInstrAssess()">Students Overview</button>
+                </div>
+                
+                <div class="btn-div">
+                    <button class="regular_button" onclick="redirectToInstrCreate()">Create an Assessment</button>
+                </div>
 
-                <br><br>
-
-                <button class="regular_button" onclick="redirectToInstrCreate()">
-                    Create an Assessment
-                </button>
-
-                <br><br>
-
-                <button class="regular_button" onclick="redirectToInstrView()">
-                    View / Edit / Delete an Assessment
-                </button>
-
+                <div class="btn-div">
+                    <button class="regular_button" onclick="redirectToInstrView()">Inspect an Assessment</button>
+                </div>
             </main>
-
-            <br><br>
 
             <footer>
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href="instr_index1.php" class="router-link-active"><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="instr_index1.php" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="instr_index1.php">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -105,7 +98,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -118,11 +111,13 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
             }
 
             let redirectToInstrCreate = () => {
-                window.location.href = "instr_create1.php";
+                if ("<?= $_SESSION["type"]; ?>" === "Instructor") window.location.href = "instr_create1.php";
+                else alert("Only Instructors have access to this functionality.");
             }
 
             let redirectToInstrView = () => {
-                window.location.href = "instr_multi.php";
+                if ("<?= $_SESSION["type"]; ?>" === "Instructor") window.location.href = "instr_multi.php";
+                else alert("Only Instructors have access to this functionality.");
             }
             
             // controlling the user profile dropdown

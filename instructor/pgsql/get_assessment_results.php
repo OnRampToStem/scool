@@ -14,10 +14,10 @@ if($_SESSION["type"] !== "Instructor"){
     exit;
 }
 
-$data = [];
-
 // processing client form data when it is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $data = [];
 
     // receive POST inputs
     $assessment_name = $_POST['assessment_name'];
@@ -32,10 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     while($row = pg_fetch_row($res)){
         $assoc_arr = array(
+            "student_name" => $row[4],
             "student_email" => $row[3],
-            "date_time_submitted" => $row[6],
             "score" => $row[7],
-            "content" => $row[8]
+            "max_score" => $row[8],
+            "content" => $row[9],
+            "date_time_submitted" => $row[10]
         );
         array_push($data, $assoc_arr);
     }

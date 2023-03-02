@@ -3,13 +3,13 @@
 session_start();
 
 // if user is not logged in then redirect them back to Fresno State Canvas
-if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
 // if user account type is not 'Instructor' or 'Mentor' then force logout
-if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor"){
+if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../register_login/logout.php");
     exit;
 }
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <link rel="stylesheet" href="../assets/css/global/global.css" />
         <link rel="stylesheet" href="../assets/css/global/footer.css" />
     </head>
-    <body onload="displayClasses()">
+    <body onload="initialize();">
         <div id="app">
             <header>
                 <nav class="container">
@@ -65,30 +65,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </nav>
             </header>
 
-            <br>
-
             <main>
-                <p><strong>Welcome to the On-Ramp to STEM Instructor Home Page!</strong></p>
-                <p><strong>Please select one of your courses below to continue.</strong></p>
+                <div id="header-div">
+                    <h1>Instructor Home Page</h1>
+                    <hr style="border: 1px solid black;">
+                </div>
 
-                <div id="classList"></div>
+                <div id="loading-div">
+                    LOADING...
+                </div>
+
+                <div id="class-list-div" style="display:none;">
+                    <h2>Inspect one of your courses.</h2>
+                </div>
+
+                <div id="static-dynamic-div" style="display:none;">
+                    <h2>Browse through Static or Dynamic questions.</h2>
+                    <button class="q-btn" onclick="redirect(0)">Static Questions</button>
+                    <button class="q-btn" onclick="redirect(1)">Dynamic Questions</button>
+                </div>
             </main>
-
-            <br><br>
 
             <footer>
                 <div class="container">
                     <div class="footer-top flex">
                         <div class="logo">
-                            <a href="" class="router-link-active"><p>On-Ramp to STEM</p></a>
+                            <a href=""><p>On-Ramp to STEM</p></a>
                         </div>
                         <div class="navigation">
                             <h4>Navigation</h4>
                             <ul>
-                                <li><a href="" class="router-link-active">Home</a></li>
-                                <li><a href="" class="">About Us</a></li>
-                                <li><a href="" class="">FAQ</a></li>
-                                <li><a href="" class="">Contact Us</a></li>
+                                <li><a href="">Home</a></li>
+                                <li><a href="../navigation/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
@@ -106,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </div>
                     </div>
                     <div class="footer-bottom">
-                        <p>© 2021-2022 OR2STEM Team</p>
+                        <p>© 2021-2023 OR2STEM Team</p>
                     </div>
                 </div>
             </footer>
@@ -118,21 +128,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const course_names = <?= json_encode($course_names); ?>;
             const course_ids = <?= json_encode($course_ids); ?>;
 
+            let initialize = () => {
+                displayClasses();
+                document.getElementById("class-list-div").style.display = "";
+                document.getElementById("static-dynamic-div").style.display = "";
+                document.getElementById("loading-div").style.display = "none";
+            }
+
             let displayClasses = () => {
                 let str = '<form id="myForm" action="" method="POST">';
-                str += '<input id="number" name="number" type="number" value="" hidden required>';
-                str += '<table id="classListTable"><thead><tr>';
-                str += '<th scope="col">Courses</th>';
-                str += '</tr></thead>';
-                str += '<tbody>';
+                str += '<input type="number" id="number" name="number" style="display: none;" />';
                 for (let i = 0; i < course_names.length; i++) {
-                    str += '<tr>'
-                    str += `<td onclick="submitForm(${i})">${course_names[i]} - ${course_ids[i]}</td>`;
-                    str += '</tr>';
+                    str += `<button type="button" class="q-btn" onclick="submitForm(${i})">${course_names[i]}</button>`;
                 }
-                str += '</tbody></table>';
                 str += '</form>';
-                document.getElementById("classList").innerHTML = str;
+                document.getElementById("class-list-div").insertAdjacentHTML('beforeend', str);
             }
 
             let submitForm = (int) => {
@@ -140,6 +150,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById("number").value = int;
                 // submit form
                 document.getElementById("myForm").submit();
+            }
+
+            let redirect = (idx) => {
+                if (idx) window.location.href = "./dynamic.php";
+                else window.location.href = "./static.php";
             }
    
             // controlling the user profile dropdown
