@@ -55,11 +55,11 @@ if($_SESSION["type"] !== "Learner"){
                 </div>
 
                 <div class="btn-div">
-                    <button class="regular_button" onclick="redirectToStudentBrowse()">Browse Available Questions</button>
+                    <button class="regular_button" onclick="redirectToStudentBrowse()">Browse Available Practice Questions</button>
                 </div>
                 
                 <div class="btn-div">
-                    <button class="regular_button" onclick="redirectToStudentAssessment()">Assessments</button>
+                    <button class="regular_button" onclick="redirectToStudentAssessment()">Browse Available Assessments</button>
                 </div>
             </main>
 
