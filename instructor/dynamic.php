@@ -419,7 +419,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
 
-                console.log(ch_digits);
+                //console.log(ch_digits);
 
                 getChapterOptions();
 
