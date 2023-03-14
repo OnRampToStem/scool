@@ -80,9 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
 
                 <div id="static-dynamic-div" style="display:none;">
-                    <h2>Browse through Static or Dynamic questions.</h2>
-                    <button class="q-btn" onclick="redirect(0)">Static Questions</button>
-                    <button class="q-btn" onclick="redirect(1)">Dynamic Questions</button>
+                    <h2>Browse through OpenStax or IMathAS questions.</h2>
+                    <button class="q-btn" onclick="redirect(0)">OpenStax Questions</button>
+                    <button class="q-btn" onclick="redirect(1)">IMathAS Questions</button>
                 </div>
             </main>
 
