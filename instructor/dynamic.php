@@ -14,17 +14,20 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor"){
     exit;
 }
 
-// globals
-$query; $res;
-$complete = "temp";
-$search_tags;
+/* PHP GLOBALS */
+$lo;
+$chapter = "Select a Chapter";
+$section = "Select a Section";
+$learningoutcome = "Select a Learning Outcome";
+$ready = false;
+
 $number;
 $learningoutcome_selected;
 $dynamic_ids = []; // list of all dynamic question ids extracted from db
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // accept POST input
-    $search_tags = $_POST["search_tags"]; // holds the lo selected (1.2.3)
+    $lo = $_POST["search_tags"]; // holds the lo selected (1.2.3)
     $number = $_POST["number"]; // holds max number of the lo selected
     $learningoutcome_selected = $_POST["learningoutcome_selected"];
 
@@ -32,11 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require_once "../register_login/config.php";
 
     // get rows at random with selected lo
-    $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$search_tags}'
+    $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$lo}'
               order by random() limit '{$number}';";
     $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
 
-    if (pg_num_rows($res) === 0) $complete = "false";
+    if (pg_num_rows($res) === 0) $ready = false;
     else {
         // push data into array
         while ($row = pg_fetch_row($res)) {
@@ -68,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             array_push($dynamic_ids, $row[0]);
         }
-        $complete = "true";
+        $ready = true;
     }
 }
 
@@ -78,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Dynamic Questions</title>
+        <title>IMathAS Questions</title>
         <link rel="stylesheet" href="../assets/css/instructor/dynamic.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
         <link rel="stylesheet" href="../assets/css/global/global.css" />
@@ -110,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <main>
                 <div id="group1">
-                    <h1>Dynamic Questions</h1>
+                    <h1>IMathAS Questions</h1>
 
                     <div id="loading-div">
                         LOADING...
@@ -237,14 +240,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById("loading-div").style.display = "none";
 
                 // checking if php process was run
-                if ("<?= $complete; ?>" === "true"){
+                if (<?= json_encode($ready); ?>) {
                     dynamic_ids = <?= json_encode($dynamic_ids); ?>;
                     buildiFrame();
                     document.getElementById("question-display-div").style.display = "";
                 }
-                else if ("<?= $complete; ?>" === "false") {
+                /*
+                else {
                     alert("There are no dynamic questions in the learning outcome you have selected.");
                 }
+                */
             }
 
 
