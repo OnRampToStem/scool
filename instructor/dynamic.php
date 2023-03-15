@@ -16,32 +16,35 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor"){
 
 /* PHP GLOBALS */
 $lo;
+$lo_quantity;
 $chapter = "Select a Chapter";
 $section = "Select a Section";
 $learningoutcome = "Select a Learning Outcome";
-$ready = false;
-
-$number;
-$learningoutcome_selected;
-$dynamic_ids = []; // list of all dynamic question ids extracted from db
+$ready = false;    // for initial page loading reasons
+$foundQuestions;   // for intial page loading reasons
+$dynamic_ids = []; // array of dynamic question ids
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // accept POST input
-    $lo = $_POST["search_tags"]; // holds the lo selected (1.2.3)
-    $number = $_POST["number"]; // holds max number of the lo selected
-    $learningoutcome_selected = $_POST["learningoutcome_selected"];
+    // accept POST inputs
+    $lo = $_POST["lo"];                                    // lo selected (1.2.3)
+    $lo_quantity = $_POST["lo_quantity"];                  // number of dynamic questions of the lo selected
+    $chapter = $_POST["chapter_selected"];                 // text name of chapter selected
+    $section = $_POST["section_selected"];                 // text name of section selected
+    $learningoutcome = $_POST["learningoutcome_selected"]; // text name of learning outcome selected
+
+    $ready = true; // indicate form was submitted
 
     // connect to the db
     require_once "../register_login/config.php";
 
     // get rows at random with selected lo
     $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$lo}'
-              order by random() limit '{$number}';";
+              order by random() limit '{$lo_quantity}';";
     $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
 
-    if (pg_num_rows($res) === 0) $ready = false;
+    if (pg_num_rows($res) === 0) $foundQuestions = false; // indicate no questions found
     else {
-        // push data into array
+        // loop through each row retrieved
         while ($row = pg_fetch_row($res)) {
             // add 0s to the front of the problem number if the length of the problem number is not 8
             if (strlen($row[0]) !== 8) {
@@ -71,10 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             array_push($dynamic_ids, $row[0]);
         }
-        $ready = true;
+        $foundQuestions = true; // indicate questions found
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -124,26 +126,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div id="group1_1" style="display:none;">
                         <div id="group1_1_1">
                             <h3>Chapter</h3>
-                            <select id="chapter_options" onchange="getSectionOptions();"></select>
+                            <select id="chapter_options" onchange="chapterHelper1();getSectionOptions();">
+                                <option selected="selected" disabled><?= $chapter; ?></option>
+                            </select>
                         </div>
                         <div id="group1_1_2">
                             <h3>Section</h3>
-                            <select id="section_options" onchange="getLoOptions();">
-                                <option selected="selected" disabled>Select a Section</option>
+                            <select id="section_options" onchange="sectionHelper1();getLoOptions();">
+                                <option selected="selected" disabled><?= $section; ?></option>
                             </select>                                
                         </div>
                         <div id="group1_1_3">
                             <h3>Learning Outcome</h3>
                             <select id="learningoutcome_options" onchange="setFormData();">
-                                <option selected="selected" disabled>Select a Learning Outcome</option>
+                                <option selected="selected" disabled><?= $learningoutcome; ?></option>
                             </select>
                         </div>
                     </div>
                    
                     <div id="form_div">
                         <form id="main_form" action="" method="post">
-                            <input id="search_tags" name="search_tags" type="text" style="display:none;">
-                            <input id="number" name="number" type="text" style="display:none;">
+                            <input id="lo" name="lo" type="text" style="display:none;">
+                            <input id="lo_quantity" name="lo_quantity" type="text" style="display:none;">
+                            <input id="chapter_selected" name="chapter_selected" type="text" style="display:none">
+                            <input id="section_selected" name="section_selected" type="text" style="display:none">
                             <input id="learningoutcome_selected" name="learningoutcome_selected" type="text" style="display:none;">
                             <input id="go_btn" type="submit" value="Go" style="display:none;">
                         </form>
@@ -153,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <hr id="hr" style="border: 1px dashed black; display: none;">
 
                 <div id="selected-lo-header-div" style="display: none;">
-                    <p><?= $learningoutcome_selected; ?></p>
+                    <p><?= $learningoutcome; ?></p>
                 </div>
 
                 <div id="question-display-div" style="display: none;">
@@ -162,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
 
                     <div id="content-div">
-                        <h1 id="question-count-h1"></h1>
+                        <h3 id="question-count-h1" style="text-decoration: underline;"></h3>
                     </div>
 
                     <div id="next-btn-div">
@@ -211,48 +217,112 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ////////////////
             // JS GLOBALS //
             ////////////////
-            let dynamic_json; // assoc arr of (lo => num) or ("1.2.3" => 15)
-            let dynamic_ids;  // arr holding each id pertaining to a selected lo
-            let counter = 0;
-            // used to make XMLHttpRequest
-            let ch_req;
-            let sec_req;
-            let lo_req;
-            // data
-            const ch_digits = [];
-            const sec_digits = [];
-            const lo_digits = [];
+            let dynamic_json;     // assoc arr of (lo => num) or ("1.2.3" => 15)
+            let dynamic_ids;      // arr holding each id pertaining to a selected lo
+            let counter = 0;      // counter to display questions
+            const ch_digits = []; // data
+            let chBool = false;
+            let secBool = false;
 
 
+
+            //////////////////////
+            // HELPER FUNCTIONS //
+            //////////////////////
+
+            const hideOrUnhide = () => {
+                document.getElementById("group1h3").style.display = "";
+                document.getElementById("group1_1").style.display = "";
+                document.getElementById("go_btn").style.display = "";
+                document.getElementById("loading-div").style.display = "none";
+            }
+
+            const readChapterDigit = () => {
+                let select = document.getElementById("chapter_options");
+                let chapter = select.options[select.selectedIndex].text;
+                let idx = chapter.indexOf(".");
+                return chapter.slice(0, idx);
+            }
+
+            const readSectionDigit = () => {
+                let select = document.getElementById("section_options");
+                let sectionText = select.options[select.selectedIndex].text;
+                let idx1 = sectionText.indexOf(".");
+                let idx2 = sectionText.indexOf(".", idx1 + 1);
+                return sectionText.slice(idx1 + 1, idx2);
+            }
+
+            const chapterHelper1 = () => {
+                chBool = true;
+            }
+            const chapterHelper2 = () => {
+                document.getElementById("mainSectionOption").innerHTML = "Select a Section";
+                if (document.getElementById("mainLoOption") !== null) {
+                    document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
+                }
+            }
+
+            const sectionHelper1 = () => {
+                secBool = true;
+            }
+            const sectionHelper2 = () => {
+                document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
+            }
 
 
 
             /////////////////
             // MAIN DRIVER //   
             /////////////////
-
             let initialize = () => {
+                // load the JSON which then loads the chapter options
                 loadJSON();
-                getChapterOptions();
-                document.getElementById("group1h3").style.display = "";
-                document.getElementById("group1_1").style.display = "";
-                document.getElementById("go_btn").style.display = "";
-                document.getElementById("loading-div").style.display = "none";
 
-                // checking if php process was run
+                // hide or unhide elements
+                hideOrUnhide();
+
+                // only run this code if Go button was pressed
                 if (<?= json_encode($ready); ?>) {
-                    dynamic_ids = <?= json_encode($dynamic_ids); ?>;
-                    buildiFrame();
-                    document.getElementById("question-display-div").style.display = "";
+                    // found questions in selected lo
+                    if (<?= json_encode($foundQuestions); ?>) {
+                        // extract the dynamic ids from php
+                        dynamic_ids = <?= json_encode($dynamic_ids); ?>;
+
+                        // build the iFrame
+                        buildiFrame();
+
+                        // get the chapter digit
+                        let chapterDigit = readChapterDigit();
+                        //console.log(`Chapter digit: ${chapterDigit}`);
+                        getSectionOptions(chapterDigit);
+
+                        // get the section digit
+                        let sectionDigit = readSectionDigit();
+                        //console.log(`Section digit: ${sectionDigit}`);
+                        getLoOptions(chapterDigit, sectionDigit);
+
+                        // display the questions
+                        document.getElementById("question-display-div").style.display = "";
+                    }
+                    // no questions found in selected lo
+                    else {
+                        // get the chapter digit
+                        let chapterDigit = readChapterDigit();
+                        //console.log(`Chapter digit: ${chapterDigit}`);
+                        getSectionOptions(chapterDigit);
+
+                        // get the section digit
+                        let sectionDigit = readSectionDigit();
+                        //console.log(`Section digit: ${sectionDigit}`);
+                        getLoOptions(chapterDigit, sectionDigit);
+
+                        alert("There are no IMathAS questions in the learning outcome you have selected. Please select a different learning outcome.");
+                    }
                 }
-                /*
                 else {
-                    alert("There are no dynamic questions in the learning outcome you have selected.");
+                    console.log("Initial page load.");
                 }
-                */
             }
-
-
 
 
 
@@ -267,17 +337,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 let pos1 = select.indexOf(".");
                 let pos2 = select.indexOf(".", pos1 + 1);
                 let pos3 = select.indexOf(".", pos2 + 1);
-                var learningoutcomeNumber = select.slice(0, pos3);
-                document.getElementById("search_tags").value = learningoutcomeNumber;
+                let learningoutcomeNumber = select.slice(0, pos3);
+                document.getElementById("lo").value = learningoutcomeNumber;
+
+                // lo quantity
+                document.getElementById("lo_quantity").value = dynamic_json[learningoutcomeNumber];
+
+                // chapter name 
+                select = document.getElementById("chapter_options");
+                document.getElementById("chapter_selected").value = select.options[select.selectedIndex].text;
+
+                // section name
+                select = document.getElementById("section_options");
+                document.getElementById("section_selected").value = select.options[select.selectedIndex].text;
 
                 // learning outcome name
                 select = document.getElementById("learningoutcome_options");
                 document.getElementById("learningoutcome_selected").value = select.options[select.selectedIndex].text;
-
-                // number of dynamic questions for the selected learning outcome
-                document.getElementById("number").value = dynamic_json[learningoutcomeNumber];
             }
-
 
             const buildiFrame = () => {
                 let iframe = document.createElement('iframe');
@@ -292,7 +369,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById("hr").style.display = "";
                 document.getElementById("selected-lo-header-div").style.display = "";
             }
-
 
             const next = () => {
                 // making sure we are in the valid range and that the question has been answered before moving on
@@ -320,116 +396,109 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
-
             ////////////////////////////////////////////////////
             // CHAPTER, SECTION, & LEARNING OUTCOME SELECTION //
             ////////////////////////////////////////////////////
 
-            // getting all chapters from openStax.json          
+            // getting all chapters from openStax.json  
+            let ch_req;        
             let getChapterOptions = () => {
+                console.log("Getting all chapter options...");
                 ch_req = new XMLHttpRequest();
                 ch_req.open('POST', './get/ch_names_3.php', true);
                 ch_req.onreadystatechange = getChapterOptionsResponse;
                 ch_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 ch_req.send("chs=" + JSON.stringify(ch_digits));
             }
-            let getChapterOptionsResponse = () =>{
+            let getChapterOptionsResponse = () => {
                 if (ch_req.readyState == 4 && ch_req.status == 200) {
-                    // receive response
                     //console.log("PHP sent back: " + ch_req.responseText);
                     let ch_obj = JSON.parse(ch_req.responseText);
-                    
-                    // now display the chapters data
-                    let str = '<option selected="selected" disabled>Select a Chapter</option>';
-                    for(const [key, value] of Object.entries(ch_obj)) {
-                        str += `<option value="${key}">${key}. ${value}</option>`;
+
+                    // display the chapters data options
+                    let str = '<option selected="selected" disabled>' + "<?= $chapter; ?>" + '</option>';
+                    for (const [key, value] of Object.entries(ch_obj)) {
+                        str += `<option>${key}. ${value}</option>`; //value="${key}"
                     }
                     document.getElementById("chapter_options").innerHTML = str;
                 }
             }   
 
-            // getting all sections from selected chapter from openStax.json    
-            let getSectionOptions = () => {
+            // getting all sections from selected chapter from openStax.json  
+            let sec_req; 
+            let getSectionOptions = (chapterDigit) => {
+                console.log("Getting all section options...");
                 sec_req = new XMLHttpRequest();
                 sec_req.open('POST', './get/sec_names_1.php', true);
                 sec_req.onreadystatechange = getSectionOptionsResponse;
                 sec_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                let select = document.getElementById("chapter_options");
-                let chapter = select.options[select.selectedIndex].value;
-                sec_req.send("chapter=" + chapter);
+                if (chapterDigit === undefined) {
+                    sec_req.send("chapter=" + readChapterDigit());
+                }
+                else {
+                    sec_req.send("chapter=" + chapterDigit);
+                }
             }
-            let getSectionOptionsResponse = () =>{
+            let getSectionOptionsResponse = () => {
                 if (sec_req.readyState == 4 && sec_req.status == 200) {
-                    // receive response
                     //console.log("PHP sent back: " + sec_req.responseText);
                     let sec_obj = JSON.parse(sec_req.responseText);
-                    
+
                     // now display the sections data
-                    let str = '<option selected="selected" disabled>Select a Section</option>';
-                    for(const [key, value] of Object.entries(sec_obj)){
-                        let sec_num = key.slice(key.indexOf('.') + 1, key.length);
-                        str += `<option value="${sec_num}">${key}. ${value}</option>`;
+                    let str = '<option id="mainSectionOption" selected="selected" disabled>' + "<?= $section; ?>" + '</option>';
+                    for (const [key, value] of Object.entries(sec_obj)) {
+                        //let sec_num = key.slice(key.indexOf('.') + 1, key.length);
+                        str += `<option>${key}. ${value}</option>`; //value="${sec_num}"
                     }
                     document.getElementById("section_options").innerHTML = str;
 
-                    // resetting lo options for better user experience
-                    document.getElementById("learningoutcome_options").innerHTML = '<option selected="selected" disabled>Select a Learning Outcome</option>';
+                    if (chBool) {
+                        chBool = false;
+                        chapterHelper2();
+                    }
                 }
             }   
 
-            // getting all los from selected section from openStax.json     
-            let getLoOptions = () =>{
+            // getting all los from selected section from openStax.json    
+            let lo_req; 
+            let getLoOptions = (chapterDigit, sectionDigit) => {
+                console.log("Getting all learning outcome options...");
                 lo_req = new XMLHttpRequest();
                 lo_req.open('POST', './get/lo_names_1.php', true);
                 lo_req.onreadystatechange = getLoOptionsResponse;
                 lo_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                let select = document.getElementById("chapter_options");
-                let chapter = select.options[select.selectedIndex].value;
-                select = document.getElementById("section_options");
-                let section = select.options[select.selectedIndex].value;
-                lo_req.send("chapter=" + chapter + "&section=" + section);
-            }
-            let getLoOptionsResponse = () =>{
-                if (lo_req.readyState == 4 && lo_req.status == 200) {
-                    // receive response
-                    //console.log("PHP sent back: " + lo_req.responseText);
-                    let lo_obj = JSON.parse(lo_req.responseText);
-                    
-                    // now display the lo data
-                    let str = '<option selected="selected" disabled>Select a Learning Outcome</option>';
-                    for(const [key, value] of Object.entries(lo_obj)){
-                        let lo_num = key.slice(key.indexOf('.', key.indexOf('.') + 1) + 1, key.length);
-                        str += `<option value="${lo_num}">${key}. ${value}</option>`;
-                    }
-                    document.getElementById("learningoutcome_options").innerHTML = str;
+                if (chapterDigit === undefined && sectionDigit === undefined) {
+                    lo_req.send("chapter=" + readChapterDigit() + "&section=" + readSectionDigit());
+                }
+                else {
+                    lo_req.send("chapter=" + chapterDigit + "&section=" + sectionDigit);
                 }
             }
+            let getLoOptionsResponse = () => {
+                if (lo_req.readyState == 4 && lo_req.status == 200) {
+                    //console.log("PHP sent back: " + lo_req.responseText);
+                    let lo_obj = JSON.parse(lo_req.responseText);
 
+                    // now display the lo data
+                    let str = '<option id="mainLoOption" selected="selected" disabled>' + "<?= $learningoutcome; ?>" + '</option>';
+                    for(const [key, value] of Object.entries(lo_obj)){
+                        //let lo_num = key.slice(key.indexOf('.', key.indexOf('.') + 1) + 1, key.length);
+                        str += `<option>${key}. ${value}</option>`; //value="${lo_num}"
+                    }
+                    document.getElementById("learningoutcome_options").innerHTML = str;
 
+                    if (secBool) {
+                        secBool = false;
+                        sectionHelper2();
+                    }
+                }
+            }
 
 
 
             ///////////////////////////////
             // BACKGROUND FUNCTIONALITES //
             ///////////////////////////////
-
-            let workJSON = () => {
-
-                for (const prop in dynamic_json) {
-                    let idx1 = prop.indexOf(".");
-                    let ch_digit = prop.slice(0, idx1);
-                    if (!ch_digits.includes(ch_digit) && dynamic_json[prop] !== 0) {
-                        ch_digits.push(ch_digit);
-                    }
-                }
-
-                //console.log(ch_digits);
-
-                getChapterOptions();
-
-            }
-
 
             let loadJSON = () => {
                 let load_json_req = new XMLHttpRequest();
@@ -443,6 +512,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
                 load_json_req.open("GET", "get/dynamic.json", true);
                 load_json_req.send();  
+            }
+
+            let workJSON = () => {
+                for (const prop in dynamic_json) {
+                    let idx1 = prop.indexOf(".");
+                    let ch_digit = prop.slice(0, idx1);
+                    if (!ch_digits.includes(ch_digit) && dynamic_json[prop] !== 0) {
+                        ch_digits.push(ch_digit);
+                    }
+                }
+                //console.log(ch_digits);
+                getChapterOptions();
             }
 
             // controlling the user profile dropdown
