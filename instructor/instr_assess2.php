@@ -19,7 +19,7 @@ $amt_students; // value used to accept unique student_email post input
 $student_email; // holds student's email
 $student_name; // holds student's full name
 $student_complete; // holds number of student's complete los
-$student_incomplete; // holds number of student's incomplete los
+$student_total; // holds number of student's total los
 
 // processing client form data when it is submitted
 if($_SERVER["REQUEST_METHOD"] === "POST"){
@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $student_email = $_POST["student_email_$i"];
             $student_name = $_POST["student_name_$i"];
             $student_complete = $_POST["student_complete_$i"];
-            $student_incomplete = $_POST["student_incomplete_$i"];
+            $student_total = $_POST["student_incomplete_$i"];
         }
     }
 }
@@ -389,11 +389,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     var data = google.visualization.arrayToDataTable([
                         ['Status', 'Learning Outcomes'],
                         ['Complete', <?= $student_complete; ?>],
-                        ['Incomplete', <?= $student_incomplete; ?>],
+                        ['Remaining', <?= $student_total - $student_complete; ?> ],
                     ]);
 
                     var options = {
-                        colors: ['green', 'red'],
+                        colors: ['green', 'white'],
+                        pieSliceBorderColor: 'black',
                         legend: 'none'
                     };
 

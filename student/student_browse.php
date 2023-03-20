@@ -15,7 +15,7 @@ if($_SESSION["type"] !== "Learner"){
 }
 
 /* GLOBALS */
-$search_tags = "";               // represents the lo being searched for
+$lo = "";                        // represents the lo being searched for
 $selected_questions = "";        // represents the json response string
 $final_selected_questions = "";  // represents the final selected json response string
 $already_selected = false;       // used to keep track if questions have already been selected
@@ -47,7 +47,7 @@ $learningoutcome_time = 0;
 if($_SERVER["REQUEST_METHOD"] === "POST"){
                 
     // receiving inputs from user
-    $search_tags = $_POST["search_tags"];                              // holds the lo selected (1.2.3)
+    $lo = $_POST["search_tags"];                                       // holds the lo selected (1.2.3)
     $chapter_selected = $_POST["chapter_selected"];                    // holds the chapter text selected (1. Functions)
     $section_selected = $_POST["section_selected"];                    // holds the section text selected (1.2. Domain and Range)
     $learningoutcome_selected = $_POST["learningoutcome_selected"];    // holds the lo text selected (1.2.3. Finding Domain and Range from Graphs)
@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     // loop through the questions once to determine if there are already selected questions
     // for the lo being searched for
     foreach($json_data as $question){
-        if($question["selected"] === "true" && $question["tags"] === $search_tags){
+        if($question["selected"] === "true" && $question["tags"] === $lo){
             $already_selected = true;
             break;
         }
@@ -81,7 +81,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         foreach($json_data as $question){
 
             // insert all questions into $selected_questions if lo matches
-            if($question["tags"] === $search_tags){
+            if($question["tags"] === $lo){
                 $selected_questions .= '{"pkey":' . $question["pkey"] . ', "title":"' . $question["title"] . '", "text":"' . $question["text"] . '", "pic":"' . $question["pic"] . '", "numTries":"' . $question["numTries"] . '", "options":[';
                 // inserting options
                 for($i = 0; $i < count($question["options"]); $i++){
@@ -525,7 +525,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         foreach($json_data as $question){
 
             // insert the question into json response string($final_selected_questions) if tags match
-            if($question["tags"] === $search_tags && $question["selected"] == "true"){
+            if($question["tags"] === $lo && $question["selected"] == "true"){
                 $final_selected_questions .= '{"pkey":' . $question["pkey"] . ', "title":"' . $question["title"] . '", "text":"' . $question["text"] . '", "pic":"' . $question["pic"] . '", "numTries":"' . $question["numTries"] . '", "options":[';
                 // inserting options
                 for($i = 0; $i < count($question["options"]); $i++){
@@ -731,18 +731,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 <div id="group1_1">
                     <div id="group1_1_1">
                         <p><strong>Chapter</strong></p>
-                        <select id="chapter_options" onchange="getSectionOptions();"></select>
+                        <select id="chapter_options" onchange="chapterHelper1();getSectionOptions();">
+                            <option selected="selected" disabled><?= $chapter_selected; ?></option>
+                        </select>
                     </div>
                     <div id="group1_1_2">
                         <p><strong>Section</strong></p>
-                        <select id="section_options" onchange="getLoOptions();">
-                            <option>Select a Section</option>
+                        <select id="section_options" onchange="sectionHelper1();getLoOptions();">
+                            <option selected="selected" disabled><?= $section_selected; ?></option>
                         </select>                                
                     </div>
                     <div id="group1_1_3">
                         <p><strong>Learning Outcome</strong></p>
                         <select id="learningoutcome_options">
-                            <option>Select a Learning Outcome</option>
+                            <option selected="selected" disabled><?= $learningoutcome_selected; ?></option>
                         </select>
                     </div>
                 </div>
@@ -935,14 +937,56 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
 
         <script type="text/javascript">
-            /* GLOBALS */
-            let obj; // obj will hold at least 1 math question from individual student static questions json file
-            let index = 0; // index of questions inside of obj being displayed (one at a time)
-            let totalQuestions; // holds total amount of questions currently in obj
-            let correctAnswer; // holds the single correct answer option from options for the current question
+            ////////////////
+            // JS GLOBALS //
+            ////////////////
+            let obj;                    // obj will hold at least 1 math question from individual student static questions json file
+            let index = 0;              // index of questions inside of obj being displayed (one at a time)
+            let totalQuestions;         // holds total amount of questions currently in obj
+            let correctAnswer;          // holds the single correct answer option from options for the current question
             let numCurrentAttempts = 0; // holds the number of current attempts for the current question
-            let timerID; // holds the ID of the timer, used to stop the timer
-            let startDate; // will contain the start timestamp of a question
+            let timerID;                // holds the ID of the timer, used to stop the timer
+            let startDate;              // will contain the start timestamp of a question
+            let chBool = false;
+            let secBool = false;
+
+
+
+            //////////////////////
+            // HELPER FUNCTIONS //
+            //////////////////////
+
+            const readChapterDigit = () => {
+                let select = document.getElementById("chapter_options");
+                let chapter = select.options[select.selectedIndex].text;
+                let idx = chapter.indexOf(".");
+                return chapter.slice(0, idx);
+            }
+
+            const readSectionDigit = () => {
+                let select = document.getElementById("section_options");
+                let sectionText = select.options[select.selectedIndex].text;
+                let idx1 = sectionText.indexOf(".");
+                let idx2 = sectionText.indexOf(".", idx1 + 1);
+                return sectionText.slice(idx1 + 1, idx2);
+            }
+
+            const chapterHelper1 = () => {
+                chBool = true;
+            }
+            const chapterHelper2 = () => {
+                document.getElementById("mainSectionOption").innerHTML = "Select a Section";
+                if (document.getElementById("mainLoOption") !== null) {
+                    document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
+                }
+            }
+
+            const sectionHelper1 = () => {
+                secBool = true;
+            }
+            const sectionHelper2 = () => {
+                document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
+            }
 
 
             // hide or display key webpage elements
@@ -953,8 +997,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 document.getElementById("main").style.display = "";
             }
 
-
-            /* TIMER PORTION */
+            ///////////////////
+            // TIMER PORTION //
+            ///////////////////
             let startTimer = () => {
                 var sec = 0;
                 let pad = (val) => {
@@ -1658,9 +1703,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
             // getting all chapters from openStax.json
-            let ch_req;              
-            let ch_obj;            
+            let ch_req;                        
             let getChapterOptions = () => {
+                console.log("Getting all chapter options...");
                 ch_req = new XMLHttpRequest();
                 ch_req.open('POST', 'learning_map/get_chapters.php', true);
                 ch_req.onreadystatechange = getChapterOptionsResponse;
@@ -1670,99 +1715,111 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let getChapterOptionsResponse = () =>{
                 if (ch_req.readyState == 4 && ch_req.status == 200) {
                     //console.log("PHP sent back: " + ch_req.responseText);
-                    ch_obj = JSON.parse(ch_req.responseText);
-                    displayChapterOptions();
+                    let ch_obj = JSON.parse(ch_req.responseText);
+
+                    // display the received chapter options
+                    let str = '<option id="ch_option_1" selected="selected" disabled>' + "<?= $chapter_selected; ?>" + '</option>';
+                    let i = 2;
+                    for (const [key, value] of Object.entries(ch_obj)) {
+                        let temp = value.slice(1, value.length);
+                        if (value[0] === 'A') {
+                            str += `<option id="ch_option_${i}" value="${key}">${key}. ${temp}</option>`;
+                        } 
+                        else {
+                            str += `<option id="ch_option_${i}" value="${key}" disabled>${key}. ${temp}</option>`;
+                        }
+                        i++;
+                    }
+                    document.getElementById("chapter_options").innerHTML = str;
                 }
             }   
-            let displayChapterOptions = () => {
-                let str = '<option id="ch_option_1" selected="selected" disabled>Select a Chapter</option>';
-                let i = 2;
-                for(const [key, value] of Object.entries(ch_obj)) {
-                    let temp = value.slice(1, value.length);
-                    if(value[0] === 'A') {
-                        str += `<option id="ch_option_${i}" value="${key}">${key}. ${temp}</option>`;
-                    } 
-                    else {
-                        str += `<option id="ch_option_${i}" value="${key}" disabled>${key}. ${temp}</option>`;
-                    }
-                    i++;
-                }
-                document.getElementById("chapter_options").innerHTML = str;
-            }
 
             // getting all sections from selected chapter from openStax.json
-            let sec_req;
-            let sec_obj;         
-            let getSectionOptions = () => {
+            let sec_req;      
+            let getSectionOptions = (chapterDigit) => {
+                console.log("Getting all section options...");
                 sec_req = new XMLHttpRequest();
                 sec_req.open('POST', 'learning_map/get_sections.php', true);
                 sec_req.onreadystatechange = getSectionOptionsResponse;
                 sec_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                let select = document.getElementById("chapter_options");
-                let chapter = select.options[select.selectedIndex].value;
-                sec_req.send("chapter=" + chapter);
+                if (chapterDigit === undefined) {
+                    sec_req.send("chapter=" + readChapterDigit());
+                }
+                else {
+                   sec_req.send("chapter=" + chapterDigit);
+                }
             }
             let getSectionOptionsResponse = () =>{
                 if (sec_req.readyState == 4 && sec_req.status == 200) {
                     //console.log("PHP sent back: " + sec_req.responseText);
-                    sec_obj = JSON.parse(sec_req.responseText);
-                    displaySectionOptions();
+                    let sec_obj = JSON.parse(sec_req.responseText);
+
+                    // display the received section options
+                    let str = '<option id="mainSectionOption" selected="selected" disabled>' + "<?= $section_selected; ?>" + '</option>';
+                    let i = 2;
+                    for(const [key, value] of Object.entries(sec_obj)){
+                        let sec_num = key.slice(key.indexOf('.') + 1, key.length);
+                        let temp = value.slice(1, value.length);
+                        if(value[0] === 'A') {
+                            str += `<option id="sec_option_${i}" value="${sec_num}">${key}. ${temp}</option>`;
+                        } 
+                        else {
+                            str += `<option id="sec_option_${i}" value="${sec_num}" disabled>${key}. ${temp}</option>`;
+                        }
+                        i++;
+                    }
+                    document.getElementById("section_options").innerHTML = str;
+
+
+                    if (chBool) {
+                        chBool = false;
+                        chapterHelper2();
+                    }
                 }
             }   
-            let displaySectionOptions = () =>{
-                let str = '<option id="sec_option_1" selected="selected" disabled>Select a Section</option>';
-                let i = 2;
-                for(const [key, value] of Object.entries(sec_obj)){
-                    let sec_num = key.slice(key.indexOf('.') + 1, key.length);
-                    let temp = value.slice(1, value.length);
-                    if(value[0] === 'A') {
-                        str += `<option id="sec_option_${i}" value="${sec_num}">${key}. ${temp}</option>`;
-                    } 
-                    else {
-                        str += `<option id="sec_option_${i}" value="${sec_num}" disabled>${key}. ${temp}</option>`;
-                    }
-                    i++;
-                }
-                document.getElementById("section_options").innerHTML = str;
-            }
 
             // getting all los from selected section from openStax.json
-            let lo_req;         
-            let lo_obj;        
-            let getLoOptions = () =>{
+            let lo_req;                
+            let getLoOptions = (chapterDigit, sectionDigit) => {
+                console.log("Getting all lo options...");
                 lo_req = new XMLHttpRequest();
                 lo_req.open('POST', 'learning_map/get_los.php', true);
                 lo_req.onreadystatechange = getLoOptionsResponse;
                 lo_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                let select = document.getElementById("chapter_options");
-                let chapter = select.options[select.selectedIndex].value;
-                select = document.getElementById("section_options");
-                let section = select.options[select.selectedIndex].value;
-                lo_req.send("chapter=" + chapter + "&section=" + section);
+                if (chapterDigit === undefined && sectionDigit === undefined) {
+                    lo_req.send("chapter=" + readChapterDigit() + "&section=" + readSectionDigit());
+                }
+                else {
+                    lo_req.send("chapter=" + chapterDigit + "&section=" + sectionDigit);
+                }
             }
             let getLoOptionsResponse = () =>{
                 if (lo_req.readyState == 4 && lo_req.status == 200) {
                     //console.log("PHP sent back: " + lo_req.responseText);
-                    lo_obj = JSON.parse(lo_req.responseText);
-                    displayLoOptions();
+                    let lo_obj = JSON.parse(lo_req.responseText);
+
+                    // display the received lo options
+                    let str = '<option id="mainLoOption" selected="selected" disabled>' + "<?= $learningoutcome_selected; ?>" + '</option>';
+                    i = 2;
+                    for(const [key, value] of Object.entries(lo_obj)){
+                        let lo_num = key.slice(key.indexOf('.', key.indexOf('.') + 1) + 1, key.length);
+                        let temp = value.slice(1, value.length);
+                        if(value[0] === 'A') {
+                            str += `<option id="lo_option_${i}" value="${lo_num}">${key}. ${temp}</option>`;
+                        } 
+                        else {
+                            str += `<option id="lo_option_${i}" value="${lo_num}" disabled>${key}. ${temp}</option>`;
+                        }
+                        i++;
+                    }
+                    document.getElementById("learningoutcome_options").innerHTML = str;
+
+                    if (secBool) {
+                        secBool = false;
+                        sectionHelper2();
+                    }
                 }
             }   
-            let displayLoOptions = () =>{
-                let str = '<option id="lo_option_1" selected="selected" disabled>Select a Learning Outcome</option>';
-                i = 2;
-                for(const [key, value] of Object.entries(lo_obj)){
-                    let lo_num = key.slice(key.indexOf('.', key.indexOf('.') + 1) + 1, key.length);
-                    let temp = value.slice(1, value.length);
-                    if(value[0] === 'A') {
-                        str += `<option id="lo_option_${i}" value="${lo_num}">${key}. ${temp}</option>`;
-                    } 
-                    else {
-                        str += `<option id="lo_option_${i}" value="${lo_num}" disabled>${key}. ${temp}</option>`;
-                    }
-                    i++;
-                }
-                document.getElementById("learningoutcome_options").innerHTML = str;
-            }
 
 
             let ch;
@@ -2216,7 +2273,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 // refresh page
                 window.location.href = "student_browse.php";
             }
-            else if ("<?= $complete; ?>" === "true"){
+            else if ("<?= $complete; ?>" === "true") {
+
+                // get the chapter digit
+                let chapterDigit = readChapterDigit();
+                //console.log(`Chapter digit: ${chapterDigit}`);
+                getSectionOptions(chapterDigit);
+
+                // get the section digit
+                let sectionDigit = readSectionDigit();
+                //console.log(`Section digit: ${sectionDigit}`);
+                getLoOptions(chapterDigit, sectionDigit);
+
                 showDisplay();
                 parseData();
             }

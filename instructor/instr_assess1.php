@@ -87,7 +87,7 @@ foreach($students as $key => $value){
     $data2 = array(); // php assoc arr holding "lo num" => "total number of static questions in rel to that lo num"
     $maxNumberAssessment = 5; // assuming data from openStax.json file remains the same, each lo should have max of 5
     $complete = 0; // counter for complete static questions
-    $incomplete = 0; // counter for incomplete static questions
+    $total = 0; // counter for total static questions
 
     // loop through each student's respective static questions
     foreach($json_data as $question){
@@ -131,11 +131,10 @@ foreach($students as $key => $value){
             if($data1[$k] >= $maxNumberAssessment){
                 $complete++;
             } 
-            // if the count of complete questions for that lo is less than $maxNumberAssessment then increment count of
-            // $incomplete
-            else {
-                $incomplete++;
-            }
+
+            // update total
+            $total++;
+
         } 
         // if the total num of static questions ($v) is less than $maxNumberAssessment
         else {
@@ -144,16 +143,14 @@ foreach($students as $key => $value){
             if($data1[$k] >= $v){
                 $complete++;
             } 
-            // if the count of complete questions for that lo is less than the total num of static questions for that
-            // given lo, then increment $incomplete
-            else {
-                $incomplete++;
-            }
+
+            // update total
+            $total++;
         }
     }
 
     // once loop is done, save the data in $students_data, to be used in JS
-    $students_data[$value] = [$complete, $incomplete];
+    $students_data[$value] = [$complete, $total];
 
 }
 
@@ -328,11 +325,12 @@ foreach($students as $key => $value){
                     var data = google.visualization.arrayToDataTable([
                         ['Status', 'Learning Outcomes'],
                         ['Complete', students_data[student_emails[num - 1]][0]],
-                        ['Incomplete', students_data[student_emails[num - 1]][1]],
+                        ['Remaining', students_data[student_emails[num - 1]][1] - students_data[student_emails[num - 1]][0]]
                     ]);
 
                     var options = {
-                        colors: ['green', 'red'],
+                        colors: ['green', 'white'],
+                        pieSliceBorderColor: 'black',
                         legend: 'none'
                     };
 

@@ -230,13 +230,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // HELPER FUNCTIONS //
             //////////////////////
 
-            const hideOrUnhide = () => {
-                document.getElementById("group1h3").style.display = "";
-                document.getElementById("group1_1").style.display = "";
-                document.getElementById("go_btn").style.display = "";
-                document.getElementById("loading-div").style.display = "none";
-            }
-
             const readChapterDigit = () => {
                 let select = document.getElementById("chapter_options");
                 let chapter = select.options[select.selectedIndex].text;
@@ -267,6 +260,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             const sectionHelper2 = () => {
                 document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
+            }
+
+            const hideOrUnhide = () => {
+                document.getElementById("group1h3").style.display = "";
+                document.getElementById("group1_1").style.display = "";
+                document.getElementById("go_btn").style.display = "";
+                document.getElementById("loading-div").style.display = "none";
             }
 
 
