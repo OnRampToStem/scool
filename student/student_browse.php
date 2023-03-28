@@ -1047,15 +1047,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 // count the total number of questions in the learning objective obj
                 totalQuestions = obj.length;
                 // then store the correctAnswers
-                storeCorrectAnswers();
+                storeCorrectAnswersAndShuffle();
                 // then display the data
                 displayData();
             }
 
 
-            const storeCorrectAnswers = () => {
+            const storeCorrectAnswersAndShuffle = () => {
                 // loop through each question in obj
                 for (let i = 0; i < obj.length; i++) {
+
                     // get the correct index
                     let correctIndex = 0;
                     for (let j = 0; j < obj[i]["rightAnswer"].length; j++) {
@@ -1064,8 +1065,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         }
                         correctIndex++;
                     }
+
                     // push the correct answer
                     correctAnswers.push(obj[i]["options"][correctIndex]);
+
+                    // now shuffle the options 
+                    obj[i]["options"] = shuffle(obj[i]["options"]);
                 }
             }
 
@@ -1127,9 +1132,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         correctIndex++;
                     }
 
-                    // 4. shuffle the options
-                    obj[index]["options"] = shuffle(obj[index]["options"]);
-
                     // 5. display options
                     let optionsLength = obj[index]["options"].length;
                     let str = '<form id="optionsForm">';
@@ -1161,9 +1163,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         }
                         correctIndex++;
                     }
-
-                    // 4. shuffle the options
-                    obj[index]["options"] = shuffle(obj[index]["options"]);
 
                     // 5. display options
                     let optionsLength = obj[index]["options"].length;
