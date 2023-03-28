@@ -14,7 +14,7 @@ if($_SESSION["type"] !== "Learner"){
     exit;
 }
 
-/* GLOBALS */
+/* PHP GLOBALS */
 $lo = "";                        // represents the lo being searched for
 $selected_questions = "";        // represents the json response string
 $final_selected_questions = "";  // represents the final selected json response string
@@ -26,19 +26,19 @@ $learningoutcome_info_form = ""; // initial empty description of lo info
 $chapter_selected = "Select a Chapter";                   // initial chapter option selection display
 $section_selected = "Select a Section";                   // initial section option selection display
 $learningoutcome_selected = "Select a Learning Outcome";  // initial lo option selection display
-// counters for totals
+// total counters
 $total_questions_correct = 0;
 $total_questions_incorrect = 0;
 $total_time_spent = 0;
-// counters for chapter
+// chapter counters
 $chapter_correct = 0;
 $chapter_incorrect = 0;
 $chapter_time = 0;
-// counters for section
+// section counters
 $section_correct = 0;
 $section_incorrect = 0;
 $section_time = 0;
-// counters for learningoutcome
+// learning outcome counters
 $learningoutcome_correct = 0;
 $learningoutcome_incorrect = 0;
 $learningoutcome_time = 0;
@@ -683,7 +683,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>OR2STEM - Static / Dynamic Questions</title>
+        <title>Browse Practice Questions</title>
         <link rel="stylesheet" href="../assets/css/student/student_browse.css" />
         <link rel="stylesheet" href="../assets/css/global/or2stem.css" />
         <link rel="stylesheet" href="../assets/css/global/header.css" />
@@ -726,8 +726,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
             <!-- INITIAL LEARNING OUTCOME SELECTION -->
             <div id="group1">
-                <p><strong>Welcome to On-Ramp to STEM. With this website, you will be able to assess your knowledge and track your progress.</strong></p>
-                <p><strong>Please select a chapter, a section, and a learning outcome, then click 'Go' to obtain a list of questions.</strong></p>
+                <h1>Browse Practice Questions</h1>
+                <h3>Please select a Chapter, a Section, and a Learning Outcome.</h3>
                 <div id="group1_1">
                     <div id="group1_1_1">
                         <p><strong>Chapter</strong></p>
@@ -940,29 +940,27 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             ////////////////
             // JS GLOBALS //
             ////////////////
-            let obj;                    // obj will hold at least 1 math question from individual student static questions json file
-            let index = 0;              // index of questions inside of obj being displayed (one at a time)
-            let totalQuestions;         // holds total amount of questions currently in obj
-            let correctAnswer;          // holds the single correct answer option from options for the current question
-            let numCurrentAttempts = 0; // holds the number of current attempts for the current question
-            let timerID;                // holds the ID of the timer, used to stop the timer
-            let startDate;              // will contain the start timestamp of a question
-            let chBool = false;
-            let secBool = false;
+            let obj;                    // math question content from student openStax question json file in relation to lo selected
+            let index = 0;              // index of obj
+            let totalQuestions;         // total amount of questions currently in obj
+            let correctAnswers = [];    // array containing the correct answers for all the questions in obj
+            let numCurrentAttempts = 0; // number of current attempts for the current displayed questions
+            let timerID;                // ID of the timer (used to stop the timer)
+            let startDate;              // start timestamp of a question
+            let chBool = false;         // for selection purposes
+            let secBool = false;        // for selection purposes
 
 
 
             //////////////////////
             // HELPER FUNCTIONS //
             //////////////////////
-
             const readChapterDigit = () => {
                 let select = document.getElementById("chapter_options");
                 let chapter = select.options[select.selectedIndex].text;
                 let idx = chapter.indexOf(".");
                 return chapter.slice(0, idx);
             }
-
             const readSectionDigit = () => {
                 let select = document.getElementById("section_options");
                 let sectionText = select.options[select.selectedIndex].text;
@@ -970,7 +968,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 let idx2 = sectionText.indexOf(".", idx1 + 1);
                 return sectionText.slice(idx1 + 1, idx2);
             }
-
             const chapterHelper1 = () => {
                 chBool = true;
             }
@@ -980,22 +977,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
                 }
             }
-
             const sectionHelper1 = () => {
                 secBool = true;
             }
             const sectionHelper2 = () => {
                 document.getElementById("mainLoOption").innerHTML = "Select a Learning Outcome";
             }
-
-
-            // hide or display key webpage elements
             let hideDisplay = () => {
                 document.getElementById("main").style.display = "none";
             }
             let showDisplay = () => {
                 document.getElementById("main").style.display = "";
             }
+
+
 
             ///////////////////
             // TIMER PORTION //
@@ -1021,6 +1016,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let stopTimer = (timerID) => {
                 clearInterval(timerID);
             }
+            // fxn to pad a number for display purposes of time
+            function str_pad_left(string,pad,length) {
+                return (new Array(length+1).join(pad)+string).slice(-length);
+            }
 
 
             // imported from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -1045,52 +1044,73 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 obj = JSON.parse('<?= $final_selected_questions; ?>');
                 // shuffle the questions in the obj
                 //obj = shuffle(obj);
+                // count the total number of questions in the learning objective obj
+                totalQuestions = obj.length;
+                // then store the correctAnswers
+                storeCorrectAnswers();
                 // then display the data
                 displayData();
             }
 
 
+            const storeCorrectAnswers = () => {
+                // loop through each question in obj
+                for (let i = 0; i < obj.length; i++) {
+                    // get the correct index
+                    let correctIndex = 0;
+                    for (let j = 0; j < obj[i]["rightAnswer"].length; j++) {
+                        if (obj[i]["rightAnswer"][j] === true) {
+                            break;
+                        }
+                        correctIndex++;
+                    }
+                    // push the correct answer
+                    correctAnswers.push(obj[i]["options"][correctIndex]);
+                }
+            }
+
+
             // display data from PHP, one question at a time according to index
             let displayData = () => {
-                // start the timer if question has not been answered yet else do not start timer and hide timerDiv
-                if(obj[index]["datetime_answered"] === "") {
+
+                // 1.
+                // question has not been answered
+                if (obj[index]["datetime_answered"] === "") {
+
+                    // 1. unhide the timer display and start the timer
                     document.getElementById("timerDiv").style.display = "";
                     timerID = startTimer();
+
+                    // 2. set the startDate to be in format (yyyy-mm-dd hh:mm:ss)
+                    let date = new Date();
+                    startDate = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + ("0" + date.getHours() ).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
+
+                    // 3. displaying number of tries
+                    document.getElementById("numTries").innerHTML = "Allowed attempts: " + obj[index]["numTries"];
+
                 }
+                // question has been answered
                 else {
                     document.getElementById("timerDiv").style.display = "none";
+                    document.getElementById("numTries").innerHTML = "";
                 }
 
-                // assign the start timestamp
-                let date = new Date();
-                // startDate will be in format (yyyy-mm-dd hh:mm:ss)
-                startDate = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + ("0" + date.getHours() ).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
-                
-                // count the total number of questions in the learning objective obj
-                totalQuestions = obj.length;
-
-                // display question number out of total number of questions along with specific title
+                // 2.
+                // display question index range & title
                 document.getElementById("questionHeader").innerHTML = "Question (" + (index + 1) + "/" + totalQuestions + "): " + obj[index]["title"];
 
-                // display question text but first convert BR back to \n before displaying text 
-                if(obj[index]["text"].includes("BR")) {
+                // 3.
+                // convert BR back to \n, then display question text prompt
+                if (obj[index]["text"].includes("BR")) {
                     obj[index]["text"] = obj[index]["text"].replaceAll("BR", "\n");
                 }
                 document.getElementById("text").innerHTML = obj[index]["text"];
 
-                // display numTries if question has not been answered yet else leave blank
-                if(obj[index]["datetime_answered"] === "") {
-                    document.getElementById("numTries").innerHTML = "Allowed attempts: " + obj[index]["numTries"];
-                }
-                else {
-                    document.getElementById("numTries").innerHTML = "";
-                }
-
-                // check that question does not contain images for options (regular presentation of question)
-                if(obj[index]["isImage"][0] === false) {
-
-                    // display pic, only if pic file is present
-                    if(obj[index]["pic"] === "") {
+                // 4.
+                // question does not contain images for options (regular presentation of question)
+                if (obj[index]["isImage"][0] === false) {
+                    // 1. display pic, only if pic file is present
+                    if (obj[index]["pic"] === "") {
                         document.getElementById("mainImg").style.display = "none";
                     }
                     else {
@@ -1098,20 +1118,19 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         document.getElementById("mainImg").alt = "main math picture";
                     }
 
-                    // before displaying options first get the correct answer, then shuffle the options
+                    // 2. get the correct index
                     let correctIndex = 0;
-                    for(let i = 0; i < obj[index]["rightAnswer"].length; i++) {
-                        if(obj[index]["rightAnswer"][i] == true) {
+                    for (let i = 0; i < obj[index]["rightAnswer"].length; i++) {
+                        if (obj[index]["rightAnswer"][i] === true) {
                             break;
                         }
-                        else {
-                            correctIndex++;
-                        }
+                        correctIndex++;
                     }
-                    correctAnswer = obj[index]["options"][correctIndex];
+
+                    // 4. shuffle the options
                     obj[index]["options"] = shuffle(obj[index]["options"]);
 
-                    // always display options
+                    // 5. display options
                     let optionsLength = obj[index]["options"].length;
                     let str = '<form id="optionsForm">';
                     for (let i = 0; i < optionsLength; i++) {
@@ -1120,41 +1139,41 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     str += '<button class="btn btn-fsblue" id="checkAnswerButton" type="button" onclick="checkQuestion()">Submit Answer</button></form>';
                     document.getElementById("optionsDiv").innerHTML=str;
 
-                    // display results data
-                    if(obj[index]["datetime_answered"] === "") {
+                    // 6. display results data
+                    if (obj[index]["datetime_answered"] === "") {
                         document.getElementById("correctAnswer").innerHTML = "N/A";
                     }
                     else {
-                        document.getElementById("correctAnswer").innerHTML = correctAnswer;
+                        document.getElementById("correctAnswer").innerHTML = correctAnswers[index];
                     }
 
                 }
+                // question contains images for options
                 else {
-                    // mainImg will be hidden bc images will be present in options
+                    // 1. mainImg will be hidden bc images will be present in options
                     document.getElementById("mainImg").style.display = "none";
 
-                    // before displaying options first get the correct answer, then shuffle the options
+                    // 2. get the correct index
                     let correctIndex = 0;
-                    for(let i = 0; i < obj[index]["rightAnswer"].length; i++) {
-                        if(obj[index]["rightAnswer"][i] !== true) {
-                            correctIndex++;
-                        }
-                        else {
+                    for (let i = 0; i < obj[index]["rightAnswer"].length; i++) {
+                        if (obj[index]["rightAnswer"][i] === true) {
                             break;
                         }
+                        correctIndex++;
                     }
-                    correctAnswer = obj[index]["options"][correctIndex];
+
+                    // 4. shuffle the options
                     obj[index]["options"] = shuffle(obj[index]["options"]);
 
-                    // always display options
+                    // 5. display options
                     let optionsLength = obj[index]["options"].length;
                     let str = '<form id="optionsForm">';
                     for (let i = 0; i < optionsLength; i++) {
                         // some options have ` in them, remove them if found
-                        if(obj[index]["options"][i].includes("`")) {
+                        if (obj[index]["options"][i].includes("`")) {
                             obj[index]["options"][i] = obj[index]["options"][i].replaceAll("`", "");
                         }
-                        if(i !== 2) {
+                        if (i !== 2) {
                             str += '<input id="option' + i + '" type="radio" name="dynamic_option" value="' + obj[index]["options"][i] + '"><img style="width:250px; height:250px;" src="../assets/img/' + obj[index]["options"][i] + '" alt="options_image"/>';
                             //<label for="option' + i + '" id="label' + i + '">' + obj[index]["options"][i] + '</label>
                         }
@@ -1168,29 +1187,30 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     document.getElementById("optionsDiv").innerHTML = str;
 
                     // display results data
-                    if(obj[index]["datetime_answered"] === "") {
+                    if (obj[index]["datetime_answered"] === "") {
                         document.getElementById("correctAnswer").innerHTML = "N/A";
                     }
                     else {
-                        document.getElementById("correctAnswer").innerHTML = '<img src="../assets/img/' + correctAnswer + '" alt="correct image option" style="width:150px; height:150px"/>';
+                        document.getElementById("correctAnswer").innerHTML = '<img src="../assets/img/' + correctAnswers[index] + '" alt="correct image option" style="width:150px; height:150px"/>';
                     }
                 }
 
+                // 5.
                 // display results data
-                if(obj[index]["numCurrentTries"] === "0") {
+                if (obj[index]["numCurrentTries"] === "0") {
                     document.getElementById("numCurrentTries").innerHTML = "N/A";
                 }
                 else {
                     document.getElementById("numCurrentTries").innerHTML = obj[index]["numCurrentTries"];
                 }
-
-                if(obj[index]["correct"] === "") {
+                if (obj[index]["correct"] === "") {
                     document.getElementById("correct").innerHTML = "N/A";
                 }
                 else {
                     document.getElementById("correct").innerHTML = obj[index]["correct"];
                 }
 
+                // 6.
                 // To use at the end to refresh the presentation of the equations to account for dynamic data
                 MathJax.typeset();
             }
@@ -1202,7 +1222,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
                 document.getElementById("correct").innerHTML = obj[index]["correct"];
 
-                document.getElementById("correctAnswer").innerHTML = correctAnswer;
+                document.getElementById("correctAnswer").innerHTML = correctAnswers[index];
 
                 // To use at the end to refresh the presentation of the equations to account for dynamic data
                 MathJax.typeset();
@@ -1215,8 +1235,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let checkCompletion = () => {
                 // first check that all the questions in the current obj are answered
                 let all_answered = true;
-                for(let i = 0; i < obj.length; i++) {
-                    if(obj[i]["datetime_answered"] === "") {
+                for (let i = 0; i < obj.length; i++) {
+                    if (obj[i]["datetime_answered"] === "") {
                         all_answered = false;
                         break;
                     }
@@ -1231,16 +1251,19 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
             let req_update;
-            let updateOpenStax = () =>{
+            let updateOpenStax = () => {
                 // collect data to send
                 let ch_num = getChapterInfo();
+
                 let tempSection = getSectionInfo();
                 let pos1 = tempSection.indexOf(".");
                 let sec_num = tempSection.slice(pos1 + 1, tempSection.length);
+
                 let tempLO = getLearningOutcomeInfo();
                 pos1 = tempLO.indexOf(".");
                 let pos2 = tempLO.indexOf(".", pos1 + 1);
                 let lo_num = tempLO.slice(pos2 + 1, tempLO.length);
+
                 // start XMLHttpRequest
                 req_update = new XMLHttpRequest();
                 req_update.open('POST', 'learning_map/update.php', true);
@@ -1262,15 +1285,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 document.getElementById("text").innerHTML = "";
                 document.getElementById("numTries").innerHTML = "";
 
-                // if new image is empty
-                if(obj[index]["pic"] === "") {
-                    document.getElementById("mainImg").src = "";
-                    document.getElementById("mainImg").alt = "";
-                    document.getElementById("mainImg").style.display = "none";
-                }
-                else {
+                // image is empty
+                document.getElementById("mainImg").src = "";
+                document.getElementById("mainImg").alt = "";
                 document.getElementById("mainImg").style.display = "";
-                }
 
                 // clearing label color that may have been assigned
                 if(obj[index]["isImage"][0] === false) {
@@ -1292,25 +1310,24 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 document.getElementById("outcome").style.display = "";
 
                 // first check if question hasn't been answered yet
-                if(obj[index]["datetime_answered"] === "") {
+                if (obj[index]["datetime_answered"] === "") {
 
                     // check if user is on his last attempt, must save result after this
-                    if(numCurrentAttempts === (parseInt(obj[index]["numTries"]) - 1)) {
+                    if (numCurrentAttempts === (parseInt(obj[index]["numTries"]) - 1)) {
 
+                        let correct;
                         // grab the selected option
                         let selectedOption = document.querySelector('input[name="dynamic_option"]:checked').value;
-                        let correct;  // will hold 'yes' or 'no', for if user was correct or not
-
+                        
                         // compare the selected option to the correct answer
-                        if(selectedOption == correctAnswer) {
-                            //console.log("You got it right!");
-                            document.getElementById("outcome").style.color = "green";
+                        if (selectedOption === correctAnswers[index]) {
                             document.getElementById("outcome").innerHTML = "Correct!";
+                            document.getElementById("outcome").style.color = "green";
                             correct = "Yes";
                             numCurrentAttempts++;
 
                             // only modify the color of a label if it exists
-                            if(obj[index]["isImage"][0] === false) {
+                            if (obj[index]["isImage"][0] === false) {
                                 // grabbing input for attribute that is checked by user
                                 let selector = document.querySelector('input[name="dynamic_option"]:checked').id;
                                 // selecting associated label to the input selected changing to green
@@ -1318,14 +1335,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                             }
                         }
                         else {
-                            //console.log("You got it wrong!");
-                            document.getElementById("outcome").style.color = "red";
                             document.getElementById("outcome").innerHTML = "Incorrect!";
+                            document.getElementById("outcome").style.color = "red";
                             correct = "No";
                             numCurrentAttempts++;
 
                             // only modify the color of a label if it exists
-                            if(obj[index]["isImage"][0] === false) {
+                            if (obj[index]["isImage"][0] === false) {
                                 // grabbing input for attribute that is checked by user
                                 let selector = document.querySelector('input[name="dynamic_option"]:checked').id;
                                 // selecting associated label to the input selected changing to green
@@ -1339,24 +1355,22 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         /* UPDATE USER JSON FILE */
                         updateData(obj[index]["pkey"], numCurrentAttempts, correct, obj[index]["tags"], startDate);
                     }
+                    // means user can attempt to answer, but result will not be saved if incorrect
                     else {
-                        // means user can attempt to answer, but result will not be saved if incorrect
-
+                        
+                        let correct;
                         // grab the selected option
                         let selectedOption = document.querySelector('input[name="dynamic_option"]:checked').value;
-                        // will hold 'yes' or 'no', for if user was correct or not
-                        let correct;
 
                         // compare the selected option to the correct answer
-                        if(selectedOption == correctAnswer) {
-                            //console.log("You got it right!");
-                            document.getElementById("outcome").style.color = "green";
-                            document.getElementById("outcome").innerHTML = "Correct!";                      
+                        if (selectedOption === correctAnswers[index]) {
+                            document.getElementById("outcome").innerHTML = "Correct!"; 
+                            document.getElementById("outcome").style.color = "green";            
                             correct = "Yes";
                             numCurrentAttempts++;
 
                             // only modify the color of a label if it exists
-                            if(obj[index]["isImage"][0] === false) {
+                            if (obj[index]["isImage"][0] === false) {
                                 // grabbing input for attribute that is checked by user
                                 let selector = document.querySelector('input[name="dynamic_option"]:checked').id;
                                 // selecting associated label to the input selected changing to green
@@ -1365,17 +1379,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     
                             // stop timer
                             stopTimer(timerID);
+
                             /* UPDATE USER JSON FILE */
                             updateData(obj[index]["pkey"], numCurrentAttempts, correct, obj[index]["tags"], startDate);
                         }
                         else {
-                            //console.log("You got it wrong!");
-                            document.getElementById("outcome").style.color = "red";
                             document.getElementById("outcome").innerHTML = "Incorrect, try again!";
+                            document.getElementById("outcome").style.color = "red";
                             numCurrentAttempts++;
 
                             // only modify the color of a label if it exists
-                            if(obj[index]["isImage"][0] === false) {
+                            if (obj[index]["isImage"][0] === false) {
                                 // grabbing input for attribute that is checked by user
                                 let selector = document.querySelector('input[name="dynamic_option"]:checked').id;
                                 // selecting associated label to the input selected changing to green
@@ -1384,10 +1398,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         }
                     }
                 }
+                // user has already answered this question
                 else {
-                    // user has already answered this question
-                    document.getElementById("outcome").style.color = "red";
                     document.getElementById("outcome").innerHTML = "You have already answered this question!";
+                    document.getElementById("outcome").style.color = "red";
                 }
             }
 
@@ -1413,16 +1427,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             }
 
 
-            // fxn to pad a number for display purposes of time
-            function str_pad_left(string,pad,length) {
-                return (new Array(length+1).join(pad)+string).slice(-length);
-            }
 
 
-            /* */
-            var total_clicked = false;
+
+            let total_clicked = false;
             let showTotalProgress = () => {
-                if(total_clicked) {
+                if (total_clicked) {
                     document.getElementById("totalProgressHeaderArrow").innerHTML = "&#709;";
                     document.getElementById("totalProgressDiv").style.display = "none";
                     total_clicked = false;
@@ -1439,14 +1449,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let chapter_clicked = false;
             let request_ch;
             let chapter_obj;
-            let getChapterData = () =>{
+            let getChapterData = () => {
                 // toggle chapterProgressButton innerHTML & display
-                if(chapter_clicked){
+                if (chapter_clicked){
                     document.getElementById("chapterProgressHeaderArrow").innerHTML = "&#709;";
                     document.getElementById("chapterProgressDiv").style.display = "none";
                     chapter_clicked = false;
                 } 
-                else{
+                else {
                     document.getElementById("chapterProgressHeaderArrow").innerHTML = "&#708;";
                     document.getElementById("chapterProgressDiv").style.display = "";
                     chapter_clicked = true;
@@ -1458,18 +1468,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     request_ch.send();
                 }
             }
-            let getChapterDataResponse = () =>{
+            let getChapterDataResponse = () => {
                 if (request_ch.readyState == 4 && request_ch.status == 200) {
                     //console.log("PHP sent back: " + request_ch.responseText);
                     chapter_obj = JSON.parse(request_ch.responseText);
                     showChapterProgress();
                 }
             }
-            let showChapterProgress = () =>{
+            let showChapterProgress = () => {
                 // create a table with all the chapter data to display on the client-side
                 let str = '<table class="content_progress">';
                 str += '<tr><th>Ch</th><th>Chapter Name</th><th>Number of Questions</th><th>Percent Correct</th><th>Percent Complete</th><th>Time Spent</th></tr>';
-                for(const key in chapter_obj){
+                for (const key in chapter_obj) {
                     const value = chapter_obj[key];
                     // value[4] contains total seconds, convert to hours:minutes:seconds then display all data in table
                     let hours = Math.floor(value["TimeSpent"] / 3600);
@@ -1637,37 +1647,47 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
             /* MOVEMENT */
-            let next = () =>{
+            let next = () => {
                 // making sure we are in legal index bound
-                if(index !== totalQuestions - 1){
-                    // clear previous question data
+                if (index !== totalQuestions - 1) {
+                    // 1. clear previous question data
                     clearData();
-                    // clear timer
+
+                    // 2. clear timer
                     clearTimer(timerID);
-                    // update index to go forward
+
+                    // 3. update index to go forward
                     index++;
-                    // hide outcome element
+
+                    // 4. hide outcome element
                     document.getElementById("outcome").style.display = "none";
-                    // since we are in a new question, set current attempts back to 0
+
+                    // 5. since we are in a new question, set current attempts back to 0
                     numCurrentAttempts = 0;
-                    // display new question data
+
+                    // 6. display new question data
                     displayData();
                 }
             }
-            let previous = () =>{
+            let previous = () => {
                 // making sure we are in legal index bound
                 if(index !== 0){
-                    // clear previous question data
+                    // 1. clear previous question data
                     clearData();
-                    // clear timer
+
+                    // 2. clear timer
                     clearTimer(timerID);
-                    // update index to go back
+
+                    // 3. update index to go back
                     index--;
-                    // hide outcome element
+
+                    // 4. hide outcome element
                     document.getElementById("outcome").style.display = "none";
-                    // since we are in a new question, set current attempts back to 0
+
+                    // 5. since we are in a new question, set current attempts back to 0
                     numCurrentAttempts = 0;
-                    // display new question data
+
+                    // 6. display new question data
                     displayData();
                 }
             }
