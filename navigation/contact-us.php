@@ -1,6 +1,29 @@
 <?php
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
+
+/*
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $to = "luisss3v@gmail.com";
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
+    $headers = "From: $email" . "\r\n" .
+               "Reply-To: $email" . "\r\n" .
+               "X-Mailer: PHP/" . phpversion();
+
+    // begin process of sending the email
+    $email_msg = "Name: $name \r\n Email: $email \r\n Message: $message";
+
+    // In case any of our lines are larger than 70 characters, we should use wordwrap()
+    $email_msg = wordwrap($email_msg, 70, "\r\n");
+
+    // Send
+    mail($to, $subject, $email_msg, $headers);
+}
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -75,11 +98,29 @@ session_start();
             .show {display: block;}
 
 
-            .outer-section {
-                width: 100%;
-                display: flex;
-                justify-content: space-evenly;
+            .form-div {
+                margin: 0 auto;
+                width: 90%;
                 padding: 10px;
+            }
+            .form-div-inner {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+            #submitInput {
+                width: 200px;
+                height: 30px;
+                color: white;
+                background-color: navy;
+                cursor: pointer;
+                transition-duration: 0.5s;
+            }
+            #submitInput:hover {
+                background-color: red;
+                transform: scale(1.05);
             }
         </style>
     </head>
@@ -112,39 +153,30 @@ session_start();
 					<h1>Contact Us</h1>
 				</div>
 
-				<div class="outer-section">
-                    <div class="inner-section">
-                        <h4>Our Address</h4>
-                        <p>5241 N. Maple Ave.<br>Fresno, CA 93740<br></p>
+				<div class="form-div">
+                    <form action="https://formsubmit.co/hcecotti@mail.fresnostate.edu" method="POST">
+                        <div class="form-div-inner">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" style="width:70%; text-align:center;" value="<?= $_SESSION["name"]; ?>" required>
+                        </div>
 
-                        <h4>Our Phone Number</h4>
-                        <p>+1 (559) 278 - 4240</p>
-                    </div>
-                    <div class="inner-section">
-                        <form action="/">
-                            <div class="full-width">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
+                        <div class="form-div-inner">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" style="width:70%; text-align:center;" value="<?= $_SESSION["email"]; ?>" required>
+                        </div>
 
-                            <div class="full-width">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
+                        <div class="form-div-inner">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" style="width:70%; text-align:center;" placeholder="Bug or Error" required>
+                        </div>
 
-                            <div class="full-width">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject">
-                            </div>
+                        <div class="form-div-inner">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" style="width: 70%; height:200px;" placeholder="Type message here" required></textarea>
+                        </div>
 
-                            <div class="full-width">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" style="height:200px" required></textarea>
-                            </div>
-
-                            <input type="submit" class="btn btn-fsblue" value="Submit">
-                        </form>
-                    </div>
+                        <input id="submitInput" type="submit" value="Submit">
+                    </form>
                 </div>
             </main>
 
@@ -183,6 +215,7 @@ session_start();
                 </div>
             </footer>
         </div>
+
         <script type="text/javascript">
             // DRIVER
             if ("<?= $_SESSION['type'] ?>" === "Instructor" || "<?= $_SESSION['type'] ?>" === "Mentor") {
