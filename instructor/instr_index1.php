@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div id="userProfile" class="dropdown">
                         <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
                         <div id="myDropdown" class="dropdown-content">
+                            <a href="../navigation/settings/settings.php">Settings</a>
                             <a href="../register_login/logout.php">Logout</a>
                         </div>
                         <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
@@ -155,6 +156,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             let redirect = (idx) => {
                 if (idx) window.location.href = "./dynamic.php";
                 else window.location.href = "./static.php";
+            }
+
+            const initializeCSS = () => {
+                const item = localStorage.getItem("mode");
+                const cssLink = document.getElementById("mode-css");
+                if (item === null) {
+                    cssLink.setAttribute("href", "./settings-light-mode.css");
+                }
+                else {
+                    cssLink.setAttribute("href", `./settings-${window.localStorage.getItem("mode")}-mode.css`);
+                }
             }
    
             // controlling the user profile dropdown
