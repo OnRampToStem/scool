@@ -1,19 +1,83 @@
 <?php
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Settings</title>
+        <title>Frequently Asked Questions</title>
         <link rel="stylesheet" href="../../assets/css/global/header.css" />
         <link rel="stylesheet" href="../../assets/css/global/global.css" />
-        <link id="mode-css" rel="stylesheet" href="./settings-light-mode.css" />
+        <link rel="stylesheet" href="../../assets/css/global/footer.css" />
+        <style>
+            /* HEADER STYLING */
+            #OR2STEM-HEADER {
+                color: navy;
+                font-weight: bold;
+                padding-left: 20px;
+            }
+            #OR2STEM-HEADER-A {
+                color: navy;
+                text-decoration: none;
+                transition-duration: 0.5s;
+            }
+            #OR2STEM-HEADER-A:hover {
+                color: red;
+            }
+            #userProfile {
+                float: right;
+                margin-right: 15px;
+                position: relative;
+            }
+            #userButton {
+                width: auto;
+                height: 30px;
+                font-size: 14px;
+                font-weight: 600;
+                color: white;
+                background-color: navy;
+                cursor: pointer;
+                margin-right: 30px;
+            }
+            #user-picture {
+                width: 30px; 
+                height: 30px; 
+                position: absolute; 
+                right: 0; 
+                bottom: 0;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                margin-left: 3px;
+                color: white;
+                background-color: navy;
+                width: 85px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 2;
+            }
+            .dropdown-content a {
+                color: white;
+                display: block;
+                text-decoration: none;
+                padding: 5px;
+                text-align: center;
+            }
+            .dropdown a:hover {
+                background-color: red;
+            }
+            .show {display: block;}
+
+
+        </style>
     </head>
-    <body onload="initializeCSS();">
+    <body>
         <div id="app">
             <header>
                 <nav class="container">
@@ -38,10 +102,9 @@ session_start();
             </header>
 
             <main>
-                <h1>Settings</h1>
-                <button onclick="toggleCSSMode('light');">Light Mode</button>
-                <button onclick="toggleCSSMode('dark');">Dark Mode</button>
-                <button onclick="toggleCSSMode('colorful');">Colorful Mode</button>
+                <div>
+                    <h1>Frequently Asked Questions</h1>
+                </div>
             </main>
 
             <footer>
@@ -55,7 +118,7 @@ session_start();
                             <ul>
                                 <li><a id="footer-link-home">Home</a></li>
                                 <li><a href="../about-us/about-us.php">About Us</a></li>
-                                <li><a href="../faq/faq.php">FAQ</a></li>
+                                <li><a href="./faq.php">FAQ</a></li>
                                 <li><a href="../contact-us/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
@@ -79,40 +142,21 @@ session_start();
                 </div>
             </footer>
         </div>
-
         <script type="text/javascript">
-            const toggleCSSMode = (mode) => {
-                const item = localStorage.getItem("mode");
-                if (item !== null) {
-                    if (item !== mode) {
-                        window.localStorage.setItem('mode', mode);
-                        toggleCSS();
-                    }
-                    else {
-                        console.log(`You already have ${mode} mode enabled.`);
-                    }
-                }
-                else {
-                    window.localStorage.setItem('mode', mode);
-                    toggleCSS();
-                }
+            // DRIVER
+            if ("<?= $_SESSION['type'] ?>" === "Instructor" || "<?= $_SESSION['type'] ?>" === "Mentor") {
+                document.getElementById("OR2STEM-HEADER-A").setAttribute("href", "../../instructor/instr_index1.php");
+                document.getElementById("footer-link").setAttribute("href", "../../instructor/instr_index1.php");
+                document.getElementById("footer-link-home").setAttribute("href", "../../instructor/instr_index1.php");
+                document.getElementById("footer-link-scale").setAttribute("href", "../../instructor/instr_index1.php");
+            }
+            else {
+                document.getElementById("OR2STEM-HEADER-A").setAttribute("href", "../../student/student_index.php");
+                document.getElementById("footer-link").setAttribute("href", "../../student/student_index.php");
+                document.getElementById("footer-link-home").setAttribute("href", "../../student/student_index.php");
+                document.getElementById("footer-link-scale").setAttribute("href", "../../student/student_index.php");
             }
 
-            const toggleCSS = () => {
-                const cssLink = document.getElementById("mode-css");
-                cssLink.setAttribute("href", `./settings-${window.localStorage.getItem("mode")}-mode.css`);
-            }
-
-            const initializeCSS = () => {
-                const item = localStorage.getItem("mode");
-                const cssLink = document.getElementById("mode-css");
-                if (item === null) {
-                    cssLink.setAttribute("href", "./settings-light-mode.css");
-                }
-                else {
-                    cssLink.setAttribute("href", `./settings-${window.localStorage.getItem("mode")}-mode.css`);
-                }
-            }
 
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
