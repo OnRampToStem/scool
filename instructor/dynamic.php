@@ -187,9 +187,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <h4>Navigation</h4>
                             <ul>
                                 <li><a href="./instr_index1.php">Home</a></li>
-                                <li><a href="../navigation/about-us.php">About Us</a></li>
-                                <li><a href="../navigation/faq.php">FAQ</a></li>
-                                <li><a href="../navigation/contact-us.php">Contact Us</a></li>
+                                <li><a href="../navigation/about-us/about-us.php">About Us</a></li>
+                                <li><a href="../navigation/faq/faq.php">FAQ</a></li>
+                                <li><a href="../navigation/contact-us/contact-us.php">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="navigation">
