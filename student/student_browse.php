@@ -684,11 +684,43 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <head>
         <meta charset="utf-8" />
         <title>Browse Practice Questions</title>
-        <link rel="stylesheet" href="../assets/css/student/student_browse.css" />
-        <link rel="stylesheet" href="../assets/css/global/or2stem.css" />
-        <link rel="stylesheet" href="../assets/css/global/header.css" />
-        <link rel="stylesheet" href="../assets/css/global/global.css" />
-        <link rel="stylesheet" href="../assets/css/global/footer.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/css/global/or2stem.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
+        <link id="css-header" rel="stylesheet" type="text/css" href="" />
+        <link id="css-mode" rel="stylesheet" type="text/css" href="" />
+        <script type="text/javascript">
+            const toggleBanner = () => {
+                const cssHeader = document.getElementById("css-header");
+                cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
+            }
+
+            const toggleCSS = () => {
+                const cssLink = document.getElementById("css-mode");
+                cssLink.setAttribute("href", `../assets/css/student/student_browse-${window.localStorage.getItem("mode")}-mode.css`);
+            }
+
+            // mode
+            let item = localStorage.getItem("mode");
+            const cssLink = document.getElementById("css-mode");
+            if (item === null) {
+                window.localStorage.setItem('mode', 'OR2STEM');
+                toggleCSS();
+            }
+            else {
+                toggleCSS();
+            }
+
+            // banner
+            item = localStorage.getItem("banner");
+            const cssHeader = document.getElementById("css-header");
+            if (item === null) {
+                window.localStorage.setItem('banner', 'OR2STEM');
+                toggleBanner();
+            }
+            else {
+                toggleBanner();
+            }
+        </script>
         <script>
             MathJax = {
                 loader: { load: ["input/asciimath", "output/chtml"] },
@@ -698,13 +730,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
         <script src="js-php/kmap.js"></script>
     </head>
-    <body onload="GetData()">
+    <body onload="initialize();">
         <div id="app">
             <header>
                 <nav class="container">
                     <div id="userProfile" class="dropdown">
                         <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
                         <div id="myDropdown" class="dropdown-content">
+                            <a href="../navigation/settings/settings.php">Settings</a>
                             <a href="../register_login/logout.php">Logout</a>
                         </div>
                         <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
@@ -950,6 +983,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             let chBool = false;         // for selection purposes
             let secBool = false;        // for selection purposes
 
+
+            const initialize = async () => {
+                await GetData();
+            }
 
 
             //////////////////////
