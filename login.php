@@ -29,7 +29,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     /* MAKE SURE ONLY ALLOWED USERS CAN ACCESS */
     if ($_POST["email"] !== "student-marisa.cheung@calearninglab.org" && $_POST["email"] !== "observer-marisa.cheung@calearninglab.org" &&
-        $_POST["email"] !== "student-nfo@calearninglab.org" && $_POST["email"] !== "observer-nfo@calearninglab.org") {
+        $_POST["email"] !== "student-nfo@calearninglab.org" && $_POST["email"] !== "observer-nfo@calearninglab.org" && 
+        $_POST["email"] !== "temp-instructor@gmail.com" && $_POST["email"] !== "temp-student@gmail.com")
+    {
         $email_err = "Only certain user emails can access this login page.";
     }
 
@@ -76,6 +78,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 else if ($row[2] === "Mentor") {
                     session_start();
         
+                    $_SESSION["loggedIn"] = true;
+                    $_SESSION["name"] = $row[0];
+                    $_SESSION["email"] = $row[1];
+                    $_SESSION["type"] = $row[2];
+                    $_SESSION["pic"] = $row[3];
+                    $_SESSION["course_name"] = $row[4];
+                    $_SESSION["course_id"] = $row[5];
+        
+                    header("location: instructor/instr_index1.php");
+                }
+                else if ($row[2] === "Instructor") {
+                    session_start();
+        
+                    echo "Setting required session variables. <br>";
                     $_SESSION["loggedIn"] = true;
                     $_SESSION["name"] = $row[0];
                     $_SESSION["email"] = $row[1];

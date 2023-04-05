@@ -10,7 +10,7 @@ $rows = pg_num_rows($res);
 
 // STATIC QUESTIONS
 
-$filepath = "../scale/user_data/MATH 6 (03) - Precalculus-2d32d562af7298330c3c5b20d3a2b88506e0fc0b/questions/student-marisa.cheung@calearninglab.org.json";
+$filepath = "../scale/user_data/Temporary Course-123/questions/temp-student@gmail.com.json";
 
 $questions_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -89,7 +89,7 @@ fwrite($questions_file, "]\n");
 
 fclose($questions_file);
 
-chmod("../scale/user_data/MATH 6 (03) - Precalculus-2d32d562af7298330c3c5b20d3a2b88506e0fc0b/questions/student-marisa.cheung@calearninglab.org.json", 0777) or die("Could not modify questions json perms.");
+chmod("../scale/user_data/Temporary Course-123/questions/temp-student@gmail.com.json", 0777) or die("Could not modify questions json perms.");
 
 
 
@@ -102,7 +102,7 @@ $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
 $json_data = json_decode($json, true);
 
-$filepath = "../scale/user_data/MATH 6 (03) - Precalculus-2d32d562af7298330c3c5b20d3a2b88506e0fc0b/openStax/student-marisa.cheung@calearninglab.org.json";
+$filepath = "../scale/user_data/Temporary Course-123/openStax/temp-student@gmail.com.json";
 
 $openStax_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -462,7 +462,7 @@ fwrite($openStax_file, "\n]");
 
 fclose($openStax_file);
 
-chmod("../scale/user_data/MATH 6 (03) - Precalculus-2d32d562af7298330c3c5b20d3a2b88506e0fc0b/openStax/student-marisa.cheung@calearninglab.org.json", 0777) or die("Could not modify openStax json perms.");
+chmod("../scale/user_data/Temporary Course-123/openStax/temp-student@gmail.com.json", 0777) or die("Could not modify openStax json perms.");
 
 
 ?>
