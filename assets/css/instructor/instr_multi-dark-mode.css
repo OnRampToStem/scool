@@ -1,0 +1,621 @@
+* {
+  background-color: black;
+}
+
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+  color: white;
+  font-weight: bold;
+  padding-left: 20px;
+}
+#OR2STEM-HEADER-A {
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+#userProfile {
+  float: right;
+  margin-right: 15px;
+  position: relative;
+}
+#userButton {
+  width: auto;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 30px;
+}
+#user-picture {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  margin-left: 3px;
+  color: black;
+  background-color: white;
+  width: 85px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+.dropdown-content a {
+  color: black;
+  background-color: white;
+  display: block;
+  text-decoration: none;
+  padding: 5px;
+  text-align: center;
+}
+.show {
+  display: block;
+}
+
+/* ASSESSMENT LIST DISPLAY STYLING */
+h1,
+p,
+label,
+select,
+option,
+th,
+td,
+ul,
+li,
+h2,
+h3,
+h4 {
+  color: white;
+}
+
+input {
+  color: black;
+  background-color: white;
+}
+
+iframe {
+  background-color: white;
+}
+
+#assessments_div {
+  margin: 0 auto;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  min-height: 300px;
+  /*border: 1px solid black;*/
+}
+#instr_div,
+#public_div {
+  width: 45%;
+}
+#instr_table,
+#public_table {
+  margin: 0 auto;
+  width: 90%;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+.tr_ele:hover {
+  border: 2px solid white;
+}
+#instr_table th,
+#public_table th {
+  width: 100%;
+  height: auto;
+  font-size: 24px;
+  padding: 5px;
+  border: 1px solid white;
+}
+#instr_table td,
+#public_table td {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  padding: 5px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+/* MAIN STYLING */
+main {
+  margin: 0 auto;
+  width: 90%;
+  border: 1px solid white;
+  text-align: center;
+}
+
+/* GROUP1 STYLING */
+#group1 {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+#group1_1,
+#group1_2 {
+  width: 40%;
+}
+.group1_1_1,
+.group1_2_1 {
+  text-align: left;
+  margin-left: 20%;
+}
+#name {
+  width: 200px;
+  padding: 4px;
+}
+#public_yes_label,
+#public_no_label {
+  font-size: 15px;
+}
+#duration {
+  width: 45px;
+  padding: 4px;
+}
+#open_date,
+#open_time,
+#close_date,
+#close_time {
+  padding: 4px;
+}
+
+/* GROUP2 STYLING */
+#group2 {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+#group2_1 {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+#group2_1_1,
+#group2_1_2,
+#group2_1_3 {
+  width: 30%;
+}
+#ch_select,
+#sec_select,
+#lo_select {
+  width: 90%;
+  padding: 4px;
+  cursor: pointer;
+}
+
+/* GROUP3 STYLING */
+#group3 {
+  margin: 0 auto;
+  width: 90%;
+  margin-bottom: 5px;
+}
+#sel_table_res {
+  margin: 0 auto;
+  width: 90%;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+#th1 {
+  text-align: center;
+  font-size: 16px;
+  width: 40%;
+  height: auto;
+  border: 1px solid white;
+}
+#th2,
+#th3,
+#th4 {
+  text-align: center;
+  font-size: 16px;
+  width: 13.33%;
+  height: auto;
+  border: 1px solid white;
+}
+#th5 {
+  text-align: center;
+  font-size: 16px;
+  width: 10%;
+  height: auto;
+  border: 1px solid white;
+}
+.td1 {
+  text-align: center;
+  font-size: 15px;
+  width: 40%;
+  height: auto;
+  border: 1px solid white;
+}
+.td2,
+.td3,
+.td4 {
+  text-align: center;
+  font-size: 15px;
+  width: 13.33%;
+  height: auto;
+  border: 1px solid white;
+}
+.td5 {
+  text-align: center;
+  font-size: 15px;
+  width: 10%;
+  height: auto;
+  border: 1px solid white;
+}
+.lonum_inputs,
+.points_inputs {
+  width: 45px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.questions_inputs {
+  width: 60px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.delete_button {
+  width: 33px;
+  height: 33px;
+  font-size: 18px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.delete_button:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+/* GROUP 4 STYLING */
+.action_btn {
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+  margin: 5px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.action_btn:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+/* GROUP 5 STYLING */
+#submit_button {
+  width: 200px;
+  height: 35px;
+  font-size: 16px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#submit_button:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+.cancel_btn {
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  margin: 5px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.cancel_btn:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+/* STUDENT RESULTS TABLE STYLING */
+#students_results_div {
+  margin: 0 auto;
+  width: 90%;
+  text-align: center;
+  border: 1px solid white;
+}
+#student_results_table {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 95%;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+.th_res_1,
+.th_res_2 {
+  text-align: center;
+  font-size: 16px;
+  width: 25%;
+  height: auto;
+  border: 1px solid white;
+}
+.th_res_3 {
+  text-align: center;
+  font-size: 16px;
+  width: 10%;
+  height: auto;
+  border: 1px solid white;
+}
+.th_res_4 {
+  text-align: center;
+  font-size: 16px;
+  width: 30%;
+  height: auto;
+  border: 1px solid white;
+}
+.th_res_5 {
+  text-align: center;
+  font-size: 16px;
+  width: 10%;
+  height: auto;
+  border: 1px solid white;
+}
+.td_res_1,
+.td_res_2 {
+  text-align: center;
+  font-size: 15px;
+  width: 25%;
+  height: 150px;
+  border: 1px solid white;
+}
+.td_res_3 {
+  text-align: center;
+  font-size: 15px;
+  width: 10%;
+  height: 150px;
+  border: 1px solid white;
+}
+.td_res_4 {
+  text-align: center;
+  font-size: 15px;
+  width: 30%;
+  height: 150px;
+  border: 1px solid white;
+}
+.td_res_5 {
+  text-align: center;
+  font-size: 15px;
+  width: 10%;
+  height: 150px;
+  border: 1px solid white;
+}
+
+#score-breakdown-div {
+  margin: 0 auto;
+  width: 100%;
+  height: 150px;
+  overflow-y: auto;
+  text-align: center;
+}
+.score-breakdown-inner-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+  height: 50px;
+  background-color: navy;
+  cursor: pointer;
+  border: 1px solid white;
+}
+.score-breakdown-inner-div:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+#score-breakdown-div a {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#assessment-info-div {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid white;
+}
+#assessment-info-div h1 {
+  margin: 0;
+}
+#assessment-info-div h3 {
+  margin: 10px;
+}
+#ul-list-div {
+  margin: 0;
+  margin: 0 auto;
+  width: 75%;
+  text-align: left;
+  padding: 5px;
+  /*border: 1px solid black;*/
+}
+#ul-list-div ul li {
+  padding: 3px;
+  margin-left: 100px;
+  list-style-type: square;
+}
+#btn1 {
+  flex: auto;
+  margin: 0 auto;
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: 600px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#btn1:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+#assessment-preview-tbl {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+#assessment-preview-tbl th,
+#assessment-preview-tbl td {
+  border: 1px solid white;
+  padding: 5px;
+}
+
+#content-div {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid white;
+}
+#controls-div {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid white;
+}
+#questionCount {
+  margin: 0;
+}
+#ul-div {
+  margin: 0;
+  margin: 0 auto;
+  width: 75%;
+  text-align: left;
+  padding: 5px;
+  /*border: 1px solid black;*/
+}
+#ul-div ul li {
+  padding: 10px;
+  margin-left: 125px;
+  list-style-type: square;
+}
+#buttons-div {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#controls-div button {
+  margin: 5px;
+  width: 150px;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 500px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#controls-div button:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+#timer-info-row {
+  padding: 3px;
+}
+.timer {
+  display: inline;
+  padding: 3px;
+}
+
+/* FOOTER STYLING */
+footer {
+  border-top: 1px solid #000;
+  background-color: black;
+  padding: 50px 0 0 0;
+}
+
+footer .container {
+  padding: 0 40px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  width: 1200px; /*should be changed according to the size of the screen*/
+}
+
+footer .footer-top {
+  padding: 30px 0;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+footer .flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+footer .footer-top h4 {
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  margin: 10px 0;
+  font-size: 20px;
+}
+footer .footer-top .logo a {
+  text-decoration: none;
+}
+footer .footer-top .logo p {
+  color: #fff;
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 15px;
+}
+
+footer .footer-top .navigation {
+  margin: 0;
+  text-align: center;
+}
+footer .footer-top .navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+footer .footer-top .navigation ul li {
+  font-size: 16px;
+  font-weight: medium;
+  padding: 5px;
+}
+footer .footer-top .navigation ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+footer .footer-top .navigation ul li a:hover {
+  opacity: 0.5;
+  background-color: #002c76;
+}
+footer .footer-top .contact p {
+  color: #fff;
+  line-height: 1.5;
+}
+footer .footer-bottom {
+  border-top: 1px solid #000;
+  padding: 10px 0;
+}
+footer .footer-bottom p {
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+}
