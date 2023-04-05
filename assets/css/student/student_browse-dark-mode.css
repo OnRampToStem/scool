@@ -1,0 +1,420 @@
+* {
+  background-color: black;
+}
+
+/* HEADER STYLING */
+#OR2STEM-HEADER {
+  color: white;
+  font-weight: bold;
+  padding-left: 20px;
+}
+#OR2STEM-HEADER-A {
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+#userProfile {
+  float: right;
+  margin-right: 15px;
+  position: relative;
+}
+#userButton {
+  width: auto;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 30px;
+}
+#user-picture {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  margin-left: 3px;
+  color: black;
+  background-color: white;
+  width: 85px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+.dropdown-content a {
+  color: black;
+  background-color: white;
+  display: block;
+  text-decoration: none;
+  padding: 5px;
+  text-align: center;
+}
+.show {
+  display: block;
+}
+
+/* MAIN STYLING */
+h1,
+h3,
+h4,
+p,
+select,
+option,
+label,
+a,
+th,
+td {
+  color: white;
+}
+/* GROUP1 STYLING */
+#group1 {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  /*border: 1px solid black;*/
+}
+#group1_1 {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+#group1_1_1,
+#group1_1_2,
+#group1_1_3 {
+  width: 30%;
+}
+#chapter_options,
+#section_options,
+#learningoutcome_options {
+  width: 90%;
+  padding: 4px;
+  cursor: pointer;
+}
+#go_btn {
+  width: 100px;
+  height: 40px;
+  margin: 15px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#go_btn:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+main {
+  width: 100%;
+  /*border: 1px solid black;*/
+}
+/* LO SELECTION INFO HEADER UNIQUE STYLING */
+#selectionInfoHeader {
+  width: 90%;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border: 3px solid white;
+}
+#selectionInfoHeader p {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+}
+
+.clickable_li:hover {
+  font-size: 17px;
+  cursor: pointer;
+}
+
+/* BLUE LONG BUTTON HEADER STYLING */
+.blue_long_btn {
+  width: 80%;
+  height: 50px;
+  margin: 0 auto;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  transition-duration: 0.5s;
+}
+.blue_long_btn:hover {
+  transform: scale(1.01);
+}
+.blue_long_content {
+  font-size: 18px;
+  font-weight: 800;
+  color: black;
+  background-color: white;
+  padding-left: 50px;
+}
+.blue_long_arrow {
+  font-size: 18px;
+  font-weight: 800;
+  color: black;
+  background-color: white;
+  padding-right: 25px;
+}
+
+/* MAIN QUESTION DISPLAY STYLING */
+#form {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+#questionMain {
+  margin: 0 auto;
+  display: flex;
+  text-align: center;
+}
+#leftButtonsDiv {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+#questionDisplay {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+#rightButtonsDiv {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+#previousButton {
+  width: 220px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 25px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#previousButton:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+#nextButton {
+  width: 220px;
+  height: 40px;
+  margin-right: auto;
+  margin-left: 25px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#nextButton:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+#mainImg {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+#optionsForm {
+  text-align: center;
+  margin: auto;
+}
+#checkAnswerButton {
+  width: 150px;
+  height: 40px;
+  color: black;
+  background-color: gainsboro;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#checkAnswerButton:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+#label0,
+#label1,
+#label2,
+#label3,
+#label4,
+#label5,
+#label6,
+#label7,
+#label8 {
+  display: inline-block;
+  width: 250px;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+#resultsDiv {
+  margin: 0 auto;
+  width: 60%;
+}
+#resultsTable {
+  width: 60%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid white;
+}
+.results_th {
+  width: 20%;
+  height: auto;
+  padding: 5px;
+  border: 1px solid white;
+}
+.results_td {
+  width: 20%;
+  height: auto;
+  padding: 5px;
+  border: 1px solid white;
+}
+#timerDiv {
+  float: right;
+  padding-top: 15px;
+  padding-right: 20px;
+}
+.timer {
+  display: inline;
+}
+
+/* CH & LO INFORMATION CONTENT STYLING */
+#myChapter,
+#myLO {
+  margin: 0 auto;
+  width: 80%;
+  text-align: left;
+  padding-left: 20px;
+  /*border: 1px solid black;*/
+}
+ul li a:hover {
+  /* works for both chapter info and lo info */
+  font-weight: 600;
+}
+
+/* CH, SEC, LO TABLE PROGRESS STYLING */
+.content_progress {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto;
+}
+.content_progress td,
+th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+.content_progress th {
+  text-align: center;
+}
+.content_progress td p {
+  text-align: center;
+}
+/*
+.refresh_button{
+    width: auto;
+    color: white;
+    background-color: navy;
+}
+*/
+
+/* FOOTER STYLING */
+footer {
+  border-top: 1px solid #000;
+  background-color: black;
+  padding: 50px 0 0 0;
+}
+
+footer .container {
+  padding: 0 40px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  width: 1200px; /*should be changed according to the size of the screen*/
+}
+
+footer .footer-top {
+  padding: 30px 0;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+footer .flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+footer .footer-top h4 {
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  margin: 10px 0;
+  font-size: 20px;
+}
+footer .footer-top .logo a {
+  text-decoration: none;
+}
+footer .footer-top .logo p {
+  color: #fff;
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 15px;
+}
+
+footer .footer-top .navigation {
+  margin: 0;
+  text-align: center;
+}
+footer .footer-top .navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+footer .footer-top .navigation ul li {
+  font-size: 16px;
+  font-weight: medium;
+  padding: 5px;
+}
+footer .footer-top .navigation ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+footer .footer-top .navigation ul li a:hover {
+  opacity: 0.5;
+  background-color: #002c76;
+}
+footer .footer-top .contact p {
+  color: #fff;
+  line-height: 1.5;
+}
+footer .footer-bottom {
+  border-top: 1px solid #000;
+  padding: 10px 0;
+}
+footer .footer-bottom p {
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+}
