@@ -21,18 +21,51 @@ if($_SESSION["type"] !== "Instructor"){
     <head>
         <meta charset="UTF-8">
         <title>Create an Assessment</title>
-        <link rel="stylesheet" href="../assets/css/instructor/instr_create1.css" />
-        <link rel="stylesheet" href="../assets/css/global/header.css" />
-        <link rel="stylesheet" href="../assets/css/global/global.css" />
-        <link rel="stylesheet" href="../assets/css/global/footer.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
+        <link id="css-header" rel="stylesheet" type="text/css" href="" />
+        <link id="css-mode" rel="stylesheet" type="text/css" href="" />
+        <script type="text/javascript">
+            const toggleBanner = () => {
+                const cssHeader = document.getElementById("css-header");
+                cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
+            }
+
+            const toggleCSS = () => {
+                const cssLink = document.getElementById("css-mode");
+                cssLink.setAttribute("href", `../assets/css/instructor/instr_create1-${window.localStorage.getItem("mode")}-mode.css`);
+            }
+
+            // mode
+            let item = localStorage.getItem("mode");
+            const cssLink = document.getElementById("css-mode");
+            if (item === null) {
+                window.localStorage.setItem('mode', 'OR2STEM');
+                toggleCSS();
+            }
+            else {
+                toggleCSS();
+            }
+
+            // banner
+            item = localStorage.getItem("banner");
+            const cssHeader = document.getElementById("css-header");
+            if (item === null) {
+                window.localStorage.setItem('banner', 'OR2STEM');
+                toggleBanner();
+            }
+            else {
+                toggleBanner();
+            }
+        </script>
     </head>
-    <body onload="getChapterOptions();loadJSON();">
+    <body onload="initialize();">
         <div id="app">
             <header>
                 <nav class="container">
                     <div id="userProfile" class="dropdown">
                         <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
                         <div id="myDropdown" class="dropdown-content">
+                            <a href="../navigation/settings/settings.php">Settings</a>
                             <a href="../register_login/logout.php">Logout</a>
                         </div>
                         <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
@@ -229,6 +262,12 @@ if($_SESSION["type"] !== "Instructor"){
             let numQuestions = 0; // used to sum the total number of questions in the table
             let numPoints = 0; // used to sum the total number of points in the table
             let dynamic_json; // holds assoc arr of lo => num of lo ("1.2.3" => 15)
+
+
+            const initialize = async () => {
+                await getChapterOptions();
+                await loadJSON();
+            }
 
 
             // function to get the complete selected chapter name (ex: 1. Functions)

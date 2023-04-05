@@ -38,10 +38,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <head>
         <meta charset="UTF-8">
         <title>Instructor Home Page</title>
-        <link rel="stylesheet" href="../assets/css/instructor/instr_index1.css" />
-        <link rel="stylesheet" href="../assets/css/global/header.css" />
-        <link rel="stylesheet" href="../assets/css/global/global.css" />
-        <link rel="stylesheet" href="../assets/css/global/footer.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
+        <link id="css-header" rel="stylesheet" type="text/css" href="" />
+        <link id="css-mode" rel="stylesheet" type="text/css" href="" />
+        <script type="text/javascript">
+            const toggleBanner = () => {
+                const cssHeader = document.getElementById("css-header");
+                cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
+            }
+
+            const toggleCSS = () => {
+                const cssLink = document.getElementById("css-mode");
+                cssLink.setAttribute("href", `../assets/css/instructor/instr_index1-${window.localStorage.getItem("mode")}-mode.css`);
+            }
+
+            // mode
+            let item = localStorage.getItem("mode");
+            const cssLink = document.getElementById("css-mode");
+            if (item === null) {
+                window.localStorage.setItem('mode', 'OR2STEM');
+                toggleCSS();
+            }
+            else {
+                toggleCSS();
+            }
+
+            // banner
+            item = localStorage.getItem("banner");
+            const cssHeader = document.getElementById("css-header");
+            if (item === null) {
+                window.localStorage.setItem('banner', 'OR2STEM');
+                toggleBanner();
+            }
+            else {
+                toggleBanner();
+            }
+        </script>
     </head>
     <body onload="initialize();">
         <div id="app">
@@ -129,13 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const course_names = <?= json_encode($course_names); ?>;
             const course_ids = <?= json_encode($course_ids); ?>;
 
-            let initialize = () => {
-                displayClasses();
-                document.getElementById("class-list-div").style.display = "";
-                document.getElementById("static-dynamic-div").style.display = "";
-                document.getElementById("loading-div").style.display = "none";
-            }
-
             let displayClasses = () => {
                 let str = '<form id="myForm" action="" method="POST">';
                 str += '<input type="number" id="number" name="number" style="display: none;" />';
@@ -158,16 +183,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 else window.location.href = "./static.php";
             }
 
-            const initializeCSS = () => {
-                const item = localStorage.getItem("mode");
-                const cssLink = document.getElementById("mode-css");
-                if (item === null) {
-                    cssLink.setAttribute("href", "./settings-light-mode.css");
-                }
-                else {
-                    cssLink.setAttribute("href", `./settings-${window.localStorage.getItem("mode")}-mode.css`);
-                }
+
+            const initialize = () => {
+                // content
+                displayClasses();
+                document.getElementById("class-list-div").style.display = "";
+                document.getElementById("static-dynamic-div").style.display = "";
+                document.getElementById("loading-div").style.display = "none";
             }
+
    
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
