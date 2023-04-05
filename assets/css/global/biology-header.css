@@ -1,0 +1,33 @@
+.inner-banner {
+  height: 300px;
+  position: relative;
+  margin-top: 13px;
+}
+.inner-banner .banner-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../img/fs-biology.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  z-index: 1;
+}
+nav {
+  text-align: left;
+  position: relative;
+}
+nav .site-logo {
+  width: auto;
+  padding-right: 20px;
+}
+nav .site-logo a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+nav .site-logo img {
+  max-width: 70px;
+}
