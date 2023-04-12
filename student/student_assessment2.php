@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- for dynamic questions -->
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
-    <body onload="initialize();">
+    <body>
         <div id="app">
             <header>
                 <nav class="container">
@@ -247,25 +247,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const dynamic_ids = <?= json_encode($dynamic_ids); ?>; // contains los with data for each lo, produced from assessment
             const sequence_question = []; // list of problem numbers fed to the imathas
             let questionsObjectList = []; // sequence of questions with answers  
-            const json_data = <?= json_encode($json_data); ?>
+            const json_data = <?= json_encode($json_data); ?>;
 
 
             //////////////////////////////////
             // initialization functionalities
             //////////////////////////////////
 
-            const initialize = async () => {
-                await hideElements();
-                await initListQuestions();
-                await buildiFrame();
-                await displayLoInfo();
+            const initialize = () => {
+                hideElements();
+                initListQuestions();
+                buildiFrame();
+                displayLoInfo();
             }
 
             const hideElements = () => {
                 // hide content-div & results-div
                 document.getElementById("content-div").style.display = "none";
                 document.getElementById("results-div").style.display = "none";
-                // hide btn3
+                // hide btn2 & btn3
+                document.getElementById("btn2").style.display = "none";
                 document.getElementById("btn3").style.display = "none";
             }
 
@@ -358,6 +359,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // hide assessment-info display
                 document.getElementById("assessment-info").style.display = "none";
                 // unhide next btn & iframe
+                if (counter + 1 === sequence_question.length) {
+                    document.getElementById("btn3").style.display = "";
+                } else {
+                    document.getElementById("btn2").style.display = "";
+                }
                 document.getElementById("content-div").style.display = "";
                 // display question number
                 document.getElementById("questionCount").innerHTML = `Question ${counter + 1} / ${sequence_question.length}`;
@@ -554,6 +560,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
             }
+
+            // driver
+            initialize();
         </script>
     </body>
 </html>

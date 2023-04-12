@@ -58,7 +58,7 @@ if($_SESSION["type"] !== "Learner"){
             }
         </script>
     </head>
-    <body onload="initialize();">
+    <body>
         <div id="app">
             <header>
                 <nav class="container">
