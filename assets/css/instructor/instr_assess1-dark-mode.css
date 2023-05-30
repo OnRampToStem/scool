@@ -91,10 +91,10 @@ td {
   width: 200px;
   height: 40px;
   padding: 5px;
-  color: navy;
+  color: white;
   font-size: 22px;
   font-weight: 600;
-  border: 2px solid navy;
+  border: 2px solid white;
   margin-bottom: 40px;
 }
 
@@ -162,6 +162,20 @@ td {
 .open_btn_1:hover {
   background-color: white;
   transform: scale(1.05);
+}
+
+#download-btn {
+  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: navy;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+#download-btn:hover {
+  background-color: red;
 }
 
 /* FOOTER STYLING */

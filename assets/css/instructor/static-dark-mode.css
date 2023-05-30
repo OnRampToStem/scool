@@ -89,10 +89,10 @@ p {
   width: 200px;
   height: 40px;
   padding: 5px;
-  color: navy;
+  color: white;
   font-size: 22px;
   font-weight: 600;
-  border: 2px solid navy;
+  border: 2px solid white;
   margin-bottom: 40px;
 }
 

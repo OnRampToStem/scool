@@ -126,26 +126,45 @@ td {
   padding: 5px;
 }
 
-#controls-div {
-  margin: 10px;
+/* MAIN CONTENT STYLING */
+#content-div {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+}
+
+#info-div {
+  width: 30%;
+}
+#info-div h4 {
+  margin: 0;
+  text-align: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+#iframe-div {
+  width: 70%;
+}
+#iframe-header-div {
+  border: 1px solid black;
+  padding: 5px;
 }
 #questionCount {
   margin: 0;
-}
-#ul-div {
-  margin: 0;
-  margin: 0 auto;
-  width: 75%;
-  text-align: left;
   padding: 5px;
-  /*border: 1px solid black;*/
 }
-#ul-div ul li {
-  padding: 10px;
-  margin-left: 125px;
-  list-style-type: square;
+#timer-div {
+  margin: 0;
+  padding: 5px;
 }
-#controls-div button {
+#timer-div .timer {
+  display: inline;
+  padding: 3px;
+}
+#iframe-header-div button {
   margin: 5px;
   width: 130px;
   height: 45px;
@@ -156,16 +175,8 @@ td {
   cursor: pointer;
   transition-duration: 0.5s;
 }
-#controls-div button:hover {
+#iframe-header-div button:hover {
   background-color: red;
-}
-
-#timer-info-row {
-  padding: 3px;
-}
-.timer {
-  display: inline;
-  padding: 3px;
 }
 
 /* FOOTER */
