@@ -80,7 +80,11 @@ session_start();
                     <button onclick="toggleBannerMode('OR2STEM');">OR2STEM</button>
                     <button onclick="toggleBannerMode('math');">Mathematics</button>
                     <button onclick="toggleBannerMode('biology');">Biology</button>
+                    <button onclick="toggleBannerMode('chemistry-biochemistry');">Chemistry / Biochemistry</button>
                     <button onclick="toggleBannerMode('cs');">Computer Science</button>
+                    <button onclick="toggleBannerMode('earth-environmental');">Earth & Environmental Science</button>
+                    <button onclick="toggleBannerMode('physics');">Physics</button>
+                    <button onclick="toggleBannerMode('psychology');">Psychology</button>
                 </div>
             </main>
 
