@@ -26,6 +26,7 @@ $numCurrentTries = $_POST["numCurrentTries"];
 $correct = $_POST["correct"];
 $tags = $_POST["tags"];
 $startDate = $_POST["startDate"];
+$endDate = $_POST["endDate"];
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
 
@@ -40,15 +41,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         // update the question where pkeys match
         if($value["pkey"] == $pkey){
-            // create timestamp to be inserted for datetime_answered attribute
-            $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
-            $timestamp = $date->format('Y-m-d H:i:s');
-            
             // updating attribute values
             $json_data[$key]["numCurrentTries"] = $numCurrentTries;
             $json_data[$key]["correct"] = $correct;
             $json_data[$key]["datetime_started"] = $startDate;
-            $json_data[$key]["datetime_answered"] = $timestamp;
+            $json_data[$key]["datetime_answered"] = $endDate;
 
             // save iterations and break out of loop, because pkey is unique
             break;
@@ -283,5 +280,3 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     echo $selected_questions;
 
 }
-
-?>
