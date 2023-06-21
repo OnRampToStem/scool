@@ -348,7 +348,7 @@ foreach ($students as $key => $value) {
                         if (req.responseText === "[]") {
                             alert("No data to output.");
                         } else {
-                            //console.log(req.responseText);
+                            console.log(req.responseText);
                             const data = JSON.parse(req.responseText);
 
                             /*
