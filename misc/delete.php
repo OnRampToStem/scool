@@ -3,11 +3,11 @@
 // for deleting directories and files on the Fresno State server
 // first delete the files, then delete the directory
 echo "Deleting file<br>";
-unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax/test_student@canvas.instructure.com.json")
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/questions/test_student@canvas.instructure.com.json")
     or die("Could not remove file<br>");
 
 echo "Deleting file<br>";
-unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/questions/test_student@canvas.instructure.com.json")
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax/test_student@canvas.instructure.com.json")
     or die("Could not remove file<br>");
 
     /*
@@ -37,5 +37,3 @@ rmdir("../scale/user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfd
     rmdir("../scale/user_data/MATH6 Dev-20d4c62c24a96e1f3afb75776a253004109a1e22")
         or die("Could not remove file<br>");
     */
-
-?>
