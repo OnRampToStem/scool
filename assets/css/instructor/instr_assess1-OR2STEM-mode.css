@@ -81,6 +81,29 @@
   margin-bottom: 40px;
 }
 
+/* SORTING OPTIONS DIV */
+#sorting-options-div {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+.sorting-btn {
+  width: 200px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background-color: navy;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.sorting-btn:hover {
+  background-color: red;
+}
+
 #ss_tab {
   margin: 0 auto;
   width: 90%;
