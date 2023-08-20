@@ -1,86 +1,97 @@
 <?php
-// start the session (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
+// start the session //
+// loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
 
-// if user is not logged in then redirect them back to Fresno State Canvas
+// if user is not logged in -> redirect them back to Fresno State Canvas //
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' or 'Mentor' then force logout
+// if user account type is not 'Instructor' or 'Mentor' -> force logout //
 if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../register_login/logout.php");
     exit;
 }
 
-$students = array();      // Associative array holding ("name" => "email") of students
-$students_data = array(); // Associative array holding ("email" => [los complete, los incomplete]) of students
+$students = [];
 
-// connect to the PGSQL db
+// connect to Fresno State PGSQL DB //
 require_once "../register_login/config.php";
 
 if ($_SESSION["type"] === "Instructor") {
-    // get all students that belong to the instructor logged in, but are also in the current selected course name and course id
-    $query = "SELECT * FROM users WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION["selected_course_name"]}'
-              AND course_id = '{$_SESSION["selected_course_id"]}'";
+    // get all students that belong to the instructor's currently selected course //
+    $query =
+        "SELECT pkey, name, email FROM users
+         WHERE type = 'Learner' AND instructor = '{$_SESSION["email"]}' AND
+         course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}' 
+         ORDER BY name ASC;";
     $res = pg_query($con, $query);
-    // error check the pg query
     if (!$res) {
         echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
         exit;
     } else {
-        // loop through each row
-        while ($row = pg_fetch_row($res)) {
-            // insert data into the array
-            $students[$row[1]] = $row[2];
+        while ($row = pg_fetch_assoc($res)) {
+            array_push(
+                $students,
+                [
+                    "pkey" => $row["pkey"],
+                    "name" => $row["name"],
+                    "email" => $row["email"]
+                ]
+            );
         }
     }
-} elseif ($_SESSION["type"] === "Mentor") {
-    // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
-    $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%'
-              AND course_id LIKE '%{$_SESSION["selected_course_id"]}%'";
+} else if ($_SESSION["type"] === "Mentor") {
+    // get the email of the instructor of the course //
+    $query =
+        "SELECT email FROM users
+         WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%' AND
+         course_id LIKE '%{$_SESSION["selected_course_id"]}%'";
     $res = pg_query($con, $query);
-    // error check the pg query
     if (!$res) {
         echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
         exit;
     } else {
         // get the instructor's email
-        $instr_email = pg_fetch_result($res, 0, 0);
+        $instructor_email = pg_fetch_result($res, 0, 0);
 
-        // get all students that belong to the instructor logged in, but are also in the current selected course name and course id
-        $query = "SELECT * FROM users WHERE instructor = '{$instr_email}' AND course_name = '{$_SESSION["selected_course_name"]}'
-                  AND course_id = '{$_SESSION["selected_course_id"]}'";
+        // get all students that belong to the instructor's currently selected course //
+        $query =
+            "SELECT pkey, name, email FROM users
+             WHERE type = 'Learner' AND instructor = '{$instructor_email}' AND
+             course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}' 
+             ORDER BY name ASC;";
         $res = pg_query($con, $query);
-        // error check the pg query
         if (!$res) {
             echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
             exit;
         } else {
-            // loop through each row
-            while ($row = pg_fetch_row($res)) {
-                // insert data into the array
-                $students[$row[1]] = $row[2];
+            while ($row = pg_fetch_assoc($res)) {
+                array_push(
+                    $students,
+                    [
+                        "pkey" => $row["pkey"],
+                        "name" => $row["name"],
+                        "email" => $row["email"]
+                    ]
+                );
             }
         }
     }
 }
-
-// close connection to PGSQL db
 pg_close($con);
 
-// loop through students php assoc arr
-foreach ($students as $key => $value) {
-
-    // read student's email static questions json filename and
-    // decode the student email JSON file (text => PHP assoc array)
-    $json_filename = "../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $value . ".json";
+// loop through the students //
+foreach ($students as &$student) {
+    // read & decode the student's static questions JSON file (text => PHP assoc array) //
+    $json_filename = "../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $student["email"] . ".json";
     $json = file_get_contents($json_filename);
     $json_data = json_decode($json, true);
 
-    $data1 = array(); // php assoc arr holding "lo num" => "total number of complete static questions in rel to that lo num"
-    $data2 = array(); // php assoc arr holding "lo num" => "total number of static questions in rel to that lo num"
+    $data1 = []; // php assoc arr holding "lo num" => "total number of complete static questions in rel to that lo num"
+    $data2 = []; // php assoc arr holding "lo num" => "total number of static questions in rel to that lo num"
     $maxNumberAssessment = 5; // assuming data from openStax.json file remains the same, each lo should have max of 5
     $complete = 0; // counter for complete static questions
     $total = 0; // counter for total static questions
@@ -143,9 +154,10 @@ foreach ($students as $key => $value) {
         }
     }
 
-    // once loop is done, save the data in $students_data, to be used in JS
-    $students_data[$value] = [$complete, $total];
+    // once loop is done, save the data in $students_data, to be used in JS //
+    $student["progress"] = [$complete, $total];
 }
+unset($student);
 
 ?>
 
@@ -225,6 +237,10 @@ foreach ($students as $key => $value) {
             <div id="loading-div">
                 LOADING...
             </div>
+
+            <div id="sorting-options-div"></div>
+
+            <div id="students-div"></div>
         </main>
 
 
@@ -267,22 +283,26 @@ foreach ($students as $key => $value) {
     </div>
 
     <script type="text/javascript">
-        /* GLOBALS */
-        let rows = 1;
-        const students = <?= json_encode($students); ?>; // converting php array to js array
-        const students_data = <?= json_encode($students_data); ?>;
-
-
+        // globals //
+        let students = <?= json_encode($students); ?>;
+        let studentsSortedByName = true;
+        let studentsSortedByProgress = false;
 
         const initialize = () => {
+            displaySortingOptions();
             displayStudents();
             drawAllCharts();
             document.getElementById("loading-div").style.display = "none";
         }
 
+        const displaySortingOptions = () => {
+            let str = '<button class="sorting-btn" onclick="sortStudentsByName()">Sort Students By Name</button>';
+            str += '<div id="sorting-status"><b>Sorted By Name - Ascending</b></div>';
+            str += '<button class="sorting-btn" onclick="sortStudentsByProgress()">Sort Students By Progress</button>';
+            document.getElementById("sorting-options-div").innerHTML = str;
+        }
 
-        // table creation of all students, displaying learning outcome progress
-        let displayStudents = () => {
+        const displayStudents = () => {
             let str = '<table id="ss_tab">';
             str += '<thead><tr>';
             str += '<th class="th1" scope="col">Name</th>';
@@ -291,52 +311,154 @@ foreach ($students as $key => $value) {
             str += '<th class="th4" scope="col">Details</th>';
             str += '</tr></thead>';
             str += '<tbody>';
-            for (const key in students) {
-                str += `<tr data-internalid="${rows}">`;
-                str += `<td class="td1">${key}</td>`;
-                str += `<td class="td2">${students[key]}</td>`;
-                str += `<td class="td3"><div id="myChart${rows}" class="myCharts"></div></td>`;
+            for (let i = 0; i < students.length; i++) {
+                let student = students[i];
+                str += `<tr id="${student["pkey"]}">`;
+                str += `<td class="td1">${student["name"]}</td>`;
+                str += `<td class="td2">${student["email"]}</td>`;
+                str += `<td class="td3"><div id="myChart${student["pkey"]}" class="myCharts"></div></td>`;
                 str += '<td class="td4">';
                 str += '<form action="instr_assess2.php" method="POST">';
-                str += '<input class="amt_students" name="amt_students" type="number" style="display:none" required>';
-                str += `<input id="student_email_${rows}" name="student_email_${rows}" type="text" style="display:none" required>`;
-                str += `<input id="student_name_${rows}" name="student_name_${rows}" type="text" style="display:none" required>`;
-                str += `<input id="student_complete_${rows}" name="student_complete_${rows}" type="number" style="display:none" required>`;
-                str += `<input id="student_incomplete_${rows}" name="student_incomplete_${rows}" type="number" style="display:none" required>`;
-                str += '<input class="open_btn_1" type="submit" name="submit" value="Open" onclick="setFormData(this.parentElement.parentElement.parentElement);">';
+                str += `<input id="student_pkey" name="student_pkey" type="number" value="${student['pkey']}" style="display:none" required>`;
+                str += `<input id="student_email" name="student_email" type="text" value="${student['email']}" style="display:none" required>`;
+                str += `<input id="student_name" name="student_name" type="text" value="${student['name']}" style="display:none" required>`;
+                str += `<input id="student_complete" name="student_complete" type="number" value="${student['progress'][0]}" style="display:none" required>`;
+                str += `<input id="student_incomplete" name="student_incomplete" type="number" value="${student['progress'][1]}" style="display:none" required>`;
+                str += `<input class="open_btn_1" type="submit" value="Open">`;
                 str += '</form>';
                 str += '</td>';
                 str += '</tr>';
-                rows++;
             }
             str += '</tbody></table>';
-            document.getElementById("main").insertAdjacentHTML("beforeend", str);
-
-            str = '<br><button id="download-btn" onclick="downloadData()">Download Data</button>';
-            document.getElementById("main").insertAdjacentHTML("beforeend", str);
+            str += '<br><button id="download-btn" onclick="downloadData()">Download Data</button>';
+            document.getElementById("students-div").innerHTML = str;
         }
 
-
-        let setFormData = (ele) => {
-            // grab list of <td> elements from input <tr> element
-            //console.log(ele);
-            const idx = ele.getAttribute("data-internalid");
-            //console.log(idx);
-            let tdList = ele.children;
-            //const idx = tdList[0].innerHTML;
-            const student_name = tdList[0].innerHTML;
-            const student_email = tdList[1].innerHTML;
-            // set form data
-            for (let i = 0; i < rows - 1; i++) {
-                // set all input html elements with a class of 'amt_students' to correct amount of students in the table
-                document.getElementsByClassName("amt_students")[i].value = rows - 1;
+        // using Google Pie Charts to display each student's learning outcome progress //
+        const drawAllCharts = () => {
+            for (let i = 0; i < students.length; i++) {
+                let student = students[i];
+                drawChart(student);
             }
-            document.getElementById(`student_email_${idx}`).value = student_email;
-            document.getElementById(`student_name_${idx}`).value = student_name;
-            document.getElementById(`student_complete_${idx}`).value = students_data[student_email][0];
-            document.getElementById(`student_incomplete_${idx}`).value = students_data[student_email][1];
+        }
+        const drawChart = (student) => {
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Status', 'Learning Outcomes'],
+                    ['Complete', student["progress"][0]],
+                    ['Remaining', student["progress"][1] - student["progress"][0]]
+                ]);
+
+                var options = {
+                    colors: ['green', 'white'],
+                    pieSliceBorderColor: 'black',
+                    legend: 'none'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById(`myChart${student["pkey"]}`));
+
+                chart.draw(data, options);
+            }
         }
 
+        const sortStudentsByName = () => {
+            const compareNamesDescending = (a, b) => {
+                if (a.name < b.name) {
+                    return 1;
+                } else if (a.name > b.name) {
+                    return -1;
+                }
+                return 0;
+            }
+            const compareNamesAscending = (a, b) => {
+                if (a.name > b.name) {
+                    return 1;
+                } else if (a.name < b.name) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            // show loading div //
+            document.getElementById("loading-div").style.display = "";
+            // hide data divs //
+            document.getElementById("sorting-options-div").style.display = "none";
+            document.getElementById("students-div").style.display = "none";
+
+            if (studentsSortedByName) {
+                // sort students from Z-A (descending) //
+                students.sort(compareNamesDescending);
+                document.getElementById("sorting-status").innerHTML = "<b>Sorted By Name - Descending</b>";
+            } else {
+                // sort students from A-Z (ascending) //
+                students.sort(compareNamesAscending);
+                document.getElementById("sorting-status").innerHTML = "<b>Sorted By Name - Ascending</b>";
+            }
+
+            // display sorted data //
+            displayStudents();
+            drawAllCharts();
+
+            // hide loading div //
+            document.getElementById("loading-div").style.display = "none";
+            // show data divs //
+            document.getElementById("sorting-options-div").style.display = "";
+            document.getElementById("students-div").style.display = "";
+
+            studentsSortedByName = !studentsSortedByName;
+        }
+
+        const sortStudentsByProgress = () => {
+            const compareProgressDescending = (a, b) => {
+                if (a.progress[0] < b.progress[0]) {
+                    return 1;
+                } else if (a.progress[0] > b.progress[0]) {
+                    return -1;
+                }
+                return 0;
+            }
+            const compareProgressAscending = (a, b) => {
+                if (a.progress[0] > b.progress[0]) {
+                    return 1;
+                } else if (a.progress[0] < b.progress[0]) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            // show loading div //
+            document.getElementById("loading-div").style.display = "";
+            // hide data divs //
+            document.getElementById("sorting-options-div").style.display = "none";
+            document.getElementById("students-div").style.display = "none";
+
+            if (studentsSortedByProgress) {
+                // sort students from lowest progress to highest progress //
+                students.sort(compareProgressDescending);
+                document.getElementById("sorting-status").innerHTML = "<b>Sorted By Progress - Descending</b>";
+            } else {
+                // sort students from highest progress to lowest progress //
+                students.sort(compareProgressAscending);
+                document.getElementById("sorting-status").innerHTML = "<b>Sorted By Progress - Ascending</b>";
+            }
+
+            // display sorted data //
+            displayStudents();
+            drawAllCharts();
+
+            // hide loading div //
+            document.getElementById("loading-div").style.display = "none";
+            // show data divs //
+            document.getElementById("sorting-options-div").style.display = "";
+            document.getElementById("students-div").style.display = "";
+
+            studentsSortedByProgress = !studentsSortedByProgress;
+        }
 
         const downloadData = () => {
             try {
@@ -424,49 +546,11 @@ foreach ($students as $key => $value) {
             }
         }
 
-
-        // using Google Pie Charts to display each student's learning outcome progress
-        let drawAllCharts = () => {
-            let student_emails = [];
-            for (const key in students) {
-                student_emails.push(students[key]);
-            }
-            for (let i = 1; i < rows; i++) {
-                drawChart(i, student_emails);
-            }
-        }
-        let drawChart = (num, student_emails) => {
-            google.charts.load('current', {
-                'packages': ['corechart']
-            });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Status', 'Learning Outcomes'],
-                    ['Complete', students_data[student_emails[num - 1]][0]],
-                    ['Remaining', students_data[student_emails[num - 1]][1] - students_data[student_emails[num - 1]][0]]
-                ]);
-
-                var options = {
-                    colors: ['green', 'white'],
-                    pieSliceBorderColor: 'black',
-                    legend: 'none'
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById(`myChart${num}`));
-
-                chart.draw(data, options);
-            }
-        }
-
-
-        // controlling the user profile dropdown
         /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
         let showDropdown = () => {
             document.getElementById("myDropdown").classList.toggle("show");
         }
-        // Close the dropdown if the user clicks outside of it
+        // Close the dropdown if the user clicks outside of it //
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
