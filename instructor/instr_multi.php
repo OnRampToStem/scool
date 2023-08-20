@@ -30,9 +30,8 @@ while ($row = pg_fetch_row($res)) {
     $instr_assessments[$row[0]] = $row[2];
 }
 
-// second query - public assessments that do not belong to current logged in instructor, but are public
-$query = "SELECT * FROM assessments WHERE instructor != '{$_SESSION["email"]}' AND public = 'Yes'";
-// AND course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}'";
+// second query - public assessments
+$query = "SELECT * FROM assessments WHERE public = 'Yes'";
 $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
 
 while ($row = pg_fetch_row($res)) {
