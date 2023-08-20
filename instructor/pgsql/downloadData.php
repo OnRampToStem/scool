@@ -25,9 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $tot_arr = []; // will hold subarrays containing questions answered by the student
 
-    foreach ($students as $key => $value) {
+    foreach ($students as $student) {
         // initialize the file path (student's static questions json file)
-        $filepath = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/{$value}.json";
+        $filepath = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/{$student['email']}.json";
         // read the text from the file
         $json_text = file_get_contents($filepath);
         // convert text to PHP assoc array
