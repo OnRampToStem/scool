@@ -460,17 +460,18 @@ unset($student);
             studentsSortedByProgress = !studentsSortedByProgress;
         }
 
+        // TODO: fix issue with downloading data (Error 500) //
         const downloadData = () => {
             try {
                 let req = new XMLHttpRequest();
-                req.open("POST", "pgsql/downloadData.php", true);
+                req.open("POST", "./pgsql/downloadData.php", true);
                 req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 req.onreadystatechange = function() {
                     if (req.readyState == 4 && req.status == 200) {
                         if (req.responseText === "[]") {
                             alert("No data to output.");
                         } else {
-                            console.log(req.responseText);
+                            //console.log(req.responseText);
                             const data = JSON.parse(req.responseText);
 
                             /*
