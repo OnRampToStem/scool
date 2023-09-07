@@ -204,6 +204,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <h4>Please make sure to 'Submit' your answer before clicking on the 'Next Question' button.</h4>
                     <h4>Do not click on the 'Try a similar question' button.</h4>
                     <h4>After submitting your last question, you must click on the 'Submit Assessment' button.</h4>
+                    <h4>Please enter the following in the text box if it applies to the solution:</h4>
+                    <ul>
+                        <li>Enter: DNE for "does not exist"</li>
+                        <li>Enter: -oo for "negative infinity"</li>
+                        <li>Enter: oo for "positive infinity"</li>
+                    </ul>
                     <h4>
                         <a id="issue-link" href="#" onclick="sendEmail();">
                             Click here
