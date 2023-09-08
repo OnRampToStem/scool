@@ -14,7 +14,6 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../register_login/logout.php");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -104,6 +103,10 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
             <div class="btn-div">
                 <button class="regular_button" onclick="redirectToInstrUnlock()">Unlock Learning Outcome(s)</button>
             </div>
+
+            <div class="btn-div">
+                <button class="regular_button" onclick="handleStudentView()">Student View</button>
+            </div>
         </main>
 
         <footer>
@@ -145,23 +148,42 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     </div>
 
     <script type="text/javascript">
-        let redirectToInstrAssess = () => {
+        const redirectToInstrAssess = () => {
             window.location.href = "instr_assess1.php";
         }
 
-        let redirectToInstrCreate = () => {
+        const redirectToInstrCreate = () => {
             if ("<?= $_SESSION["type"]; ?>" === "Instructor") window.location.href = "instr_create1.php";
             else alert("Only Instructors have access to this functionality.");
         }
 
-        let redirectToInstrView = () => {
+        const redirectToInstrView = () => {
             if ("<?= $_SESSION["type"]; ?>" === "Instructor") window.location.href = "instr_multi.php";
             else alert("Only Instructors have access to this functionality.");
         }
 
-        let redirectToInstrUnlock = () => {
+        const redirectToInstrUnlock = () => {
             if ("<?= $_SESSION["type"]; ?>" === "Instructor") window.location.href = "unlock_lo.php";
             else alert("Only Instructors have access to this functionality.");
+        }
+
+        const handleStudentView = () => {
+            alert("Student View is coming soon!");
+
+            /*
+            if ("<?= $_SESSION["type"]; ?>" === "Instructor") {
+                // run student view handler //
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "./pgsql/studentViewHandler.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    }
+                }
+                xhr.send();
+            } else alert("Only Instructors have access to this functionality.");
+            */
         }
 
         // controlling the user profile dropdown
