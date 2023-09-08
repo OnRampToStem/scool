@@ -116,7 +116,7 @@ main {
 
 .q-btn {
   width: 100%;
-  height: 40px;
+  height: auto;
   margin-bottom: 5px;
   color: black;
   background-color: gainsboro;
