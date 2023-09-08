@@ -1,14 +1,15 @@
 <?php
-// start the session (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
+// start the session //
+// (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id) //
 session_start();
 
-// if user is not logged in then redirect them back to Fresno State Canvas
+// redirect users if not logged in //
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' or 'Mentor' then force logout
+// force logout for non-instructors or non-mentors //
 if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../register_login/logout.php");
     exit;
@@ -85,7 +86,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
 
         <main>
             <div id="header-div">
-                <h1><?= $_SESSION['selected_course_name']; ?></h1>
+                <h1 title="<?= $_SESSION['selected_course_id']; ?>"><?= $_SESSION['selected_course_name']; ?></h1>
             </div>
 
             <div class="btn-div">

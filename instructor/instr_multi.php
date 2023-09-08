@@ -113,9 +113,7 @@ pg_close($con);
         </header>
 
         <div>
-            <h1>
-                <?= $_SESSION["selected_course_name"]; ?>
-            </h1>
+            <h1 title="<?= $_SESSION['selected_course_id']; ?>"><?= $_SESSION["selected_course_name"]; ?></h1>
         </div>
 
         <div id="assessments_div">
