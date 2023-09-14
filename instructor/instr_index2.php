@@ -168,22 +168,30 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
         }
 
         const handleStudentView = () => {
-            alert("Student View is coming soon!");
-
-            /*
-            if ("<?= $_SESSION["type"]; ?>" === "Instructor") {
+            // TODO: change this when all functionalities complete and tested //
+            // only developer instructor can execute //
+            if ("<?= $_SESSION["type"]; ?>" === "Instructor" && "<?= $_SESSION["email"]; ?>" === "luisss3v@mail.fresnostate.edu") {
                 // run student view handler //
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "./pgsql/studentViewHandler.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.open("GET", "./pgsql/studentViewHandler.php", true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        console.log(xhr.responseText);
+                        //console.log(xhr.responseText);
+                        const response = xhr.responseText.trim();
+                        if (response === "Login Test Student") {
+                            // redirect to the student home page //
+                            window.location.href = "../student/student_index.php";
+                        } else {
+                            alert("Unknown Error.");
+                        }
                     }
                 }
                 xhr.send();
-            } else alert("Only Instructors have access to this functionality.");
-            */
+            } else {
+                // TODO: change this when all functionalities complete and tested //
+                //alert("Only Instructors have access to this functionality.");
+                alert("Student view is coming soon!");
+            }
         }
 
         // controlling the user profile dropdown
