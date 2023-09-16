@@ -105,6 +105,21 @@ main {
   cursor: pointer;
 }
 
+#studentsButton {
+  color: white;
+}
+#students-table {
+  margin: 0 auto;
+  border: 1px solid white;
+  border-collapse: collapse;
+  color: white;
+}
+#students-table th,
+#students-table td {
+  border: 1px solid white;
+  padding: 3px;
+}
+
 #submit-btn {
   width: 250px;
   height: 55px;

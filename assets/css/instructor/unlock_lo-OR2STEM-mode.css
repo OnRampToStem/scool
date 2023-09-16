@@ -86,6 +86,17 @@ main {
   cursor: pointer;
 }
 
+#students-table {
+  margin: 0 auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+#students-table th,
+#students-table td {
+  border: 1px solid black;
+  padding: 3px;
+}
+
 #submit-btn {
   width: 250px;
   height: 55px;
