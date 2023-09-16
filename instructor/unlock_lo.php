@@ -11,422 +11,380 @@ if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
 
 // force logout for non-instructors //
 if ($_SESSION["type"] !== "Instructor") {
-    header("location: ../../register_login/logout.php");
+    header("location: ../register_login/logout.php");
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // globals //
-    $ch_digit = (int)$_POST["ch_digit"];
-    $sec_digit = (int)$_POST["sec_digit"];
-    $lo_digit = (int)$_POST["lo_digit"];
-    $student_emails = json_decode($_POST["students"]);
+// globals //
+$chapter = "Select a Chapter";
+$section = "Select a Section";
+$learningoutcome = "Select a Learning Outcome";
+$students = [];
 
-    // 1
-    // unlock the requested learning outcome for each student
-    foreach ($student_emails as $student_email) {
+// connect to the db //
+require_once "../register_login/config.php";
 
-        echo "Starting unlock process for $student_email \n";
-
-        // filepath
-        $json_filename = "../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/openStax/" . $student_email . ".json";
-        // read the openStax.json file to text
-        $json = file_get_contents($json_filename);
-        // decode the text into a PHP assoc array
-        $openStax = json_decode($json, true);
-
-        // UNLOCK THE CHAPTER, SECTION, AND LO
-        // loop through each chapter
-        foreach ($openStax as $key1 => $val1) {
-
-            // only looking for specific chapter
-            if ($val1["Index"] === $ch_digit) {
-
-                // perform modification here for chapter
-                $openStax[$key1]["Access"] = "True";
-                echo "Modified chapter {$val1["Index"]} Access to True \n";
-
-                // loop through each section in that chapter
-                foreach ($val1["Sections"] as $key2 => $val2) {
-
-                    // only looking for specific section
-                    if ($val2["Index"] === $sec_digit) {
-
-                        // peform modification here for section
-                        $openStax[$key1]["Sections"][$key2]["Access"] = "True";
-                        echo "Modified section {$val2["Index"]} Access to True \n";
-
-                        // loop through each lo in that section
-                        foreach ($val2["LearningOutcomes"] as $key3 => $val3) {
-
-                            // only looking for specific lo
-                            if ($val3["Index"] === $lo_digit) {
-
-                                // perform modification here for lo
-                                $openStax[$key1]["Sections"][$key2]["LearningOutcomes"][$key3]["Access"] = "True";
-                                echo "Modified lo {$val3["Index"]} Access to True \n";
-                                break 3;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // 2
-        // PROCEED TO REWRITE OPENSTAX JSON FILE
-        echo "Now rewriting respective openStax json file\n";
-        // rewrite user openStax json file (original data + modified data)
-        $myfile = fopen("../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/openStax/" . $student_email . ".json", "w") or die("Unable to open file!");
-
-        // begin writing
-        fwrite($myfile, "[");
-
-        // loop through each chapter
-        $c1 = 0;
-        foreach ($openStax as $chapter) {
-
-            // comma at the end
-            if ($c1 !== count($openStax) - 1) {
-                $string = "\n\t" . "{" . "\n\t\t\"Index\": " . $chapter["Index"] . "," . "\n\t\t\"Name\": \"" . $chapter["Name"] . "\"," . "\n\t\t\"Access\": \"" . $chapter["Access"] . "\",";
-
-                $string .= "\n\t\t\"Introduction\": {";
-                $string .= "\n\t\t\t\"Name\": \"" . $chapter["Introduction"]["Name"] . "\",";
-                $string .= "\n\t\t\t\"Description\": \"" . $chapter["Introduction"]["Description"] . "\",";
-                $string .= "\n\t\t\t\"Document\": \"" . $chapter["Introduction"]["Document"] . "\",";
-                $string .= "\n\t\t\t\"PageStart\": " . $chapter["Introduction"]["PageStart"];
-                $string .= "\n\t\t},";
-
-                $string .= "\n\t\t\"Review\": {";
-                $string .= "\n\t\t\t\"Name\": \"" . $chapter["Review"]["Name"] . "\",";
-                $string .= "\n\t\t\t\"Document\": \"" . $chapter["Review"]["Document"] . "\",";
-                $string .= "\n\t\t\t\"PageStart\": " . $chapter["Review"]["PageStart"];
-                $string .= "\n\t\t},";
-
-                $string .= "\n\t\t\"Sections\": [";
-                // loop through inner Sections array
-                for ($i = 0; $i < count($chapter["Sections"]); $i++) {
-                    // comma at the end
-                    if ($i !== count($chapter["Sections"]) - 1) {
-                        $string .= "\n\t\t\t{";
-                        $string .= "\n\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["Index"] . ",";
-                        $string .= "\n\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["Name"] . "\",";
-                        $string .= "\n\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["Access"] . "\",";
-
-                        $string .= "\n\t\t\t\t\"LearningOutcomes\": [";
-                        // loop through inner inner LearningOutcomes array
-                        for ($j = 0; $j < count($chapter["Sections"][$i]["LearningOutcomes"]); $j++) {
-                            // comma at the end
-                            if ($j !== count($chapter["Sections"][$i]["LearningOutcomes"]) - 1) {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t},"; //learning outcome comma here
-                            }
-                            // no comma
-                            else {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t}"; //no learning outcome comma here
-                            }
-                        }
-
-                        $string .= "\n\t\t\t\t],";
-                        $string .= "\n\t\t\t\t\"score\": [";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0";
-                        $string .= "\n\t\t\t\t]";
-                        $string .= "\n\t\t\t},"; //section comma here
-
-                    }
-                    // no comma
-                    else {
-                        $string .= "\n\t\t\t{";
-                        $string .= "\n\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["Index"] . ",";
-                        $string .= "\n\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["Name"] . "\",";
-                        $string .= "\n\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["Access"] . "\",";
-
-                        $string .= "\n\t\t\t\t\"LearningOutcomes\": [";
-                        // loop through inner inner LearningOutcomes array
-                        for ($j = 0; $j < count($chapter["Sections"][$i]["LearningOutcomes"]); $j++) {
-                            // comma at the end
-                            if ($j !== count($chapter["Sections"][$i]["LearningOutcomes"]) - 1) {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t},"; //learning outcome comma here
-                            }
-                            // no comma
-                            else {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t}"; //no learning outcome comma here
-                            }
-                        }
-
-                        $string .= "\n\t\t\t\t],";
-                        $string .= "\n\t\t\t\t\"score\": [";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0";
-                        $string .= "\n\t\t\t\t]";
-                        $string .= "\n\t\t\t}"; //no section comma here
-                    }
-                }
-
-                $string .= "\n\t\t],";
-                $string .= "\n\t\t\"score\": [";
-                $string .= "\n\t\t\t0,";
-                $string .= "\n\t\t\t0,";
-                $string .= "\n\t\t\t0";
-                $string .= "\n\t\t]";
-                $string .= "\n\t},"; //chapter comma here
-
-                // writing 
-                fwrite($myfile, $string);
-            }
-            // no comma
-            else {
-                $string = "\n\t" . "{" . "\n\t\t\"Index\": " . $chapter["Index"] . "," . "\n\t\t\"Name\": \"" . $chapter["Name"] . "\"," . "\n\t\t\"Access\": \"" . $chapter["Access"] . "\",";
-
-                $string .= "\n\t\t\"Introduction\": {";
-                $string .= "\n\t\t\t\"Name\": \"" . $chapter["Introduction"]["Name"] . "\",";
-                $string .= "\n\t\t\t\"Description\": \"" . $chapter["Introduction"]["Description"] . "\",";
-                $string .= "\n\t\t\t\"Document\": \"" . $chapter["Introduction"]["Document"] . "\",";
-                $string .= "\n\t\t\t\"PageStart\": " . $chapter["Introduction"]["PageStart"];
-                $string .= "\n\t\t},";
-
-                $string .= "\n\t\t\"Review\": {";
-                $string .= "\n\t\t\t\"Name\": \"" . $chapter["Review"]["Name"] . "\",";
-                $string .= "\n\t\t\t\"Document\": \"" . $chapter["Review"]["Document"] . "\",";
-                $string .= "\n\t\t\t\"PageStart\": " . $chapter["Review"]["PageStart"];
-                $string .= "\n\t\t},";
-
-                $string .= "\n\t\t\"Sections\": [";
-                // loop through inner Sections array
-                for ($i = 0; $i < count($chapter["Sections"]); $i++) {
-                    // comma at the end
-                    if ($i !== count($chapter["Sections"]) - 1) {
-                        $string .= "\n\t\t\t{";
-                        $string .= "\n\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["Index"] . ",";
-                        $string .= "\n\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["Name"] . "\",";
-                        $string .= "\n\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["Access"] . "\",";
-
-                        $string .= "\n\t\t\t\t\"LearningOutcomes\": [";
-                        // loop through inner inner LearningOutcomes array
-                        for ($j = 0; $j < count($chapter["Sections"][$i]["LearningOutcomes"]); $j++) {
-                            // comma at the end
-                            if ($j !== count($chapter["Sections"][$i]["LearningOutcomes"]) - 1) {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t},"; //learning outcome comma here
-                            }
-                            // no comma
-                            else {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t}"; //no learning outcome comma here
-                            }
-                        }
-
-                        $string .= "\n\t\t\t\t],";
-                        $string .= "\n\t\t\t\t\"score\": [";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0";
-                        $string .= "\n\t\t\t\t]";
-                        $string .= "\n\t\t\t},"; //section comma here
-
-                    }
-                    // no comma
-                    else {
-                        $string .= "\n\t\t\t{";
-                        $string .= "\n\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["Index"] . ",";
-                        $string .= "\n\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["Name"] . "\",";
-                        $string .= "\n\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["Access"] . "\",";
-
-                        $string .= "\n\t\t\t\t\"LearningOutcomes\": [";
-                        // loop through inner inner LearningOutcomes array
-                        for ($j = 0; $j < count($chapter["Sections"][$i]["LearningOutcomes"]); $j++) {
-                            // comma at the end
-                            if ($j !== count($chapter["Sections"][$i]["LearningOutcomes"]) - 1) {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t},"; //learning outcome comma here
-                            }
-                            // no comma
-                            else {
-                                $string .= "\n\t\t\t\t\t{";
-                                $string .= "\n\t\t\t\t\t\t\"Index\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Name\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Name"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"Access\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Access"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"MaxNumberAssessment\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"Document\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Document"] . "\",";
-                                $string .= "\n\t\t\t\t\t\t\"PageStart\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageStart"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"PageEnd\": " . $chapter["Sections"][$i]["LearningOutcomes"][$j]["PageEnd"] . ",";
-                                $string .= "\n\t\t\t\t\t\t\"url\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["url"] . "\",";
-                                if (gettype($chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"]) === "string") {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": \"" . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Video"] . "\",";
-                                } else {
-                                    $string .= "\n\t\t\t\t\t\t\"Video\": [],";
-                                }
-                                $string .= "\n\t\t\t\t\t\t\"score\": [";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0,";
-                                $string .= "\n\t\t\t\t\t\t\t0";
-                                $string .= "\n\t\t\t\t\t\t]";
-                                $string .= "\n\t\t\t\t\t}"; //no learning outcome comma here
-                            }
-                        }
-
-                        $string .= "\n\t\t\t\t],";
-                        $string .= "\n\t\t\t\t\"score\": [";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0,";
-                        $string .= "\n\t\t\t\t\t0";
-                        $string .= "\n\t\t\t\t]";
-                        $string .= "\n\t\t\t}"; //no section comma here
-                    }
-                }
-
-                $string .= "\n\t\t],";
-                $string .= "\n\t\t\"score\": [";
-                $string .= "\n\t\t\t0,";
-                $string .= "\n\t\t\t0,";
-                $string .= "\n\t\t\t0";
-                $string .= "\n\t\t]";
-                $string .= "\n\t}"; //no chapter comma here
-
-                // writing 
-                fwrite($myfile, $string);
-            }
-
-            // updating counter
-            $c1++;
-        }
-        echo "\n";
-
-        // finalizing writing
-        fwrite($myfile, "\n]");
-        fclose($myfile);
-        echo "Successfully Rewrote OpenStax\n\n";
+// get all students belonging to the instructor for the selected course //
+$query =
+    "SELECT name, email FROM users
+    WHERE type = 'Learner'
+        AND instructor = '" . $_SESSION["email"] . "'
+        AND course_name='" . $_SESSION["selected_course_name"] . "'
+        AND course_id='" . $_SESSION["selected_course_id"] . "'
+    ORDER BY name ASC;";
+$res = pg_query($con, $query) or die(pg_last_error($con));
+if (pg_num_rows($res) > 0) {
+    while ($row = pg_fetch_assoc($res)) {
+        array_push($students, ["name" => $row["name"], "email" => $row["email"]]);
     }
 }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title><?= $_SESSION['selected_course_name']; ?></title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
+    <link id="css-header" rel="stylesheet" type="text/css" href="" />
+    <link id="css-mode" rel="stylesheet" type="text/css" href="" />
+    <script type="text/javascript">
+        const toggleBanner = () => {
+            const cssHeader = document.getElementById("css-header");
+            cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
+        }
+
+        const toggleCSS = () => {
+            const cssLink = document.getElementById("css-mode");
+            cssLink.setAttribute("href", `../assets/css/instructor/unlock_lo-${window.localStorage.getItem("mode")}-mode.css`);
+        }
+
+        // mode
+        let item = localStorage.getItem("mode");
+        const cssLink = document.getElementById("css-mode");
+        if (item === null) {
+            window.localStorage.setItem('mode', 'OR2STEM');
+            toggleCSS();
+        } else {
+            toggleCSS();
+        }
+
+        // banner
+        item = localStorage.getItem("banner");
+        const cssHeader = document.getElementById("css-header");
+        if (item === null) {
+            window.localStorage.setItem('banner', 'OR2STEM');
+            toggleBanner();
+        } else {
+            toggleBanner();
+        }
+    </script>
+</head>
+
+<body onload="getChapterOptions();">
+    <div id="app">
+        <header>
+            <nav class="container">
+                <div id="userProfile" class="dropdown">
+                    <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="../navigation/settings/settings.php">Settings</a>
+                        <a href="../register_login/logout.php">Logout</a>
+                    </div>
+                    <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
+                </div>
+
+                <div class="site-logo">
+                    <h1 id="OR2STEM-HEADER">
+                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">On-Ramp to STEM</a>
+                    </h1>
+                </div>
+
+                <div class="inner-banner">
+                    <div class="banner-img"></div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Learning Outcome(s) Unlock Tool</h1>
+
+            <br>
+
+            <div>
+                <h3>Select A Learning Outcome to Unlock</h3>
+
+                <div id="main-select-container">
+                    <div id="chapter-container">
+                        <h3>Chapter</h3>
+                        <select id="chapter_options" onchange="getSectionOptions();">
+                            <option selected="selected" disabled><?= $chapter; ?></option>
+                        </select>
+                    </div>
+                    <div id="section-container">
+                        <h3>Section</h3>
+                        <select id="section_options" onchange="getLoOptions();">
+                            <option selected="selected" disabled><?= $section; ?></option>
+                        </select>
+                    </div>
+                    <div id="lo-container">
+                        <h3>Learning Outcome</h3>
+                        <select id="learningoutcome_options">
+                            <option selected="selected" disabled><?= $learningoutcome; ?></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div>
+                <h3>Select All Students or Specific Students</h3>
+                <button id="studentsButton" onclick="selectAllStudents();">Select All Students</button>
+                <br><br>
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th id="student-name">Student Name</th>
+                            <th id="student-email">Student Email</th>
+                            <th id="select">Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($students as $student) : ?>
+                            <tr>
+                                <td headers="student-name"><?= $student['name'] ?></td>
+                                <td headers="student-email"><?= $student['email'] ?></td>
+                                <td headers="select">
+                                    <input type="checkbox" class="studentCheckbox" value="<?= $student['email'] ?>">
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <br><br>
+
+            <button id="submit-btn" onclick="handleSubmit();">Unlock Learning Outcome</button>
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-top flex">
+                    <div class="logo">
+                        <a href="instr_index1.php" class="router-link-active">
+                            <p>On-Ramp to STEM</p>
+                        </a>
+                    </div>
+                    <div class="navigation">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="instr_index1.php">Home</a></li>
+                            <li><a href="../navigation/about-us/about-us.php">About Us</a></li>
+                            <li><a href="../navigation/faq/faq.php">FAQ</a></li>
+                            <li><a href="../navigation/contact-us/contact-us.php">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation">
+                        <h4>External Links</h4>
+                        <ul>
+                            <li><a href="instr_index1.php"> CSU SCALE </a></li>
+                            <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
+                            <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
+                            <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
+                        </ul>
+                    </div>
+                    <div class="contact">
+                        <h4>Contact Us</h4>
+                        <p> 5241 N. Maple Ave. <br /> Fresno, CA 93740 <br /> Phone: 559-278-4240 <br /></p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2021-2023 OR2STEM Team</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        const students = <?= json_encode($students) ?>;
+        let allStudentsSelected = false;
+
+        const readChapterDigit = () => {
+            // ex: ch => 1
+            let ch = document.getElementById("chapter_options").value;
+            //console.log(ch);
+            return ch;
+        }
+
+        const readSectionDigit = () => {
+            // ex: sec => 1.2
+            // we want to extract 2
+            let sec = document.getElementById("section_options").value;
+            let digitsArray = sec.split(".");
+            let lastDigit = digitsArray[digitsArray.length - 1];
+            //console.log(lastDigit);
+            return lastDigit;
+        }
+
+        const readLoDigit = () => {
+            // ex: lo => 1.2.3
+            // we want to extract 3
+            let lo = document.getElementById("learningoutcome_options").value;
+            let digitsArray = lo.split(".");
+            let lastDigit = digitsArray[digitsArray.length - 1];
+            //console.log(lastDigit);
+            return lastDigit;
+        }
+
+        // getting all chapters from openStax.json
+        let getChapterOptions = () => {
+            //console.log("Getting all chapter options...");
+            let req = new XMLHttpRequest();
+            req.open("GET", "./get/ch_names_1.php", true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                    //console.log(req.response);
+                    let ch_obj = JSON.parse(req.response);
+                    let str = '<option selected="selected" disabled>' + "<?= $chapter; ?>" + '</option>';
+                    for (const [key, value] of Object.entries(ch_obj)) {
+                        str += `<option value="${key}">${key}. ${value}</option>`; //value="${key}"
+                    }
+                    document.getElementById("chapter_options").innerHTML = str;
+                }
+            }
+            req.send();
+        };
+
+        // getting all sections from selected chapter from openStax.json
+        let getSectionOptions = () => {
+            //console.log("Getting all section options...");
+            let req = new XMLHttpRequest();
+            req.open("POST", "./get/sec_names_1.php", true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                    //console.log(req.response);
+                    let sec_obj = JSON.parse(req.response);
+                    let str = '<option selected="selected" disabled>' + "<?= $section; ?>" + '</option>';
+                    for (const [key, value] of Object.entries(sec_obj)) {
+                        //let sec_num = key.slice(key.indexOf('.') + 1, key.length);
+                        str += `<option value="${key}">${key}. ${value}</option>`; //value="${sec_num}"
+                    }
+                    document.getElementById("section_options").innerHTML = str;
+                }
+            }
+            req.send("chapter=" + readChapterDigit());
+        };
+
+        // getting all los from selected section from openStax.json
+        let getLoOptions = () => {
+            //console.log("Getting all learning outcome options...");
+            let req = new XMLHttpRequest();
+            req.open("POST", "./get/lo_names_1.php", true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                    //console.log(req.response);
+                    let lo_obj = JSON.parse(req.response);
+                    let str = '<option selected="selected" disabled>' + "<?= $learningoutcome; ?>" + '</option>';
+                    for (const [key, value] of Object.entries(lo_obj)) {
+                        //let lo_num = key.slice(key.indexOf('.', key.indexOf('.') + 1) + 1, key.length);
+                        str += `<option value="${key}">${key}. ${value}</option>`; //value="${lo_num}"
+                    }
+                    document.getElementById("learningoutcome_options").innerHTML = str;
+                }
+            }
+            req.send("chapter=" + readChapterDigit() + "&section=" + readSectionDigit());
+        };
+
+        const selectAllStudents = () => {
+            allStudentsSelected = !allStudentsSelected;
+            const studentCheckboxes = document.querySelectorAll(".studentCheckbox");
+            studentCheckboxes.forEach(function(checkbox) {
+                checkbox.checked = allStudentsSelected;
+            });
+        }
+
+        const validateInputs = () => {
+            let select = document.getElementById("chapter_options");
+            let chapterTxt = select.options[select.selectedIndex].text;
+            //console.log(chapterTxt);
+
+            select = document.getElementById("section_options");
+            let sectionTxt = select.options[select.selectedIndex].text;
+            //console.log(sectionTxt);
+
+            select = document.getElementById("learningoutcome_options");
+            let loTxt = select.options[select.selectedIndex].text;
+            //console.log(loTxt);
+
+            if (chapterTxt === "Select a Chapter" || sectionTxt === "Select a Section" || loTxt === "Select a Learning Outcome") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        const handleSubmit = () => {
+            if (!validateInputs()) {
+                alert("Make sure you select a Chapter, Section, and Learning Outcome.");
+                return;
+            }
+
+            const checkboxes = document.querySelectorAll(".studentCheckbox");
+            let students = [];
+
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    students.push(checkbox.value);
+                }
+            });
+
+            if (students.length === 0) {
+                alert("You must select at least 1 student.");
+                return;
+            }
+
+            let ch_digit = readChapterDigit();
+            let sec_digit = readSectionDigit();
+            let lo_digit = readLoDigit();
+
+            console.log(`Unlocking learning outcome ${ch_digit}.${sec_digit}.${lo_digit}`);
+            let req = new XMLHttpRequest();
+            req.open("POST", "./pgsql/unlock_lo.php", true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                    console.log(req.response);
+                    alert(`Learning Outcome ${ch_digit}.${sec_digit}.${lo_digit}. has been unlocked for your selected students!`);
+                }
+            }
+            req.send("ch_digit=" + ch_digit + "&sec_digit=" + sec_digit + "&lo_digit=" + lo_digit + "&students=" + JSON.stringify(students));
+        }
+
+        // controlling the user profile dropdown
+        /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+        let showDropdown = () => {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -168,9 +168,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
         }
 
         const handleStudentView = () => {
-            // TODO: change this when all functionalities complete and tested //
-            // only developer instructor can execute //
-            if ("<?= $_SESSION["type"]; ?>" === "Instructor" && "<?= $_SESSION["email"]; ?>" === "luisss3v@mail.fresnostate.edu") {
+            if ("<?= $_SESSION["type"]; ?>" === "Instructor") {
                 // run student view handler //
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", "./pgsql/studentViewHandler.php", true);
@@ -188,9 +186,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
                 }
                 xhr.send();
             } else {
-                // TODO: change this when all functionalities complete and tested //
-                //alert("Only Instructors have access to this functionality.");
-                alert("Student view is coming soon!");
+                alert("Only Instructors have access to this functionality.");
             }
         }
 
