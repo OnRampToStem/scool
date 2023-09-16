@@ -15,79 +15,190 @@ if ($_SESSION["type"] !== "Instructor") {
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // globals //
-    $ch_digit = (int)$_POST["ch_digit"];
-    $sec_digit = (int)$_POST["sec_digit"];
-    $lo_digit = (int)$_POST["lo_digit"];
-    $student_emails = json_decode($_POST["students"]);
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    // create timestamp to be inserted / updated for test students for account registration and login //
+    $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
+    $timestamp = $date->format('Y-m-d H:i:s');
 
-    // 1
-    // unlock the requested learning outcome for each student
-    foreach ($student_emails as $student_email) {
+    // connect to the db //
+    require_once "../../register_login/config.php";
 
-        echo "Starting unlock process for $student_email \n";
+    // check if the instructor already owns a test student for the selected course //
+    $query =
+        "SELECT * FROM users
+         WHERE name = 'Test Student'
+            AND type = 'Learner'
+            AND instructor = '" . $_SESSION["email"] . "'
+            AND course_name='" . $_SESSION["selected_course_name"] . "'
+            AND course_id='" . $_SESSION["selected_course_id"] . "';";
+    $res = pg_query($con, $query) or die(pg_last_error($con));
 
-        // filepath
-        $json_filename = "../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/openStax/" . $student_email . ".json";
-        // read the openStax.json file to text
-        $json = file_get_contents($json_filename);
-        // decode the text into a PHP assoc array
-        $openStax = json_decode($json, true);
+    // test student already exists //
+    if (pg_num_rows($res) === 1) {
+        // get the data //
+        $row = pg_fetch_assoc($res);
 
-        // UNLOCK THE CHAPTER, SECTION, AND LO
-        // loop through each chapter
-        foreach ($openStax as $key1 => $val1) {
+        // unset all of the session variables & destroy the session for the instructor //
+        $_SESSION = array();
+        session_destroy();
 
-            // only looking for specific chapter
-            if ($val1["Index"] === $ch_digit) {
+        // login the test student //
+        $query =
+            "UPDATE users
+             SET last_signed_in = '" . $timestamp . "' 
+             WHERE email = '" . $row["email"] . "'";
+        pg_query($con, $query) or die(pg_last_error($con));
 
-                // perform modification here for chapter
-                $openStax[$key1]["Access"] = "True";
-                echo "Modified chapter {$val1["Index"]} Access to True \n";
+        // start the session for the test student //
+        session_start();
 
-                // loop through each section in that chapter
-                foreach ($val1["Sections"] as $key2 => $val2) {
+        // set the session variables & values //
+        $_SESSION["loggedIn"]    = true;
+        $_SESSION["name"]        = $row["name"];
+        $_SESSION["email"]       = $row["email"];
+        $_SESSION["type"]        = $row["type"];
+        $_SESSION["pic"]         = $row["pic"];
+        $_SESSION["course_name"] = $row["course_name"];
+        $_SESSION["course_id"]   = $row["course_id"];
 
-                    // only looking for specific section
-                    if ($val2["Index"] === $sec_digit) {
+        // redirect to the student home page //
+        echo "Login Test Student";
+    }
+    // test student does not exist //
+    else {
+        // create a unique email //
+        $email_prefix = "test_student_";
+        $unique_identifier = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+        $email_postfix = "@canvas.instructure.com";
+        $unique_email = $email_prefix . $unique_identifier . $email_postfix;
+        $unique = false;
 
-                        // peform modification here for section
-                        $openStax[$key1]["Sections"][$key2]["Access"] = "True";
-                        echo "Modified section {$val2["Index"]} Access to True \n";
+        // assume the email is not unique until proven unique //
+        while (!$unique) {
+            // check if the email is unique //
+            $query = "SELECT * FROM users WHERE email='" . $unique_email . "';";
+            $res = pg_query($con, $query) or die(pg_last_error($con));
 
-                        // loop through each lo in that section
-                        foreach ($val2["LearningOutcomes"] as $key3 => $val3) {
-
-                            // only looking for specific lo
-                            if ($val3["Index"] === $lo_digit) {
-
-                                // perform modification here for lo
-                                $openStax[$key1]["Sections"][$key2]["LearningOutcomes"][$key3]["Access"] = "True";
-                                echo "Modified lo {$val3["Index"]} Access to True \n";
-                                break 3;
-                            }
-                        }
-                    }
-                }
+            if (pg_num_rows($res) === 1) {
+                // email already exists - regenerate the unique email //
+                $unique_identifier = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+                $unique_email = $email_prefix . $unique_identifier . $email_postfix;
+            } else {
+                // email does not exist //
+                $unique = true;
             }
         }
 
-        // 2
-        // PROCEED TO REWRITE OPENSTAX JSON FILE
-        echo "Now rewriting respective openStax json file\n";
-        // rewrite user openStax json file (original data + modified data)
-        $myfile = fopen("../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/openStax/" . $student_email . ".json", "w") or die("Unable to open file!");
+        // register the test student //
+        $query =
+            "INSERT INTO users (name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+             VALUES ('Test Student', '" . $unique_email . "', '" . $unique_email . "', 'N/A', 'Learner', 'https://canvas.instructure.com/images/messages/avatar-50.png',
+             '" . $_SESSION["email"] . "', '" . $_SESSION["selected_course_name"] . "', '" . $_SESSION["selected_course_id"] . "', 'N/A', 'N/A', 'N/A', 'N/A',
+             '" . $timestamp . "', '" . $timestamp . "')
+             RETURNING *;";
+        $res = pg_query($con, $query) or die(pg_last_error($con));
+        $test_student = pg_fetch_assoc($res);
+
+        // get all static questions from 'questions' table //
+        $query = "SELECT * FROM questions";
+        $res = pg_query($con, $query) or die(pg_last_error($con));
+        $rows = pg_num_rows($res);
+
+        // begin writing the test student's static questions json file //
+        $filepath = "../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json";
+        $questions_file = fopen($filepath, "w") or die("Unable to open file!");
+
+        fwrite($questions_file, "[\n");
+
+        // loop to write to file
+        $counter = 1;
+        while ($row = pg_fetch_row($res)) {
+            // OPTIONS DATA MODIFICATIONS 
+            // first remove { from options string $row[5]
+            $row[5] = substr($row[5], 1);
+            // then remove } from options string $row[5]
+            $row[5] = substr($row[5], 0, -1);
+            // then remove all double quotes from options string $row[5]
+            $row[5] = str_replace('"', '', $row[5]);
+            // convert options string $row[5] => to an array (based on commas)
+            $options_arr = explode(",", $row[5]);
+            // get options_arr length
+            $options_length = count($options_arr);
+
+            // rightAnswer array modification
+            $row[6] = str_replace('{', '[', $row[6]);
+            $row[6] = str_replace('}', ']', $row[6]);
+
+            // isImage array modification
+            $row[7] = str_replace('{', '[', $row[7]);
+            $row[7] = str_replace('}', ']', $row[7]);
+
+            if ($counter == $rows) {
+                // no comma, because it is the last math question
+                $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
+
+                // insert each option into $db_string
+                for ($i = 0; $i < $options_length; $i++) {
+                    if ($i == $options_length - 1) {
+                        $db_string .= "\"$options_arr[$i]\"], ";
+                    } else {
+                        $db_string .= "\"$options_arr[$i]\",";
+                    }
+                }
+
+                $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n}\n";
+
+                // replacing the commas back in the options array
+                $db_string = str_replace('*%', ',', $db_string);
+
+                fwrite($questions_file, $db_string);
+            } else {
+                // normal write
+                $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
+
+                // insert each option into $db_string
+                for ($i = 0; $i < $options_length; $i++) {
+                    if ($i == $options_length - 1) {
+                        $db_string .= "\"$options_arr[$i]\"], ";
+                    } else {
+                        $db_string .= "\"$options_arr[$i]\",";
+                    }
+                }
+
+                $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n},\n";
+
+                // replacing the commas back in the options array
+                $db_string = str_replace('*%', ',', $db_string);
+
+                fwrite($questions_file, $db_string);
+            }
+
+            $counter++;
+        }
+
+        fwrite($questions_file, "]\n");
+        fclose($questions_file);
+        chmod("../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json", 0777) or die("Could not modify questions json perms.");
+
+
+        // begin writing the test student's openStax json file //
+        $json_filename = "new_openStax.json";
+        // read the openStax.json file to text
+        $json = file_get_contents($json_filename);
+        // decode the text into a PHP assoc array
+        $json_data = json_decode($json, true);
+
+        $filepath = "../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json";
+        $openStax_file = fopen($filepath, "w") or die("Unable to open file!");
 
         // begin writing
-        fwrite($myfile, "[");
+        fwrite($openStax_file, "[");
 
         // loop through each chapter
         $c1 = 0;
-        foreach ($openStax as $chapter) {
-
+        foreach ($json_data as $chapter) {
             // comma at the end
-            if ($c1 !== count($openStax) - 1) {
+            if ($c1 !== count($json_data) - 1) {
                 $string = "\n\t" . "{" . "\n\t\t\"Index\": " . $chapter["Index"] . "," . "\n\t\t\"Name\": \"" . $chapter["Name"] . "\"," . "\n\t\t\"Access\": \"" . $chapter["Access"] . "\",";
 
                 $string .= "\n\t\t\"Introduction\": {";
@@ -250,7 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $string .= "\n\t},"; //chapter comma here
 
                 // writing 
-                fwrite($myfile, $string);
+                fwrite($openStax_file, $string);
             }
             // no comma
             else {
@@ -416,17 +527,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $string .= "\n\t}"; //no chapter comma here
 
                 // writing 
-                fwrite($myfile, $string);
+                fwrite($openStax_file, $string);
             }
 
             // updating counter
             $c1++;
         }
-        echo "\n";
 
         // finalizing writing
-        fwrite($myfile, "\n]");
-        fclose($myfile);
-        echo "Successfully Rewrote OpenStax\n\n";
+        fwrite($openStax_file, "\n]");
+        fclose($openStax_file);
+        chmod("../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json", 0777) or die("Could not modify openStax json perms.");
+
+        // unset all of the session variables & destroy the session for the instructor //
+        $_SESSION = array();
+        session_destroy();
+
+        // start the session for the test student //
+        session_start();
+
+        // set the session variables & values //
+        $_SESSION["loggedIn"]    = true;
+        $_SESSION["name"]        = $test_student["name"];
+        $_SESSION["email"]       = $test_student["email"];
+        $_SESSION["type"]        = $test_student["type"];
+        $_SESSION["pic"]         = $test_student["pic"];
+        $_SESSION["course_name"] = $test_student["course_name"];
+        $_SESSION["course_id"]   = $test_student["course_id"];
+
+        // redirect to the student home page //
+        echo "Login Test Student";
     }
+
+    // close connection to the db //
+    pg_close($con);
 }
