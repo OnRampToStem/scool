@@ -176,6 +176,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         //console.log(xhr.responseText);
                         const response = xhr.responseText.trim();
+                        //console.log(response);
                         if (response === "Login Test Student") {
                             // redirect to the student home page //
                             window.location.href = "../student/student_index.php";
