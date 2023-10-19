@@ -1,101 +1,81 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// start the session (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
+// start PHP session //
+// loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
 
-// if user is not logged in then redirect them back to Fresno State Canvas
+// user not logged in => redirect to FS Canvas //
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
+// user not 'Instructor' => force logout //
 if ($_SESSION["type"] !== "Instructor") {
     header("location: ../../register_login/logout.php");
     exit;
 }
 
-$obj = new stdClass();
+// debugging //
+//ini_set("display_errors", 1);
+//ini_set("display_startup_errors", 1);
+//error_reporting(E_ALL & ~E_DEPRECATED);
 
-$root_dir = "../user_data";
+// set memory limit higher due to high amount of data //
+ini_set('memory_limit', '256M');
 
-// open the root directory
-if ($handle = opendir($root_dir)) {
+$main = []; // holds course names & students' filenames in those courses //
 
-    // loop through the sub-directories inside the root directory
-    while (false !== ($sub_dir = readdir($handle))) {
-
-        // exclude special directories
-        if ($sub_dir != "." && $sub_dir != ".." && $sub_dir != ".DS_Store") {
-
-            $obj->$sub_dir = [];
+// GETTING ALL COURSE DIRECTORIES INSIDE USER DATA DIRECTORY //
+if ($handle = opendir("../user_data")) { // open the user data directory //
+    // loop through the course directories inside the user data directory //
+    while (false !== ($course_dir_name = readdir($handle))) {
+        // exclude special directories //
+        if ($course_dir_name !== ".DS_Store" && $course_dir_name !== "." && $course_dir_name !== "..") {
+            $main[$course_dir_name] = [];
         }
     }
 }
 
-
-// Loop through the object's properties
-foreach ($obj as $key => $value) {
-    $dyna_dir = "../user_data/$key/questions";
-
-    // open the dynamic directory
-    if ($handle = opendir($dyna_dir)) {
-
-        // loop through the sub-directories inside the root directory
+// GETTING ALL STUDENTS QUESTIONS FILENAMES //
+foreach ($main as $course_dir_name => $arr) {
+    $dynamic_dir_name = "../user_data/$course_dir_name/questions";
+    if ($handle = opendir($dynamic_dir_name)) {
+        // loop through files inside directory //
         while (false !== ($filename = readdir($handle))) {
-
-            // exclude special directories
-            if ($filename != "." && $filename != ".." && $filename != ".DS_Store") {
-
-                array_push($obj->$key, $filename);
+            // only include files ending with .json //
+            if (strpos($filename, ".json") !== false) {
+                array_push($main[$course_dir_name], $filename);
             }
         }
     }
 }
 
-//print_r($obj);
+$data = []; // holds all students' questions data //
 
+foreach ($main as $course_name => $student_filename_arr) {
+    $course = []; // holds sub-arrays containing questions answered by students //
 
-$main = [];
+    for ($i = 0; $i < count($student_filename_arr); $i++) {
+        $filepath = "../user_data/$course_name/questions/$student_filename_arr[$i]";
+        $json_text = file_get_contents($filepath); // read txt from file //
+        $json_data = json_decode($json_text, true); // text => PHP assoc arr //
 
+        $arr = []; // local array //
 
-// loop through the PHP object
-foreach ($obj as $key => $value) {
-    // $key is the name of the course as a string
-    // $value is an array containing the student questions json files as strings
-
-    $course = []; // holds subarrays containing questions answered by students
-
-    // loop through the array of the student questions json files
-    for ($i = 0; $i < count($value); $i++) {
-
-        // initialize the file path (student's static questions json file)
-        $filepath = "../user_data/$key/questions/$value[$i]";
-        // read the text from the file
-        $json_text = file_get_contents($filepath);
-        // convert text to PHP assoc array
-        $json_data = json_decode($json_text, true);
-
-        // local array
-        $arr = [];
-
-        // loop through each question in the file
+        // loop through each question in the file //
         for ($j = 0; $j < count($json_data); $j++) {
             if ($json_data[$j]["datetime_answered"] !== "") {
-                // create PHP object containing student name & email + question data
-                $q = new stdClass();
-                $q->course = $key;
-                $q->email = $value[$i];
-                $q->tags = $json_data[$j]["tags"];
-                $q->text = $json_data[$j]["text"];
-                $q->numCurrentTries = $json_data[$j]["numCurrentTries"];
-                $q->numTries = $json_data[$j]["numTries"];
-                $q->correct = $json_data[$j]["correct"];
-                $q->datetime_started = $json_data[$j]["datetime_started"];
-                $q->datetime_answered = $json_data[$j]["datetime_answered"];
+                $q = [
+                    'course'            => $course_name,
+                    'email'             => $student_filename_arr[$i],
+                    'tags'              => $json_data[$j]["tags"],
+                    'text'              => $json_data[$j]["text"],
+                    'numCurrentTries'   => $json_data[$j]["numCurrentTries"],
+                    'numTries'          => $json_data[$j]["numTries"],
+                    'correct'           => $json_data[$j]["correct"],
+                    'datetime_started'  => $json_data[$j]["datetime_started"],
+                    'datetime_answered' => $json_data[$j]["datetime_answered"]
+                ];
                 /*
                 $q->pkey = $json_data[$j]["pkey"];
                 $q->title = $json_data[$j]["title"];
@@ -112,16 +92,11 @@ foreach ($obj as $key => $value) {
         }
         array_push($course, $arr);
     }
-
-    array_push($main, $course);
+    array_push($data, $course);
 }
-
-/*
-echo "<pre>";
-print_r($main);
-echo "</pre>";
-*/
-
+unset($main);
+//$json = json_encode($data, JSON_PRETTY_PRINT);
+//echo "<pre>" . $json . "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -132,9 +107,7 @@ echo "</pre>";
     <title>Download All</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script type="text/javascript">
-        const main = <?= json_encode($main); ?>; // converting php array to js array      
-        console.log(main);
-
+        const main = <?= json_encode($data); ?>; // converting php array to js array    
         let counter = 1;
 
         // loop through courses array
@@ -202,7 +175,7 @@ echo "</pre>";
                         // update counter
                         counter++;
                     }
-                }, i * 2500);
+                }, i * 3250);
             }
         }
     </script>
