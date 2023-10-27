@@ -980,75 +980,97 @@ pg_close($con);
                                 alert("No data to output.");
                             } else {
                                 //console.log(req.responseText);
-
                                 const data = JSON.parse(req.responseText);
+
+                                // calculating the number of questions //
+                                let numQuestions = 0;
                                 let maxScore = "N/A";
-                                let contentLength = 0;
-
-                                // Setting the column headers of the CSV file //
-                                let csvContent = 'Student Name, Student Email, Student Score, Max Score, ';
-
-                                // loop through each student until we find one that has complete the assessment
-                                // if we find one: Student Name, Student Email, Student Score, Max Score, Q1 ... QN, Status
-                                // if we don't find one: Student Name, Student Email, Student Score, Max Score, Status
                                 for (let i = 0; i < data.length; i++) {
-                                    const student = data[i];
-                                    if (student.status === "complete") {
-                                        let studentContentLength = JSON.parse(student.content).length;
-                                        for (let j = 0; j < studentContentLength; j++) {
-                                            csvContent += `Q${j + 1}, `;
-                                        }
-                                        maxScore = student.max_score;
-                                        contentLength = studentContentLength;
+                                    if (data[i]["status"] === "complete") {
+                                        numQuestions = Object.keys(data[i]).length;
+                                        numQuestions = numQuestions - 5;
+                                        numQuestions = numQuestions / 4;
+                                        maxScore = data[i]["max_score"];
                                         break;
                                     }
                                 }
-                                csvContent += 'Status \r\n';
 
-                                // Setting the row data of the CSV file //
-                                data.forEach((student) => {
+                                // setting the column headers of the CSV file //
+                                let csvContent = 'Student Name, Student Email, Status, Assessment Score, Assessment Max Score, ';
+                                if (numQuestions > 0) {
+                                    for (let i = 1; i <= numQuestions; i++) {
+                                        csvContent += 'Q' + i + ' - Link, ';
+                                        csvContent += 'Q' + i + ' - LO, ';
+                                        csvContent += 'Q' + i + ' - Score, ';
+                                        csvContent += 'Q' + i + ' - Max Score, ';
+                                    }
+                                    csvContent += "Assessment Date Time Submitted \r\n";
+                                } else if (numQuestions === 0) {
+                                    // remove the last 2 chars //
+                                    csvContent = csvContent.slice(0, -2);
+                                    csvContent += ' \r\n';
+                                }
+
+                                // setting the row data of the CSV file //
+                                for (let i = 0; i < data.length; i++) {
                                     let row = [];
 
-                                    // current student has completed the assessment 
-                                    if (student.status === "complete") {
-                                        row.push(student.name, student.email, student.score, student.max_score);
-                                        student.content = JSON.parse(student.content);
-                                        for (let i = 0; i < contentLength; i++) {
-                                            row.push(`${student.content[i].result} / ${student.content[i].max_score}`);
+                                    if (data[i]["status"] === "complete") {
+                                        row.push(
+                                            data[i]["name"],
+                                            data[i]["email"],
+                                            data[i]["status"],
+                                            data[i]["score"],
+                                            data[i]["max_score"]
+                                        );
+                                        for (let j = 1; j <= numQuestions; j++) {
+                                            row.push(
+                                                data[i]["Q" + j + " - Link"],
+                                                data[i]["Q" + j + " - LO"],
+                                                data[i]["Q" + j + " - Score"],
+                                                data[i]["Q" + j + " - Max Score"]
+                                            );
                                         }
-                                        row.push(student.status);
-                                        row = row.join(',');
-                                    }
-                                    // current student has not completed the assessment
-                                    else {
-                                        row.push(student.name, student.email, "N/A", maxScore)
-                                        for (let i = 0; i < contentLength; i++) {
-                                            row.push("N/A");
+                                        row.push(data[i]["date_time_submitted"]);
+                                    } else {
+                                        row.push(
+                                            data[i]["name"],
+                                            data[i]["email"],
+                                            data[i]["status"],
+                                            "N/A",
+                                            maxScore
+                                        );
+                                        for (let j = 1; j <= numQuestions; j++) {
+                                            row.push(
+                                                "N/A",
+                                                "N/A",
+                                                "N/A",
+                                                "N/A"
+                                            );
                                         }
-                                        row.push(student.status);
-                                        row = row.join(',');
+                                        row.push("N/A");
                                     }
-
+                                    row = row.join(',');
                                     csvContent += row + '\r\n';
-                                });
+                                }
 
-                                // create a Blob object from the CSV data
+                                // create a Blob object from the CSV data //
                                 const blob = new Blob([csvContent], {
                                     type: 'text/csv'
                                 });
 
-                                // generate a URL for the Blob object
+                                // generate a URL for the Blob object //
                                 const url = URL.createObjectURL(blob);
 
-                                // create a link element
+                                // create a link element //
                                 const link = document.createElement('a');
                                 link.href = url;
-                                link.download = `${assessment[2]}.csv`;
+                                link.download = `${assessment[2]} - Results.csv`;
 
-                                // simulate a click on the link to initiate the download
+                                // simulate a click on the link to initiate the download //
                                 link.click();
 
-                                // clean up by revoking the generated URL
+                                // clean up by revoking the generated URL //
                                 URL.revokeObjectURL(url);
                             }
                         }
