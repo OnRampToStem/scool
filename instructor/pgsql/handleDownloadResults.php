@@ -1,78 +1,90 @@
 <?php
-session_start(); // session keys: loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id
+// start PHP session //
+// loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
+session_start();
 
-// if user is not logged in then redirect them back to Fresno State Canvas
+// user not logged in => redirect to FS Canvas //
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
+// user not 'Instructor' => force logout //
 if ($_SESSION["type"] !== "Instructor") {
     header("location: ../../register_login/logout.php");
     exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // receive data
-    $assessment_name = $_POST["assessment_name"];
-
-    // local variables to hold data
-    $students = [];
-    $student_scores = [];
-
-    // connect to the db
+    // connect to the db //
     require_once "../../register_login/config.php";
 
-    // 1.
-    // get all the students in the class corresponding to the instructor
+    $assessment_name = $_POST["assessment_name"];
+
+    // get all the students in the class corresponding to the instructor //
+    $students = [];
     $query = "SELECT name, email FROM users 
-              WHERE instructor='{$_SESSION["email"]}' AND course_name='{$_SESSION["selected_course_name"]}'
-              AND course_id='{$_SESSION["selected_course_id"]}'";
-
+              WHERE instructor='" . $_SESSION["email"] . "' AND course_name='" . $_SESSION["selected_course_name"] . "'
+              AND course_id='" . $_SESSION["selected_course_id"] . "';";
     $res = pg_query($con, $query) or die(pg_last_error($con));
-
-    while ($row = pg_fetch_assoc($res)) {
-        $student = new stdClass();
-        $student->name = $row["name"];
-        $student->email = $row["email"];
-        array_push($students, $student);
+    if ($res) {
+        if (pg_num_rows($res) > 0) {
+            while ($row = pg_fetch_assoc($res)) {
+                $students[] = [
+                    "name"  => $row["name"],
+                    "email" => $row["email"]
+                ];
+            }
+        }
     }
 
-    // 2.
-    // get the score and content for each student's assessment submission
-    for ($i = 0; $i < count($students); $i++) {
-        $query = "SELECT score, max_score, content FROM assessments_results 
-                  WHERE assessment_name='$assessment_name' AND instructor_email='{$_SESSION["email"]}' AND
-                  student_email='{$students[$i]->email}' AND student_name='{$students[$i]->name}' AND
-                  course_name='{$_SESSION["selected_course_name"]}' AND course_id='{$_SESSION["selected_course_id"]}'
-                  ORDER BY student_name";
-
+    // get the assessment data for each student's assessment submission //
+    $assessment_data = [];
+    foreach ($students as $student) {
+        $query = "SELECT score, max_score, content, date_time_submitted FROM assessments_results 
+                  WHERE assessment_name='" . $assessment_name . "' AND instructor_email='" . $_SESSION["email"] . "' 
+                    AND student_email='" . $student["email"] . "' AND student_name='" . $student["name"] . "' 
+                    AND course_name='" . $_SESSION["selected_course_name"] . "' AND course_id='" . $_SESSION["selected_course_id"] . "'
+                  ORDER BY student_name;";
         $res = pg_query($con, $query) or die(pg_last_error($con));
+        if ($res) {
+            // student has taken assessment //
+            if (pg_num_rows($res) > 0) {
+                while ($row = pg_fetch_assoc($res)) {
+                    // set the static data //
+                    $data = [
+                        "name"                => $student["name"],
+                        "email"               => $student["email"],
+                        "status"              => "complete",
+                        "score"               => $row["score"],
+                        "max_score"           => $row["max_score"],
+                        "date_time_submitted" => $row["date_time_submitted"]
+                    ];
 
-        // student exists in class but hasn't taken the assessment
-        if (pg_num_rows($res) === 0) {
-            $obj = new stdClass();
-            $obj->name = $students[$i]->name;
-            $obj->email = $students[$i]->email;
-            $obj->status = "incomplete";
-            array_push($student_scores, $obj);
-        }
-        // student exists in class and has taken the assessment
-        else {
-            while ($row = pg_fetch_assoc($res)) {
-                $obj = new stdClass();
-                $obj->name = $students[$i]->name;
-                $obj->email = $students[$i]->email;
-                $obj->content = $row["content"];
-                $obj->score = $row["score"];
-                $obj->max_score = $row["max_score"];
-                $obj->status = "complete";
-                array_push($student_scores, $obj);
+                    // set the dynamic data //
+                    $content = json_decode($row["content"], true);
+                    for ($i = 0; $i < count($content); $i++) {
+                        $data["Q" . $i + 1 . " - Link"] = "https://imathas.libretexts.org/imathas/embedq2.php?id=" . $content[$i]["id"];
+                        $data["Q" . $i + 1 . " - LO"] = $content[$i]["lo"];
+                        $data["Q" . $i + 1 . " - Score"] = $content[$i]["result"];
+                        $data["Q" . $i + 1 . " - Max Score"] = $content[$i]["max_score"];
+                    }
+
+                    // push //
+                    $assessment_data[] = $data;
+                }
+            }
+            // student has not taken assessment //
+            else if (pg_num_rows($res) === 0) {
+                $assessment_data[] = [
+                    "name"   => $student["name"],
+                    "email"  => $student["email"],
+                    "status" => "incomplete"
+                ];
             }
         }
     }
 
     // send back data
-    echo (json_encode($student_scores));
+    echo (json_encode($assessment_data));
 }
