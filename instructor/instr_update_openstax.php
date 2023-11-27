@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </head>
 
-<body onload="displayUpdateForm();">
+<body>
     <div id="app">
         <header>
             <nav class="container">
@@ -136,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div>
             <form id='getQForm' method='POST'>
+                <h1>Get Open Stax Question</h1>
                 <div>
                     <label for='questionId'>Question ID:</label>
                     <input id='questionId' name='questionId' type='number' required />
@@ -159,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div>
                     <label for='qText'>Text:</label>
-                    <input id='qText' name='qText' type='text' required />
+                    <textarea id='qText' name='qText' cols='30' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qPic'>Picture:</label>
@@ -171,15 +172,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div>
                     <label for='qOptions'>Options:</label>
-                    <input id='qOptions' name='qOptions' type='text' required />
+                    <textarea id='qOptions' name='qOptions' cols='30' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qRightAnswer'>Right Answer:</label>
-                    <input id='qRightAnswer' name='qRightAnswer' type='text' required />
+                    <textarea id='qRightAnswer' name='qRightAnswer' cols='30' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qIsImage'>Is Image:</label>
-                    <input id='qIsImage' name='qIsImage' type='text' required />
+                    <textarea id='qIsImage' name='qIsImage' cols='30' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qDifficulty'>Difficulty:</label>
@@ -228,25 +229,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script type="text/javascript">
+        // driver //
+        let question = <?php echo json_encode($question); ?>;
+        if (question !== null) {
+            displayUpdateForm();
+        } else {
+            document.getElementById('updateQForm').style.display = 'none';
+        }
+
         const displayUpdateForm = () => {
-            let question = <? json_encode($question); ?>;
-            if (question !== null) {
-                document.getElementById('qId').value = question.pkey;
-                document.getElementById('qTags').value = question.tags;
-                document.getElementById('qTitle').value = question.title;
-                document.getElementById('qText').value = question.text;
-                document.getElementById('qPic').value = question.pic;
-                document.getElementById('qNumTries').value = question.numtries;
-                document.getElementById('qOptions').value = question.options;
-                document.getElementById('qRightAnswer').value = question.rightanswer;
-                document.getElementById('qIsImage').value = question.isimage;
-                document.getElementById('qDifficulty').value = question.difficulty;
-                
-                document.getElementById('updateForm').style.display = 'block';
-            }
-            else {
-                alert('Error');
-            }
+            // set form values //
+            document.getElementById('qId').value = question.pkey;
+            document.getElementById('qTags').value = question.tags;
+            document.getElementById('qTitle').value = question.title;
+            document.getElementById('qText').value = question.text;
+            document.getElementById('qPic').value = question.pic;
+            document.getElementById('qNumTries').value = question.numtries;
+            document.getElementById('qOptions').value = question.options;
+            document.getElementById('qRightAnswer').value = question.rightanswer;
+            document.getElementById('qIsImage').value = question.isimage;
+            document.getElementById('qDifficulty').value = question.difficulty;
+            // show form //
+            document.getElementById('updateQForm').style.display = '';
         }
 
         // controlling the user profile dropdown
