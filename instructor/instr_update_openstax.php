@@ -19,21 +19,49 @@ if ($_SESSION["type"] !== "Instructor") {
 $question = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // input data //
-    $question_id = $_POST['questionId'];
-
     // connect to the db //
     require_once "../register_login/config.php";
 
-    // get question //
-    $query = "SELECT pkey, title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty
-              FROM questions
-              WHERE pkey = $1;";
-    $result = pg_query_params($con, $query, [$question_id]);
-    if ($result) {
-        $question = pg_fetch_assoc($result);
-    } else {
-        die(pg_last_error($con));
+    // get question by id //
+    if (isset($_POST['questionId'])) {
+        // input data //
+        $question_id = $_POST['questionId'];
+
+        // get question //
+        $query = "SELECT pkey, title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty
+                  FROM questions
+                  WHERE pkey = $1;";
+        $result = pg_query_params($con, $query, [$question_id]);
+        if ($result) {
+            $question = pg_fetch_assoc($result);
+        } else {
+            die(pg_last_error($con));
+        }
+    }
+    // update question by id //
+    else if (isset($_POST['qId'])) {
+        // input data //
+        $q_id           = $_POST['qId'];
+        $q_tags         = trim($_POST['qTags']);
+        $q_title        = trim($_POST['qTitle']);
+        $q_text         = trim($_POST['qText']);
+        $q_pic          = (strlen(trim($_POST['qPic'])) === 0 ? '' : trim($_POST['qPic']));
+        $q_num_tries    = trim($_POST['qNumTries']);
+        $q_options      = trim($_POST['qOptions']);
+        $q_right_answer = trim($_POST['qRightAnswer']);
+        $q_is_image     = trim($_POST['qIsImage']);
+        $q_difficulty   = (strlen(trim($_POST['qDifficulty'])) === 0 ? '' : trim($_POST['$qDifficulty']));
+
+        // update question //
+        $query = "UPDATE questions
+                  SET title = $1, text = $2, pic = $3, numtries = $4, options = $5, rightanswer = $6, isimage = $7, tags = $8, difficulty = $9
+                  WHERE pkey = $10;";
+        $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty, $q_id]);
+        if ($result) {
+
+        } else {
+            die(pg_last_error($con));
+        }
     }
 }
 
@@ -49,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link id="css-header" rel="stylesheet" type="text/css" href="" />
     <link id="css-mode" rel="stylesheet" type="text/css" href="" />
     <script type="text/javascript">
-        /*
         const toggleBanner = () => {
             const cssHeader = document.getElementById("css-header");
             cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
@@ -57,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         const toggleCSS = () => {
             const cssLink = document.getElementById("css-mode");
-            cssLink.setAttribute("href", `../assets/css/instructor/unlock_lo-${window.localStorage.getItem("mode")}-mode.css`);
+            cssLink.setAttribute("href", `../assets/css/instructor/instr_update_openstax-${window.localStorage.getItem("mode")}-mode.css`);
         }
 
         // mode
@@ -79,11 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             toggleBanner();
         }
-        */
     </script>
 </head>
 
-<body>
+<body onload="displayUpdateForm();">
     <div id="app">
         <header>
             <nav class="container">
@@ -109,10 +135,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </header>
 
         <div>
-            <form method='POST'>
-                <label for='questionId'>Question ID:</label>
-                <input id='questionId' name='questionId' type='number' required />
-                <input type='submit' />
+            <form id='getQForm' method='POST'>
+                <div>
+                    <label for='questionId'>Question ID:</label>
+                    <input id='questionId' name='questionId' type='number' required />
+                </div>
+                <input type='submit' value='Enter' />
+            </form>
+
+            <form id='updateQForm' method='POST'>
+                <h1>Open Stax Question</h1>
+                <div>
+                    <label for='qId'>ID:</label>
+                    <input id='qId' name='qId' type='number' readonly />
+                </div>
+                <div>
+                    <label for='qTags'>Tags:</label>
+                    <input id='qTags' name='qTags' type='text' required />
+                </div>
+                <div>
+                    <label for='qTitle'>Title:</label>
+                    <input id='qTitle' name='qTitle' type='text' required />
+                </div>
+                <div>
+                    <label for='qText'>Text:</label>
+                    <input id='qText' name='qText' type='text' required />
+                </div>
+                <div>
+                    <label for='qPic'>Picture:</label>
+                    <input id='qPic' name='qPic' type='text' />
+                </div>
+                <div>
+                    <label for='qNumTries'>Number of Tries:</label>
+                    <input id='qNumTries' name='qNumTries' type='text' required />
+                </div>
+                <div>
+                    <label for='qOptions'>Options:</label>
+                    <input id='qOptions' name='qOptions' type='text' required />
+                </div>
+                <div>
+                    <label for='qRightAnswer'>Right Answer:</label>
+                    <input id='qRightAnswer' name='qRightAnswer' type='text' required />
+                </div>
+                <div>
+                    <label for='qIsImage'>Is Image:</label>
+                    <input id='qIsImage' name='qIsImage' type='text' required />
+                </div>
+                <div>
+                    <label for='qDifficulty'>Difficulty:</label>
+                    <input id='qDifficulty' name='qDifficulty' type='text' />
+                </div>
+                <input type='submit' value='Update' />
             </form>
         </div>
 
@@ -155,9 +228,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script type="text/javascript">
-        // globals //
-        let question = <?= json_encode($question) ?>;
-
+        const displayUpdateForm = () => {
+            let question = <? json_encode($question); ?>;
+            if (question !== null) {
+                document.getElementById('qId').value = question.pkey;
+                document.getElementById('qTags').value = question.tags;
+                document.getElementById('qTitle').value = question.title;
+                document.getElementById('qText').value = question.text;
+                document.getElementById('qPic').value = question.pic;
+                document.getElementById('qNumTries').value = question.numtries;
+                document.getElementById('qOptions').value = question.options;
+                document.getElementById('qRightAnswer').value = question.rightanswer;
+                document.getElementById('qIsImage').value = question.isimage;
+                document.getElementById('qDifficulty').value = question.difficulty;
+                
+                document.getElementById('updateForm').style.display = 'block';
+            }
+            else {
+                alert('Error');
+            }
+        }
 
         // controlling the user profile dropdown
         /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
