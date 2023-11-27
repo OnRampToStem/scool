@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $q_options      = trim($_POST['qOptions']);
         $q_right_answer = trim($_POST['qRightAnswer']);
         $q_is_image     = trim($_POST['qIsImage']);
-        $q_difficulty   = (strlen(trim($_POST['qDifficulty'])) === 0 ? '' : trim($_POST['$qDifficulty']));
+        $q_difficulty   = (strlen(trim($_POST['qDifficulty'])) === 0 ? '' : trim($_POST['qDifficulty']));
 
         // update question //
         $query = "UPDATE questions
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   WHERE pkey = $10;";
         $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty, $q_id]);
         if ($result) {
-
+            echo 'Question ID: ' . $q_id . ' was updated successfully.';
         } else {
             die(pg_last_error($con));
         }
@@ -229,14 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script type="text/javascript">
-        // driver //
-        let question = <?php echo json_encode($question); ?>;
-        if (question !== null) {
-            displayUpdateForm();
-        } else {
-            document.getElementById('updateQForm').style.display = 'none';
-        }
-
         const displayUpdateForm = () => {
             // set form values //
             document.getElementById('qId').value = question.pkey;
@@ -251,6 +243,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             document.getElementById('qDifficulty').value = question.difficulty;
             // show form //
             document.getElementById('updateQForm').style.display = '';
+        }
+
+        // driver //
+        let question = <?php echo json_encode($question); ?>;
+        if (question !== null) {
+            displayUpdateForm();
+        } else {
+            document.getElementById('updateQForm').style.display = 'none';
         }
 
         // controlling the user profile dropdown
