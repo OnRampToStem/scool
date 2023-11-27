@@ -68,7 +68,28 @@
     margin-bottom: 30px;
   }
   
-  /* MAIN CONTENT STYLING */
+  /* MAIN */
+  div {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #getQForm, #updateQForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #getQForm h1, #updateQForm h1 {
+    margin: 0;
+    padding: 0;
+  }
+  #getQForm div, #updateQForm div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   
   /* FOOTER STYLING */

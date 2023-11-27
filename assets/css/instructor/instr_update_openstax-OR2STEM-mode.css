@@ -71,6 +71,10 @@
     flex-direction: column;
     gap: 10px;
   }
+  #getQForm h1, #updateQForm h1 {
+    margin: 0;
+    padding: 0;
+  }
   #getQForm div, #updateQForm div {
     display: flex;
     justify-content: center;
