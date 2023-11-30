@@ -100,6 +100,15 @@ main {
   margin: 10px;
 }
 
+#update-openstax-div {
+  margin: 0 auto;
+  width: 60%;
+  margin-bottom: 40px;
+}
+#update-openstax-div h2 {
+  margin: 10px;
+}
+
 .q-btn {
   width: 100%;
   height: auto;
