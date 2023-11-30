@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <div class="site-logo">
                     <h1 id="OR2STEM-HEADER">
-                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">On-Ramp to STEM</a>
+                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">SCOOL - Student-Centered Open Online Learning</a>
                     </h1>
                 </div>
 
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="footer-top flex">
                     <div class="logo">
                         <a href="instr_index1.php">
-                            <p>On-Ramp to STEM</p>
+                            <p>SCOOL</p>
                         </a>
                     </div>
                     <div class="navigation">
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="navigation">
                         <h4>External Links</h4>
                         <ul>
-                            <li><a href="instr_index1.php"> CSU SCALE </a></li>
+                            <li><a href="instr_index1.php"> SCOOL </a></li>
                             <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>© 2021-2023 OR2STEM Team</p>
+                    <p>© 2021-2023 SCOOL Team</p>
                 </div>
             </div>
         </footer>

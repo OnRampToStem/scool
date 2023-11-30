@@ -3,7 +3,7 @@
 session_start();
 
 // if user is not logged in then redirect them back to Fresno State Canvas
-if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
@@ -15,7 +15,7 @@ if ($_SESSION["type"] === "Mentor") {
 }
 
 // if user account type is not 'Instructor' then force logout
-if($_SESSION["type"] !== "Instructor"){
+if ($_SESSION["type"] !== "Instructor") {
     header("location: ../register_login/logout.php");
     exit;
 }
@@ -24,7 +24,10 @@ if($_SESSION["type"] !== "Instructor"){
 $name;
 $public;
 $duration;
-$open_date; $open_time; $close_date; $close_time;
+$open_date;
+$open_time;
+$close_date;
+$close_time;
 $num_of_selected_los;
 $lo_num = [];
 $questions = [];
@@ -32,16 +35,18 @@ $points = [];
 $result;
 
 // processing client form data when it is submitted
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // extract POST data
     $name = $_POST["name"];
     $public = $_POST["public"];
     $duration = $_POST["duration"];
-    $open_date = $_POST["open_date"]; $open_time = $_POST["open_time"];
-    $close_date = $_POST["close_date"]; $close_time = $_POST["close_time"];
+    $open_date = $_POST["open_date"];
+    $open_time = $_POST["open_time"];
+    $close_date = $_POST["close_date"];
+    $close_time = $_POST["close_time"];
     $num_of_selected_los = $_POST["num_of_selected_los"];
-    for($i = 1; $i <= $num_of_selected_los; $i++){
+    for ($i = 1; $i <= $num_of_selected_los; $i++) {
         array_push($lo_num, $_POST["lonum_${i}"]);
         array_push($questions, $_POST["questions_${i}"]);
         array_push($points, $_POST["points_${i}"]);
@@ -54,9 +59,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     // create the json content string
     $json_content = "[";
-    for($i = 0; $i < $num_of_selected_los; $i++){
+    for ($i = 0; $i < $num_of_selected_los; $i++) {
         // first entries
-        if($i !== $num_of_selected_los - 1){
+        if ($i !== $num_of_selected_los - 1) {
             $json_content .= "{";
             $json_content .= "\"LearningOutcomeNumber\": \"" . $lo_num[$i] . "\",";
             $json_content .= "\"NumberQuestions\": " . $questions[$i] . ",";
@@ -64,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $json_content .= "},";
         }
         // last entry
-        else{
+        else {
             $json_content .= "{";
             $json_content .= "\"LearningOutcomeNumber\": \"" . $lo_num[$i] . "\",";
             $json_content .= "\"NumberQuestions\": " . $questions[$i] . ",";
@@ -77,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     // inserting values into table, (manually adding ' ' needed for PostgreSQL query strings / text)
     $query = "INSERT INTO assessments(instructor, name, public, duration, open_date, open_time, close_date, close_time, content, course_name, course_id)
               VALUES ('" . $_SESSION["email"] . "', '" . $name . "', '" . $public . "', " . $duration . ", '" . $open_date  . "', '" . $open_time . "', '" . $close_date  . "', '" . $close_time . "', '" . $json_content
-              . "', '" . $_SESSION['selected_course_name'] . "', '" . $_SESSION['selected_course_id'] . "')";
+        . "', '" . $_SESSION['selected_course_name'] . "', '" . $_SESSION['selected_course_id'] . "')";
     $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
 
     $result = "Assessment creation was successful.";
@@ -134,136 +139,139 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Assessment Creation</title>
-        <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
-        <link id="css-header" rel="stylesheet" type="text/css" href="" />
-        <link id="css-mode" rel="stylesheet" type="text/css" href="" />
-        <script type="text/javascript">
-            const toggleBanner = () => {
-                const cssHeader = document.getElementById("css-header");
-                cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
-            }
 
-            const toggleCSS = () => {
-                const cssLink = document.getElementById("css-mode");
-                cssLink.setAttribute("href", `../assets/css/instructor/instr_create2-${window.localStorage.getItem("mode")}-mode.css`);
-            }
-
-            // mode
-            let item = localStorage.getItem("mode");
-            const cssLink = document.getElementById("css-mode");
-            if (item === null) {
-                window.localStorage.setItem('mode', 'OR2STEM');
-                toggleCSS();
-            }
-            else {
-                toggleCSS();
-            }
-
-            // banner
-            item = localStorage.getItem("banner");
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment Creation</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
+    <link id="css-header" rel="stylesheet" type="text/css" href="" />
+    <link id="css-mode" rel="stylesheet" type="text/css" href="" />
+    <script type="text/javascript">
+        const toggleBanner = () => {
             const cssHeader = document.getElementById("css-header");
-            if (item === null) {
-                window.localStorage.setItem('banner', 'OR2STEM');
-                toggleBanner();
-            }
-            else {
-                toggleBanner();
-            }
-        </script>
-    </head>
-    <body>
-        <div id="app">
-            <header>
-                <nav class="container">
-                    <div id="userProfile" class="dropdown">
-                        <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="../navigation/settings/settings.php">Settings</a>
-                            <a href="../register_login/logout.php">Logout</a>
-                        </div>
-                        <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
+            cssHeader.setAttribute("href", `../assets/css/global/${window.localStorage.getItem("banner")}-header.css`);
+        }
+
+        const toggleCSS = () => {
+            const cssLink = document.getElementById("css-mode");
+            cssLink.setAttribute("href", `../assets/css/instructor/instr_create2-${window.localStorage.getItem("mode")}-mode.css`);
+        }
+
+        // mode
+        let item = localStorage.getItem("mode");
+        const cssLink = document.getElementById("css-mode");
+        if (item === null) {
+            window.localStorage.setItem('mode', 'OR2STEM');
+            toggleCSS();
+        } else {
+            toggleCSS();
+        }
+
+        // banner
+        item = localStorage.getItem("banner");
+        const cssHeader = document.getElementById("css-header");
+        if (item === null) {
+            window.localStorage.setItem('banner', 'OR2STEM');
+            toggleBanner();
+        } else {
+            toggleBanner();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="container">
+                <div id="userProfile" class="dropdown">
+                    <button id="userButton" class="dropbtn" onclick="showDropdown()">Hello <?= $_SESSION["name"]; ?>!</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="../navigation/settings/settings.php">Settings</a>
+                        <a href="../register_login/logout.php">Logout</a>
                     </div>
+                    <img id="user-picture" src="<?= $_SESSION['pic']; ?>" alt="user-picture">
+                </div>
 
-                    <div class="site-logo">
-                        <h1 id="OR2STEM-HEADER">
-                            <a id="OR2STEM-HEADER-A" href="instr_index1.php">On-Ramp to STEM</a>
-                        </h1>
+                <div class="site-logo">
+                    <h1 id="OR2STEM-HEADER">
+                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">SCOOL - Student-Centered Open Online Learning</a>
+                    </h1>
+                </div>
+
+                <div class="inner-banner">
+                    <div class="banner-img"></div>
+                </div>
+            </nav>
+        </header>
+
+        <br>
+
+        <main>
+            <h1><?= $result ?></h1>
+            <p><a href="instr_multi.php">Click here to view Assessments</a></p>
+            <p><a href="instr_index1.php">Click Here to go to Instructor Home Page</a></p>
+        </main>
+
+        <br>
+
+        <footer>
+            <div class="container">
+                <div class="footer-top flex">
+                    <div class="logo">
+                        <a href="instr_index1.php">
+                            <p>SCOOL</p>
+                        </a>
                     </div>
-
-                    <div class="inner-banner">
-                        <div class="banner-img"></div>
+                    <div class="navigation">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="instr_index1.php">Home</a></li>
+                            <li><a href="../navigation/about-us/about-us.php">About Us</a></li>
+                            <li><a href="../navigation/faq/faq.php">FAQ</a></li>
+                            <li><a href="../navigation/contact-us/contact-us.php">Contact Us</a></li>
+                        </ul>
                     </div>
-                </nav>
-            </header>
-
-            <br>
-
-            <main>
-                <h1><?= $result ?></h1>
-                <p><a href="instr_multi.php">Click here to view Assessments</a></p>
-                <p><a href="instr_index1.php">Click Here to go to Instructor Home Page</a></p>
-            </main>
-
-            <br>
-
-            <footer>
-                <div class="container">
-                    <div class="footer-top flex">
-                        <div class="logo">
-                            <a href="instr_index1.php"><p>On-Ramp to STEM</p></a>
-                        </div>
-                        <div class="navigation">
-                            <h4>Navigation</h4>
-                            <ul>
-                                <li><a href="instr_index1.php">Home</a></li>
-                                <li><a href="../navigation/about-us/about-us.php">About Us</a></li>
-                                <li><a href="../navigation/faq/faq.php">FAQ</a></li>
-                                <li><a href="../navigation/contact-us/contact-us.php">Contact Us</a></li>
-                            </ul>
-                        </div>
-                        <div class="navigation">
-                            <h4>External Links</h4>
-                            <ul>
-                                <li><a href="instr_index1.php"> CSU SCALE </a></li>
-                                <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
-                                <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
-                                <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
-                            </ul>
-                        </div>
-                        <div class="contact">
-                            <h4>Contact Us</h4>
-                            <p> 5241 N. Maple Ave. <br /> Fresno, CA 93740 <br /> Phone: 559-278-4240 <br /></p>
-                        </div>
+                    <div class="navigation">
+                        <h4>External Links</h4>
+                        <ul>
+                            <li><a href="instr_index1.php"> SCOOL </a></li>
+                            <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
+                            <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
+                            <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
+                        </ul>
                     </div>
-                    <div class="footer-bottom">
-                        <p>© 2021-2023 OR2STEM Team</p>
+                    <div class="contact">
+                        <h4>Contact Us</h4>
+                        <p> 5241 N. Maple Ave. <br /> Fresno, CA 93740 <br /> Phone: 559-278-4240 <br /></p>
                     </div>
                 </div>
-            </footer>
-        </div>  
+                <div class="footer-bottom">
+                    <p>© 2021-2023 SCOOL Team</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-        <!-- START OF JAVASCRIPT -->
-        <script type="text/javascript">
-            // controlling the user profile dropdown
-            /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-            let showDropdown = () => {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function(event) {
-                if(!event.target.matches('.dropbtn')) {
-                    let dropdowns = document.getElementsByClassName("dropdown-content");
-                    for (let i = 0; i < dropdowns.length; i++) {
-                        let openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
+    <!-- START OF JAVASCRIPT -->
+    <script type="text/javascript">
+        // controlling the user profile dropdown
+        /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+        let showDropdown = () => {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
                     }
                 }
             }
-        </script>
-    </body>
+        }
+    </script>
+</body>
+
 </html>

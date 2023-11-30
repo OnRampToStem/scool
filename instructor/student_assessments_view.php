@@ -123,8 +123,7 @@ pg_close($con);
         if (item === null) {
             window.localStorage.setItem('mode', 'OR2STEM');
             toggleCSS();
-        }
-        else {
+        } else {
             toggleCSS();
         }
 
@@ -134,8 +133,7 @@ pg_close($con);
         if (item === null) {
             window.localStorage.setItem('banner', 'OR2STEM');
             toggleBanner();
-        }
-        else {
+        } else {
             toggleBanner();
         }
     </script>
@@ -158,7 +156,7 @@ pg_close($con);
 
                 <div class="site-logo">
                     <h1 id="OR2STEM-HEADER">
-                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">On-Ramp to STEM</a>
+                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">SCOOL - Student-Centered Open Online Learning</a>
                     </h1>
                 </div>
 
@@ -204,7 +202,7 @@ pg_close($con);
                 <div class="footer-top flex">
                     <div class="logo">
                         <a href="instr_index1.php">
-                            <p>On-Ramp to STEM</p>
+                            <p>SCOOL</p>
                         </a>
                     </div>
                     <div class="navigation">
@@ -219,7 +217,7 @@ pg_close($con);
                     <div class="navigation">
                         <h4>External Links</h4>
                         <ul>
-                            <li><a href="instr_index1.php"> CSU SCALE </a></li>
+                            <li><a href="instr_index1.php"> SCOOL </a></li>
                             <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer
                                     Science </a></li>
@@ -233,7 +231,7 @@ pg_close($con);
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>© 2021-2023 OR2STEM Team</p>
+                    <p>© 2021-2023 SCOOL Team</p>
                 </div>
             </div>
         </footer>
@@ -336,8 +334,7 @@ pg_close($con);
                 document.getElementById("openHeaderArrow").innerHTML = "&#708;";
                 document.getElementById("open_assessments").style.display = "";
                 open_clicked = false;
-            }
-            else {
+            } else {
                 document.getElementById("openHeaderArrow").innerHTML = "&#709;";
                 document.getElementById("open_assessments").style.display = "none";
                 open_clicked = true;
@@ -349,8 +346,7 @@ pg_close($con);
                 document.getElementById("futureHeaderArrow").innerHTML = "&#709;";
                 document.getElementById("future_assessments").style.display = "none";
                 future_clicked = false;
-            }
-            else {
+            } else {
                 document.getElementById("futureHeaderArrow").innerHTML = "&#708;";
                 document.getElementById("future_assessments").style.display = "";
                 future_clicked = true;
@@ -362,8 +358,7 @@ pg_close($con);
                 document.getElementById("pastHeaderArrow").innerHTML = "&#709;";
                 document.getElementById("past_assessments").style.display = "none";
                 past_clicked = false;
-            }
-            else {
+            } else {
                 document.getElementById("pastHeaderArrow").innerHTML = "&#708;";
                 document.getElementById("past_assessments").style.display = "";
                 past_clicked = true;
@@ -376,7 +371,7 @@ pg_close($con);
             document.getElementById("myDropdown").classList.toggle("show");
         }
         // Close the dropdown if the user clicks outside of it
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
                 let dropdowns = document.getElementsByClassName("dropdown-content");
                 for (let i = 0; i < dropdowns.length; i++) {
