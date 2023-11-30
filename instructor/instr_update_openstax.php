@@ -16,6 +16,7 @@ if ($_SESSION["type"] !== "Instructor") {
 }
 
 // globals //
+$received_question = null;
 $question = null;
 $updated = false;
 
@@ -34,7 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   WHERE pkey = $1;";
         $result = pg_query_params($con, $query, [$question_id]);
         if ($result) {
-            $question = pg_fetch_assoc($result);
+            if (pg_num_rows($result) === 1) {
+                $received_question = true;
+                $question = pg_fetch_assoc($result);
+            } else {
+                $received_question = false;
+            }
         } else {
             die(pg_last_error($con));
         }
@@ -232,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script type="text/javascript">
-        const displayUpdateForm = () => {
+        const displayUpdateForm = (question) => {
             // hide get form //
             document.getElementById('getQForm').style.display = 'none';
             // set form values //
@@ -251,10 +257,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // driver //
-        let question = <?php echo json_encode($question); ?>;
-        if (question !== null) {
-            displayUpdateForm();
-        } else {
+        let receivedQuestion = <?php echo json_encode($received_question); ?>;
+        if (receivedQuestion === null) {
+            // show get form & hide update form //
+            document.getElementById('getQForm').style.display = '';
+            document.getElementById('updateQForm').style.display = 'none';
+            if (<?php echo json_encode($updated); ?>) {
+                alert('Open Stax Question has been successfully modified.');
+            }
+        } else if (receivedQuestion === true) {
+            let question = <?php echo json_encode($question); ?>;
+            displayUpdateForm(question);
+        } else if (receivedQuestion === false) {
+            alert('Did not find an OpenStax question associated with the input ID.');
+
             // show get form & hide update form //
             document.getElementById('getQForm').style.display = '';
             document.getElementById('updateQForm').style.display = 'none';
