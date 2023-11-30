@@ -277,7 +277,7 @@ while ($row = pg_fetch_row($res)) {
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>© 2021-2023 OR2STEM Team</p>
+                    <p>© 2021-2023 SCOOL Team</p>
                 </div>
             </div>
         </footer>
