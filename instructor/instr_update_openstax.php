@@ -17,6 +17,7 @@ if ($_SESSION["type"] !== "Instructor") {
 
 // globals //
 $question = null;
+$updated = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // connect to the db //
@@ -38,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die(pg_last_error($con));
         }
     }
+
     // update question by id //
     else if (isset($_POST['qId'])) {
         // input data //
@@ -58,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   WHERE pkey = $10;";
         $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty, $q_id]);
         if ($result) {
-            echo 'Question ID: ' . $q_id . ' was updated successfully.';
+            $updated = true;
         } else {
             die(pg_last_error($con));
         }
@@ -134,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </nav>
         </header>
 
-        <div>
+        <div id='main-div'>
             <form id='getQForm' method='POST'>
                 <h1>Get Open Stax Question</h1>
                 <div>
@@ -144,8 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type='submit' value='Enter' />
             </form>
 
-            <form id='updateQForm' method='POST'>
+            <form id='updateQForm' method='POST' autocomplete='off'>
                 <h1>Open Stax Question</h1>
+                <p>It is important to keep all the data in the same format with no typos!</p>
                 <div>
                     <label for='qId'>ID:</label>
                     <input id='qId' name='qId' type='number' readonly />
@@ -160,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div>
                     <label for='qText'>Text:</label>
-                    <textarea id='qText' name='qText' cols='30' rows='10' required></textarea>
+                    <textarea id='qText' name='qText' cols='60' rows='12' required></textarea>
                 </div>
                 <div>
                     <label for='qPic'>Picture:</label>
@@ -168,19 +171,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div>
                     <label for='qNumTries'>Number of Tries:</label>
-                    <input id='qNumTries' name='qNumTries' type='text' required />
+                    <input id='qNumTries' name='qNumTries' type='number' required />
                 </div>
                 <div>
                     <label for='qOptions'>Options:</label>
-                    <textarea id='qOptions' name='qOptions' cols='30' rows='10' required></textarea>
+                    <textarea id='qOptions' name='qOptions' cols='60' rows='12' required></textarea>
                 </div>
                 <div>
                     <label for='qRightAnswer'>Right Answer:</label>
-                    <textarea id='qRightAnswer' name='qRightAnswer' cols='30' rows='10' required></textarea>
+                    <textarea id='qRightAnswer' name='qRightAnswer' cols='40' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qIsImage'>Is Image:</label>
-                    <textarea id='qIsImage' name='qIsImage' cols='30' rows='10' required></textarea>
+                    <textarea id='qIsImage' name='qIsImage' cols='40' rows='10' required></textarea>
                 </div>
                 <div>
                     <label for='qDifficulty'>Difficulty:</label>
@@ -230,6 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script type="text/javascript">
         const displayUpdateForm = () => {
+            // hide get form //
+            document.getElementById('getQForm').style.display = 'none';
             // set form values //
             document.getElementById('qId').value = question.pkey;
             document.getElementById('qTags').value = question.tags;
@@ -241,7 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             document.getElementById('qRightAnswer').value = question.rightanswer;
             document.getElementById('qIsImage').value = question.isimage;
             document.getElementById('qDifficulty').value = question.difficulty;
-            // show form //
+            // show update form //
             document.getElementById('updateQForm').style.display = '';
         }
 
@@ -250,7 +255,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (question !== null) {
             displayUpdateForm();
         } else {
+            // show get form & hide update form //
+            document.getElementById('getQForm').style.display = '';
             document.getElementById('updateQForm').style.display = 'none';
+            if (<?php echo json_encode($updated); ?>) {
+                alert('Open Stax Question has been successfully modified.');
+            }
         }
 
         // controlling the user profile dropdown
