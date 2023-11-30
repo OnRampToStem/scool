@@ -118,6 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button class="q-btn" onclick="redirect(0)">OpenStax Questions</button>
                 <button class="q-btn" onclick="redirect(1)">IMathAS Questions</button>
             </div>
+
+            <div id='update-openstax-div' style="display:none;">
+                <h2>Update OpenStax Questions By ID.</h2>
+                <button class="q-btn" onclick="redirect(2)">OpenStax Questions</button>
+            </div>
         </main>
 
         <footer>
@@ -182,8 +187,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         let redirect = (idx) => {
-            if (idx) window.location.href = "./dynamic.php";
-            else window.location.href = "./static.php";
+            if (idx === 0) {
+                window.location.href = "./static.php";
+            } else if (idx === 1) {
+                window.location.href = "./dynamic.php";
+            } else if (idx === 2) {
+                window.location.href = "./instr_update_openstax.php";
+            }
         }
 
 
@@ -192,6 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             displayClasses();
             document.getElementById("class-list-div").style.display = "";
             document.getElementById("static-dynamic-div").style.display = "";
+            document.getElementById("update-openstax-div").style.display = "";
             document.getElementById("loading-div").style.display = "none";
         }
 
