@@ -72,7 +72,7 @@ if ($_SESSION["type"] !== "Learner") {
                 </div>
 
                 <div class="site-logo">
-                    <h1 id="OR2STEM-HEADER">On-Ramp to STEM</h1>
+                    <h1 id="OR2STEM-HEADER">SCOOL - Student-Centered Open Online Learning</h1>
                 </div>
 
                 <div class="inner-banner">
@@ -118,7 +118,7 @@ if ($_SESSION["type"] !== "Learner") {
                 <div class="footer-top flex">
                     <div class="logo">
                         <a href="">
-                            <p>On-Ramp to STEM</p>
+                            <p>SCOOL</p>
                         </a>
                     </div>
                     <div class="navigation">
@@ -133,7 +133,7 @@ if ($_SESSION["type"] !== "Learner") {
                     <div class="navigation">
                         <h4>External Links</h4>
                         <ul>
-                            <li><a href=""> CSU SCALE </a></li>
+                            <li><a href=""> SCOOL </a></li>
                             <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
@@ -145,7 +145,7 @@ if ($_SESSION["type"] !== "Learner") {
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>© 2021-2023 OR2STEM Team</p>
+                    <p>© 2021-2023 SCOOL Team</p>
                 </div>
             </div>
         </footer>
