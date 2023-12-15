@@ -1,6 +1,6 @@
 <?php
 // start the session //
-// (loggedIn, name, email, type, pic, course_name, course_id) //
+// (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id) //
 session_start();
 
 // redirect users if not logged in //
@@ -9,27 +9,39 @@ if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     exit;
 }
 
-// force logout for non-instructors or non-mentors //
-if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
+// force logout for non-instructors //
+if ($_SESSION["type"] !== "Instructor") {
     header("location: ../register_login/logout.php");
     exit;
 }
 
-// globals
-$course_names = json_decode($_SESSION['course_name']);
-$course_ids = json_decode($_SESSION['course_id']);
+// globals //
+$inserted = false;
 
-// processing client form data when it is submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // extract POST data
-    $idx = $_POST['number'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // connect to the db //
+    require_once "../register_login/config.php";
 
-    // set new session variables for instructor
-    $_SESSION['selected_course_name'] = $course_names[$idx];
-    $_SESSION['selected_course_id'] = $course_ids[$idx];
+    // input data //
+    $q_tags         = trim($_POST['qTags']);
+    $q_title        = trim($_POST['qTitle']);
+    $q_text         = trim($_POST['qText']);
+    $q_pic          = (strlen(trim($_POST['qPic'])) === 0 ? '' : trim($_POST['qPic']));
+    $q_num_tries    = trim($_POST['qNumTries']);
+    $q_options      = trim($_POST['qOptions']);
+    $q_right_answer = trim($_POST['qRightAnswer']);
+    $q_is_image     = trim($_POST['qIsImage']);
+    $q_difficulty   = (strlen(trim($_POST['qDifficulty'])) === 0 ? '' : trim($_POST['qDifficulty']));
 
-    // redirect to instr_index2.php
-    header("Location: instr_index2.php");
+    // insert question //
+    $query = "INSERT into questions (title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty, selected, numcurrenttries, correct, datetime_started, datetime_answered, createdon)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'false', 0, null, null, null, CURRENT_TIMESTAMP)";
+    $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty]);
+    if ($result) {
+        $inserted = true;
+    } else {
+        die(pg_last_error($con));
+    }
 }
 
 ?>
@@ -39,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Instructor Home Page</title>
+    <title>New OpenStax Question</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/global/global.css" />
     <link id="css-header" rel="stylesheet" type="text/css" href="" />
     <link id="css-mode" rel="stylesheet" type="text/css" href="" />
@@ -51,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         const toggleCSS = () => {
             const cssLink = document.getElementById("css-mode");
-            cssLink.setAttribute("href", `../assets/css/instructor/instr_index1-${window.localStorage.getItem("mode")}-mode.css`);
+            cssLink.setAttribute("href", `../assets/css/instructor/instr_new_openstax-${window.localStorage.getItem("mode")}-mode.css`);
         }
 
         // mode
@@ -76,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </script>
 </head>
 
-<body onload="initialize();">
+<body>
     <div id="app">
         <header>
             <nav class="container">
@@ -90,7 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
 
                 <div class="site-logo">
-                    <h1 id="OR2STEM-HEADER">SCOOL - Student-Centered Open Online Learning</h1>
+                    <h1 id="OR2STEM-HEADER">
+                        <a id="OR2STEM-HEADER-A" href="instr_index1.php">SCOOL - Student-Centered Open Online Learning</a>
+                    </h1>
                 </div>
 
                 <div class="inner-banner">
@@ -99,49 +113,66 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </nav>
         </header>
 
-        <main>
-            <div id="header-div">
-                <h1>Instructor Home Page</h1>
-                <hr style="border: 1px solid black;">
-            </div>
+        <div id='main-div'>
+            <form id='newQForm' method='POST' autocomplete='off'>
+                <h1>New Open Stax Question</h1>
+                <div>
+                    <label for='qTags'>Tags:</label>
+                    <input id='qTags' name='qTags' type='text' placeholder='1.1.1' required />
+                </div>
+                <div>
+                    <label for='qTitle'>Title:</label>
+                    <input id='qTitle' name='qTitle' type='text' placeholder='1.1.1' required />
+                </div>
+                <div>
+                    <label for='qText'>Text:</label>
+                    <textarea id='qText' name='qText' cols='60' rows='12' placeholder='Which graph represents the `f(x)=x^2` function?' required></textarea>
+                </div>
+                <div>
+                    <label for='qPic'>Picture:</label>
+                    <input id='qPic' name='qPic' type='text' placeholder='math-img.jpg' />
+                </div>
+                <div>
+                    <label for='qNumTries'>Number of Tries:</label>
+                    <input id='qNumTries' name='qNumTries' type='number' placeholder='1' required />
+                </div>
+                <div>
+                    <label for='qOptions'>Options:</label>
+                    <textarea id='qOptions' name='qOptions' cols='60' rows='12' placeholder='{`(0*%oo)`,`(-oo*%0)uu(0*%oo)`,`(-oo*%oo)`,"Not decreasing"}' required></textarea>
+                </div>
+                <div>
+                    <label for='qRightAnswer'>Right Answer:</label>
+                    <textarea id='qRightAnswer' name='qRightAnswer' cols='40' rows='10' placeholder="{true,false,false,false}" required></textarea>
+                </div>
+                <div>
+                    <label for='qIsImage'>Is Image:</label>
+                    <textarea id='qIsImage' name='qIsImage' cols='40' rows='10' placeholder="{false,false,false,false}" required></textarea>
+                </div>
+                <div>
+                    <label for='qDifficulty'>Difficulty:</label>
+                    <input id='qDifficulty' name='qDifficulty' type='text' placeholder="Easy" />
+                </div>
+                <input type='submit' value='Insert' />
+            </form>
 
-            <div id="loading-div">
-                LOADING...
+            <div id='inserted-div' style='display:none;'>
+                <h2>Successfully inserted your new OpenStax question!</h2>
+                <button onclick="insertAgain();">Insert Another Question</button>
             </div>
-
-            <div id="class-list-div" style="display:none;">
-                <h2>Inspect one of your courses.</h2>
-            </div>
-
-            <div id="static-dynamic-div" style="display:none;">
-                <h2>Browse through OpenStax or IMathAS questions.</h2>
-                <button class="q-btn" onclick="redirect(0)">OpenStax Questions</button>
-                <button class="q-btn" onclick="redirect(1)">IMathAS Questions</button>
-            </div>
-
-            <div id='new-openstax-div' style="display:none;">
-                <h2>Insert New OpenStax Question.</h2>
-                <button class="q-btn" onclick="redirect(2)">New OpenStax Question</button>
-            </div>
-
-            <div id='update-openstax-div' style="display:none;">
-                <h2>Update OpenStax Question By ID.</h2>
-                <button class="q-btn" onclick="redirect(3)">Update OpenStax Question</button>
-            </div>
-        </main>
+        </div>
 
         <footer>
             <div class="container">
                 <div class="footer-top flex">
                     <div class="logo">
-                        <a href="">
+                        <a href="instr_index1.php" class="router-link-active">
                             <p>SCOOL</p>
                         </a>
                     </div>
                     <div class="navigation">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="">Home</a></li>
+                            <li><a href="instr_index1.php">Home</a></li>
                             <li><a href="../navigation/about-us/about-us.php">About Us</a></li>
                             <li><a href="../navigation/faq/faq.php">FAQ</a></li>
                             <li><a href="../navigation/contact-us/contact-us.php">Contact Us</a></li>
@@ -150,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="navigation">
                         <h4>External Links</h4>
                         <ul>
-                            <li><a href=""> SCOOL </a></li>
+                            <li><a href="instr_index1.php"> SCOOL </a></li>
                             <li><a href="http://fresnostate.edu/" target="_blank"> CSU Fresno Homepage </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/csci/" target="_blank"> Department of Computer Science </a></li>
                             <li><a href="http://www.fresnostate.edu/csm/math/" target="_blank"> Department of Mathematics </a></li>
@@ -169,51 +200,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <script type="text/javascript">
-        /* JS GLOBALS */
-        // converting php array to js array
-        const course_names = <?= json_encode($course_names); ?>;
-        const course_ids = <?= json_encode($course_ids); ?>;
-
-        let displayClasses = () => {
-            let str = '<form id="myForm" action="" method="POST">';
-            str += '<input type="number" id="number" name="number" style="display: none;" />';
-            for (let i = 0; i < course_names.length; i++) {
-                str += `<button type="button" class="q-btn" onclick="submitForm(${i})">${course_names[i]}<br>${course_ids[i]}</button>`;
-            }
-            str += '</form>';
-            document.getElementById("class-list-div").insertAdjacentHTML('beforeend', str);
+        // driver //
+        let inserted = <?php echo json_encode($inserted); ?>;
+        if (inserted) {
+            document.getElementById('newQForm').style.display = 'none';
+            document.getElementById('inserted-div').style.display = '';
         }
 
-        let submitForm = (int) => {
-            // set chosen index value
-            document.getElementById("number").value = int;
-            // submit form
-            document.getElementById("myForm").submit();
+        const insertAgain = () => {
+            document.getElementById('newQForm').style.display = '';
+            document.getElementById('inserted-div').style.display = 'none';
         }
-
-        let redirect = (idx) => {
-            if (idx === 0) {
-                window.location.href = "./static.php";
-            } else if (idx === 1) {
-                window.location.href = "./dynamic.php";
-            } else if (idx === 2) {
-                window.location.href = "./instr_new_openstax.php";
-            } else if (idx === 3) {
-                window.location.href = "./instr_update_openstax.php";
-            }
-        }
-
-
-        const initialize = () => {
-            // content
-            displayClasses();
-            document.getElementById("class-list-div").style.display = "";
-            document.getElementById("static-dynamic-div").style.display = "";
-            document.getElementById("new-openstax-div").style.display = "";
-            document.getElementById("update-openstax-div").style.display = "";
-            document.getElementById("loading-div").style.display = "none";
-        }
-
 
         // controlling the user profile dropdown
         /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
