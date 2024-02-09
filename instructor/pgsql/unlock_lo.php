@@ -1,16 +1,15 @@
-
 <?php
-// start the session 
-// (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
+// start the session //
+// (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id) //
 session_start();
 
-// if user is not logged in then redirect them back to Fresno State Canvas
+// redirect users if not logged in //
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("location: https://fresnostate.instructure.com");
     exit;
 }
 
-// if user account type is not 'Instructor' then force logout
+// force logout for non-instructors //
 if ($_SESSION["type"] !== "Instructor") {
     header("location: ../../register_login/logout.php");
     exit;
@@ -21,18 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $ch_digit = (int)$_POST["ch_digit"];
     $sec_digit = (int)$_POST["sec_digit"];
     $lo_digit = (int)$_POST["lo_digit"];
-    $student_emails = [];
-
-    // query to get all the student emails currently in the course
-    require_once "../../register_login/config.php";
-
-    $query = "SELECT email FROM users 
-              WHERE instructor='{$_SESSION["email"]}' AND course_name='{$_SESSION["selected_course_name"]}'
-              AND course_id='{$_SESSION["selected_course_id"]}'";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
-    while ($row = pg_fetch_assoc($res)) {
-        array_push($student_emails, $row["email"]);
-    }
+    $student_emails = json_decode($_POST["students"]);
 
     // 1
     // unlock the requested learning outcome for each student

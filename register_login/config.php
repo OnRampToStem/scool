@@ -1,4 +1,13 @@
 <?php
+// Local PostgreSQL Database credentials
+/*
+define('HOST', 'localhost');
+define('PORT', '5432');
+define('DB', 'math_db');
+define('USER', 'postgres');
+define('PASS', 'pass');
+*/
+
 // Fresno State PostgreSQL Database credentials
 define('HOST', 'stem-scale-db.priv.fresnostate.edu');
 define('PORT', '5432');

@@ -10,6 +10,23 @@ echo "Deleting file<br>";
 unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax/test_student@canvas.instructure.com.json")
     or die("Could not remove file<br>");
 
+echo "Deleting file<br>";
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/questions/test_student_hoUMIt2EGnmfORP5@canvas.instructure.com.json")
+    or die("Could not remove file<br>");
+
+echo "Deleting file<br>";
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax/test_student_hoUMIt2EGnmfORP5@canvas.instructure.com.json")
+    or die("Could not remove file<br>");
+
+
+echo "Deleting file<br>";
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/questions/test_student_kUjPEsJp@canvas.instructure.com.json")
+    or die("Could not remove file<br>");
+
+echo "Deleting file<br>";
+unlink("../user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax/test_student_kUjPEsJp@canvas.instructure.com.json")
+    or die("Could not remove file<br>");
+
     /*
 echo "Removing directory<br>";
 rmdir("../scale/user_data/Development MATH6 Pilot-cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef/openStax")

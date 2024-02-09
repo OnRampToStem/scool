@@ -3,7 +3,7 @@
 header('Content-type: text/plain');
 
 // connect to the db
-require_once "../register_login/config.php";
+require_once "../../register_login/config.php";
 
 // creating the 'assessments' table, if it does not exist in the PostgreSQL database
 $query = "CREATE TABLE IF NOT EXISTS assessments (
