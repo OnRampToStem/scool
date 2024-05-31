@@ -18,6 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// do not load the page directly -- only include it
+if (count(get_included_files()) === 1) {
+    header('HTTP/1.0 404 Not Found', true, 404);
+    die();
+}
+
 // Fresno State PostgreSQL Database credentials
 const DB_HOST = 'localhost';
 const DB_PORT = 5432;
