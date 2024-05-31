@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selected_los = []; // php associative array
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // pg query
     $query = "SELECT tags FROM questions;";

@@ -41,7 +41,7 @@ $updated = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // connect to the db //
-    require_once "../register_login/config.php";
+    require_once "../bootstrap.php";
 
     // get question by id //
     if (isset($_POST['questionId'])) {

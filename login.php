@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// connect to the DB
-require_once "register_login/config.php";
+require_once "bootstrap.php";
 
 // global variables and init with empty values
 $email = $password = "";

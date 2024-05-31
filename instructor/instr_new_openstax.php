@@ -39,7 +39,7 @@ $inserted = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // connect to the db //
-    require_once "../register_login/config.php";
+    require_once "../bootstrap.php";
 
     // input data //
     $q_tags         = trim($_POST['qTags']);

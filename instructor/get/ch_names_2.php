@@ -44,7 +44,7 @@ $los = []; // 1D array containing all unique learning outcomes in the 'questions
 $chs = []; // Associative array in the format: "chapter number" => "chapter name" ("1" => "Chapter One")
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../../bootstrap.php";
 
 // pg query
 $query = "SELECT tags FROM questions;";

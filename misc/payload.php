@@ -64,7 +64,7 @@ $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
 $timestamp = $date->format('Y-m-d H:i:s');
 
 // connect to the db
-require_once "config.php";
+require_once "../bootstrap.php";
 
 /* Now begin process of analyzing sent data and determine what should be done with the data */
 

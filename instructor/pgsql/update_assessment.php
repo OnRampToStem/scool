@@ -86,7 +86,7 @@ echo $json_content, "\n";
 */
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../../bootstrap.php";
 
 // query
 $query = "UPDATE assessments SET name = '{$name}', public = '{$public}', duration = '{$duration}', open_date = '{$open_date}',

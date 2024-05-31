@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // get all student emails in the instructor's currently selected course //
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
     $student_emails = [];
     $query = "SELECT email FROM users 
               WHERE instructor='{$_SESSION["email"]}' AND course_name='{$_SESSION["selected_course_name"]}'

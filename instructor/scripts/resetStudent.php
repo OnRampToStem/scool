@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // delete the student //
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
     $query = "DELETE FROM users WHERE email='" . pg_escape_string($student_email) . "' AND type='Learner';";
     $res = pg_query($con, $query) or die(pg_last_error($con));
     if (pg_affected_rows($res) > 0) {

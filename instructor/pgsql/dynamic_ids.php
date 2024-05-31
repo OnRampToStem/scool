@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $assessment_json = json_decode($_POST['assessment_json'], true);
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // create list of randomly chosen dynamic questions
     for ($i = 0; $i < count($assessment_json); $i++) {

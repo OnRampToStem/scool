@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// connect to the db
-require_once "config.php";
+require_once "bootstrap.php";
 
 // prepare and execute query for getting all static questions from 'questions' table
 $query = "SELECT * FROM questions"; 

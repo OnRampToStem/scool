@@ -39,7 +39,7 @@ $curr_date = date_create();
 $curr_date = date_format($curr_date, "Y-m-d"); //echo $curr_date, "\n";
 
 // connect to the db
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 // 1
 // grab instructor's email

@@ -41,7 +41,7 @@ $learningoutcome = "Select a Learning Outcome";
 $students = [];
 
 // connect to the db //
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 // get all students belonging to the instructor for the selected course //
 $query =

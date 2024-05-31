@@ -34,7 +34,7 @@ if ($_SESSION["type"] !== "Instructor") {
 }
 
 // connect to the db
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 // php globals
 $open_assessments = [];

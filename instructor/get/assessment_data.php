@@ -37,7 +37,7 @@ if($_SESSION["type"] !== "Instructor"){
 $pkey = $_POST["pkey"];
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../../bootstrap.php";
 
 $query = "SELECT * FROM assessments WHERE pkey = '{$pkey}'";
 $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");

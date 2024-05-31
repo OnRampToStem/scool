@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $json_data = json_decode($_POST['json_data']); //print_r($json_data);
 
     // connect to the db
-    require_once "../register_login/config.php";
+    require_once "../bootstrap.php";
 
     // grab the assessment from 'assessments' table
     $query = "SELECT * FROM assessments WHERE pkey = {$pkey}";

@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $secs = []; // Associative array in the format: "section number" => "section name" ("1.2" => "Section One")
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // pg query
     $query = "SELECT tags FROM questions;";

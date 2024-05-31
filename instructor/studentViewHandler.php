@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $timestamp = $date->format('Y-m-d H:i:s');
 
     // connect to the db //
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // check if the instructor already owns a test student for the selected course //
     $query =

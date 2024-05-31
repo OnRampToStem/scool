@@ -22,7 +22,7 @@
 header('Content-type: text/plain');
 
 echo "Connecting to PostgreSQL database.\n";
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 $query = "CREATE TABLE IF NOT EXISTS assessments_results (
     pkey SERIAL PRIMARY KEY,

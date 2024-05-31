@@ -18,15 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Fresno State PostgreSQL Database credentials
-define('HOST', 'stem-scale-db.priv.fresnostate.edu');
-define('PORT', '5432');
-define('DB', 'swa');
-define('USER', 'scale_dyna');
-define('PASS', 'ZAKh55Mxxafz7jBqwhy_SG23C8_WkXm8_6');
+// do not load the page directly -- only include it
+if (count(get_included_files()) === 1) {
+    header('HTTP/1.0 404 Not Found', true, 404);
+    die();
+}
 
-// Attempt to connect to the PostgreSQL database 
-$con = pg_connect("host=" . HOST . " port=" . PORT . " dbname=" . DB . " user=" . USER . " password=" . PASS)
-       or die ("Could not connect to the database.\n");
-?>
-    
+require_once "secrets.php";

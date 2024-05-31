@@ -38,7 +38,7 @@ $instr_assessments = array();
 $public_assessments = array();
 
 // connect to the db
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 // first query - instructor's assessments that were created for the selected_course_name and selected_course_id
 $query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}' 

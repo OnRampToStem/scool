@@ -31,7 +31,7 @@ header('Content-type: text/plain');
 $query = "";
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../../bootstrap.php";
 
 // create the "dynamic_questions" table if it does not exist in the PostgreSQL database
 // Note: "lo_tag" and "difficulty" are do not have constraint "not null" because some entries in

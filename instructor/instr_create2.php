@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     /* NOW SAVE JSON DATA INTO 'Assessments' TABLE IN PGSQL DB */
 
     // connect to the db
-    require_once "../register_login/config.php";
+    require_once "../bootstrap.php";
 
     // create the json content string
     $json_content = "[";

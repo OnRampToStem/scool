@@ -37,7 +37,7 @@ if($_SESSION["type"] !== "Instructor"){
 $pkey = $_POST["pkey"];
 
 // connect to the db
-require_once "../../register_login/config.php";
+require_once "../../bootstrap.php";
 
 // query
 $query = "DELETE FROM assessments WHERE pkey = '{$pkey}'";

@@ -37,7 +37,7 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
 $students = [];
 
 // connect to Fresno State PGSQL DB //
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 if ($_SESSION["type"] === "Instructor") {
     // get all students that belong to the instructor's currently selected course //

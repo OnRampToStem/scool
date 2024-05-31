@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
     $content = $_POST['content'];
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // query to insert results into 'assessments_results' table
     $query = "INSERT INTO assessments_results (assessment_name, instructor_email, student_email, student_name, course_name, course_id, score, max_score, content, date_time_submitted)

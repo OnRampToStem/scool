@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $assessment_name = $_POST['assessment_name'];
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // get all assessments
     $query = "SELECT * FROM assessments_results WHERE assessment_name = '{$assessment_name}' AND instructor_email = '{$_SESSION['email']}'

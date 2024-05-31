@@ -43,7 +43,7 @@ ini_set("display_startup_errors", 1);
 error_reporting(E_ALL & ~E_DEPRECATED);
 
 // db connection //
-require_once "../register_login/config.php";
+require_once "../bootstrap.php";
 
 $data = [];
 

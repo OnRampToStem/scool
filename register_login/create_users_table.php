@@ -22,7 +22,7 @@
 header('Content-type: text/plain');
 
 // connect to the DB using the config file
-require_once "config.php";
+require_once "../bootstrap.php";
 
 // create the 'users' table if it does not already exist in the PostgreSQL database
 $query = "CREATE TABLE IF NOT EXISTS users (

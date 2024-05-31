@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $assessment = json_decode($_POST["assessment"]);
 
     // connect to the db
-    require_once "../../register_login/config.php";
+    require_once "../../bootstrap.php";
 
     // query
     $query = "INSERT INTO assessments(instructor, name, public, duration, open_date, open_time, close_date, close_time, content, course_name, course_id)

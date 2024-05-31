@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $ready = true; // indicate form was submitted
 
     // connect to the db
-    require_once "../register_login/config.php";
+    require_once "../bootstrap.php";
 
     // get rows at random with selected lo
     $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$lo}'
