@@ -12,6 +12,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     && docker-php-ext-install pgsql
 
 COPY etc/apache2/sites-available/scool.conf /etc/apache2/sites-available/
+COPY etc/php/conf.d/scool.ini /usr/local/etc/php/conf.d/
 
 RUN mkdir /var/www/user_data \
     && a2enmod ssl proxy proxy_http rewrite \
