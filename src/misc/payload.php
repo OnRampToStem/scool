@@ -109,12 +109,12 @@ if ($obj->roles[0] === "Instructor") {
             echo "Inserted 'Instructor' into 'users' table successfully! <br>";
 
             // create the directories that will keep track of the student progress in 'user_data'
-            echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions <br>";
-            $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions";
+            echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions <br>";
+            $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions";
             mkdir($directory_path, 0777, true) or die("Failed to create directory.");
         
-            echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax <br>";
-            $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax";
+            echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax <br>";
+            $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax";
             mkdir($directory_path, 0777, true) or die("Failed to create directory.");
 
             echo "Starting Session. <br>";
@@ -130,7 +130,7 @@ if ($obj->roles[0] === "Instructor") {
             $_SESSION["course_id"] = json_encode($course_id);
 
             echo "Redirecting to Instructor Home Page. <br>";
-            header("location: ../scale/instructor/instr_index1.php");
+            header("location: /instructor/instr_index1.php");
         }
 	}		
 	else {
@@ -174,12 +174,12 @@ if ($obj->roles[0] === "Instructor") {
                 echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Instructor'. <br>";
 
                 // create the new directories that will keep track of the student progress in 'user_data'
-                echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions <br>";
-                $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions";
+                echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions <br>";
+                $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions";
                 mkdir($directory_path, 0777, true) or die("Failed to create directory.");
             
-                echo "Creating directory in: ../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax <br>";
-                $directory_path = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax";
+                echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax <br>";
+                $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax";
                 mkdir($directory_path, 0777, true) or die("Failed to create directory.");
 
                 echo "Starting Session. <br>";
@@ -195,7 +195,7 @@ if ($obj->roles[0] === "Instructor") {
                 $_SESSION["course_id"] = json_encode($course_id);
 
                 echo "Redirecting to Instructor Home Page. <br>";
-                header("location: ../scale/instructor/instr_index1.php");
+                header("location: /instructor/instr_index1.php");
             }
             else {
                 // case 2 is handled here
@@ -219,7 +219,7 @@ if ($obj->roles[0] === "Instructor") {
                 $_SESSION["course_id"] = json_encode($course_id);
 
                 echo "Redirecting to Instructor Home Page. <br>";
-                header("location: ../scale/instructor/instr_index1.php");
+                header("location: /instructor/instr_index1.php");
             }
         }
 	}
@@ -268,7 +268,7 @@ elseif ($obj->roles[0] === "Learner") {
             // begin writing Learner's questions file
             echo "Now writing 'Learner's' own static questions json file. <br>";
 
-            $filepath = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions/{$obj->email}.json";
+            $filepath = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions/{$obj->email}.json";
 
             $questions_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -347,7 +347,7 @@ elseif ($obj->roles[0] === "Learner") {
 
             fclose($questions_file);
 
-            chmod("../scale/user_data/{$obj->context->title}-{$obj->context->id}/questions/{$obj->email}.json", 0777) or die("Could not modify questions json perms.");
+            chmod(USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions/{$obj->email}.json", 0777) or die("Could not modify questions json perms.");
 
             echo "Successfully wrote 'Learner's' own static questions json file. <br>";
 
@@ -362,7 +362,7 @@ elseif ($obj->roles[0] === "Learner") {
             // decode the text into a PHP assoc array
             $json_data = json_decode($json, true);
 
-            $filepath = "../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax/{$obj->email}.json";
+            $filepath = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax/{$obj->email}.json";
 
             $openStax_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -722,7 +722,7 @@ elseif ($obj->roles[0] === "Learner") {
 
             fclose($openStax_file);
 
-            chmod("../scale/user_data/{$obj->context->title}-{$obj->context->id}/openStax/{$obj->email}.json", 0777) or die("Could not modify openStax json perms.");
+            chmod(USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax/{$obj->email}.json", 0777) or die("Could not modify openStax json perms.");
 
             echo "Successfully wrote 'Learner's' own openStax json file. <br>";
 
@@ -739,7 +739,7 @@ elseif ($obj->roles[0] === "Learner") {
             $_SESSION["course_id"] = $obj->context->id;
 
             echo "Redirecting to Student Home Page. <br>";
-			header("location: ../scale/student/student_index.php");
+			header("location: /student/student_index.php");
         }
 	}
 	else {
@@ -771,7 +771,7 @@ elseif ($obj->roles[0] === "Learner") {
             $_SESSION["course_id"] = $obj->context->id;
 
             echo "Redirecting to Student Home Page. <br>";
-            header("location: ../scale/student/student_index.php");
+            header("location: /student/student_index.php");
         }
         else {
             // Learner is using the same email in another Canvas course to try to work on OR2STEM
@@ -835,7 +835,7 @@ elseif ($obj->roles[0] === "Mentor") {
             $_SESSION["course_id"] = json_encode($course_id);
 
             echo "Redirecting to Instructor Home Page. <br>";
-            header("location: ../scale/instructor/instr_index1.php");
+            header("location: /instructor/instr_index1.php");
         }
     }
     else {
@@ -891,7 +891,7 @@ elseif ($obj->roles[0] === "Mentor") {
                 $_SESSION["course_id"] = json_encode($course_id);
 
                 echo "Redirecting to Instructor Home Page. <br>";
-                header("location: ../scale/instructor/instr_index1.php");
+                header("location: /instructor/instr_index1.php");
             }
             else {
                 // case 2 is handled here
@@ -915,7 +915,7 @@ elseif ($obj->roles[0] === "Mentor") {
                 $_SESSION["course_id"] = json_encode($course_id);
 
                 echo "Redirecting to Instructor Home Page. <br>";
-                header("location: ../scale/instructor/instr_index1.php");
+                header("location: /instructor/instr_index1.php");
             }
         }
     }

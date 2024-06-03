@@ -18,6 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+global $con;
 require_once "bootstrap.php";
 
 // prepare and execute query for getting all static questions from 'questions' table
@@ -27,7 +28,7 @@ $rows = pg_num_rows($res);
 
 // STATIC QUESTIONS
 
-$filepath = "../scale/user_data/Temporary Course-123/questions/temp-student@gmail.com.json";
+$filepath = USER_DATA_DIR . "/Temporary Course-123/questions/temp-student@gmail.com.json";
 
 $questions_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -106,7 +107,7 @@ fwrite($questions_file, "]\n");
 
 fclose($questions_file);
 
-chmod("../scale/user_data/Temporary Course-123/questions/temp-student@gmail.com.json", 0777) or die("Could not modify questions json perms.");
+chmod(USER_DATA_DIR . "/Temporary Course-123/questions/temp-student@gmail.com.json", 0777) or die("Could not modify questions json perms.");
 
 
 
@@ -119,7 +120,7 @@ $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
 $json_data = json_decode($json, true);
 
-$filepath = "../scale/user_data/Temporary Course-123/openStax/temp-student@gmail.com.json";
+$filepath = USER_DATA_DIR . "/Temporary Course-123/openStax/temp-student@gmail.com.json";
 
 $openStax_file = fopen($filepath, "w") or die("Unable to open file!");
 
@@ -479,7 +480,7 @@ fwrite($openStax_file, "\n]");
 
 fclose($openStax_file);
 
-chmod("../scale/user_data/Temporary Course-123/openStax/temp-student@gmail.com.json", 0777) or die("Could not modify openStax json perms.");
+chmod(USER_DATA_DIR . "/Temporary Course-123/openStax/temp-student@gmail.com.json", 0777) or die("Could not modify openStax json perms.");
 
 
 ?>
