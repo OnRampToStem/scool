@@ -1,0 +1,8 @@
+services:
+  scool:
+    build: .
+    image: scool
+    env_file:
+      - .env
+    ports:
+      - "443:443"
