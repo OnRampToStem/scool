@@ -11,5 +11,11 @@ services:
       - type: bind
         source: temp/user_data
         target: /var/www/user_data
+    networks:
+      - scool_net
     ports:
       - "443:443"
+
+
+networks:
+  scool_net:
