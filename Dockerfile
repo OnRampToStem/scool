@@ -1,8 +1,11 @@
 FROM php:8.3.4-apache-bookworm
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
 		ca-certificates \
         libpq-dev \
+        git \
     && rm -rf /var/lib/apt/lists/* \
     && openssl req -x509 -nodes -batch -newkey rsa:2048 \
         -keyout /etc/ssl/private/server.key \
@@ -20,7 +23,16 @@ RUN mkdir /var/www/user_data \
     && a2ensite scool \
     && service apache2 restart
 
-COPY src/ /var/www/html/
+WORKDIR /var/www
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY composer.json ./
+COPY composer.lock ./
+RUN composer install --no-dev
+
+WORKDIR /var/www/html
+
+COPY src/ ./
 
 # see https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
 STOPSIGNAL SIGWINCH

@@ -19,10 +19,16 @@
  */
 
 /* GLOBALS */
-$token;
-$obj;
-$query;
-$res;
+global $token;
+global $obj;
+global $query;
+global $res;
+global $con;
+
+require_once "../bootstrap.php";
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 // checking for POST
 if (isset($_POST['token'])) {
@@ -35,7 +41,7 @@ else {
 }
 
 function DecodeToken($token) {
-	return json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $token)[1]))));
+    return JWT::decode($token, new Key(SECRET_KEY, "HS256"));
 }
 
 function display($obj) {
@@ -62,9 +68,6 @@ display($obj);
 // create timestamp to be inserted / updated for users when creating account & logging into account
 $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
 $timestamp = $date->format('Y-m-d H:i:s');
-
-// connect to the db
-require_once "../bootstrap.php";
 
 /* Now begin process of analyzing sent data and determine what should be done with the data */
 

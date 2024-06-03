@@ -26,6 +26,8 @@ if (count(get_included_files()) === 1) {
 
 require_once "secrets.php";
 
+require VENDOR_DIR . "/autoload.php";
+
 // Attempt to connect to the PostgreSQL database
 $con = pg_connect("host=" . DB_HOST . " port=" . DB_PORT . " dbname=" . DB_NAME . " user=" . DB_USER . " password=" . DB_PASS)
 or die ("Could not connect to the database.\n");

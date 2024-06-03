@@ -3,3 +3,4 @@
 .*/
 **/secrets.php
 temp/
+vendor/

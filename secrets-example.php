@@ -30,6 +30,10 @@ if (count(get_included_files()) === 1) {
     die();
 }
 
+const SECRET_KEY = "supersekret";
+
+const VENDOR_DIR = "/var/www/vendor";
+
 const USER_DATA_DIR = "/var/www/user_data";
 
 // Fresno State PostgreSQL Database credentials
