@@ -1,4 +1,4 @@
-FROM php:8-apache
+FROM php:8.3.4-apache-bookworm
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
 		ca-certificates \
