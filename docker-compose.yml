@@ -4,5 +4,12 @@ services:
     image: scool
     env_file:
       - .env
+    volumes:
+      - type: bind
+        source: src
+        target: /var/www/html
+      - type: bind
+        source: temp/user_data
+        target: /var/www/user_data
     ports:
       - "443:443"
