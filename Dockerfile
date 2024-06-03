@@ -9,10 +9,10 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
         -out /etc/ssl/certs/server.pem \
         -days 365 \
         -subj "/C=US/ST=California/L=Fresno/O=Fresno State/OU=TS/CN=scool.fresnostate.edu" \
+    && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
     && docker-php-ext-install pgsql
 
 COPY etc/apache2/sites-available/scool.conf /etc/apache2/sites-available/
-COPY etc/php/conf.d/scool.ini /usr/local/etc/php/conf.d/
 
 RUN mkdir /var/www/user_data \
     && a2enmod ssl proxy proxy_http rewrite \
