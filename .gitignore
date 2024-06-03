@@ -1,7 +1,5 @@
 .env
 
 .*/
-src/secrets.php
-src/user_data/*
-!src/user_data/explanation.txt
+**/secrets.php
 temp/
