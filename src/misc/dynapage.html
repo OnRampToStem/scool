@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head> 
+  <title>On-RAMP to STEM - Assessment</title>
+  </head>
+  
+  
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    var src;
+    var response;
+    // let hour = 0;
+    let minute = 0;
+    let second = 0;
+    let millisecond = 0;
+    let cron;
+	
+	// List of questions
+    var questionsObjectList = []; // sequence of questions with answers  
+    var counter = 0; // current index of the presented question	
+	
+	/////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////
+	
+	// There should be an onload function that load the assessment
+	
+	
+	
+	
+	// Load assessement
+	
+	// l=[];
+	
+	// For each learning outcome, query the table of dynamic questions and retrieve all the questions for the given learning outcome
+	// Select randomly the n questions (in relation to what is specified for this learning outcome)
+	
+	//    add to the list of questions the object 
+	
+	
+	var sequence_question=["00000005","00000021","00000031","00000041","00000061","00000071"];
+	
+	function InitListQuestions()
+	{
+		var nquestions=sequence_question.length;
+		for (let i=0;i<nquestions;i++)
+		{
+			var questionObject = {
+				  id: sequence_question[i], // to be extracted from the assessment
+				  lo: "1.1.1", // to be extracted from the assessment
+				  time_submit: 0,
+				  result: -1,
+				  max_score: 1, // to be extracted from the assessment
+				  timeStamp: "",
+			};	
+			questionsObjectList.push(questionObject);	
+		}
+	}
+	
+	/////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////
+	
+    function getSrc() {
+      axios
+        .get("/imathas-api/imathas")
+        .then((response) => {
+          const data = JSON.stringify(response.data);
+          if (data.type !== "success") {
+            // this.$noty.message(data.message);
+            return false;
+          }
+          src = data.src;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    function timer() {
+      if ((millisecond += 10) == 1000) {
+        millisecond = 0;
+        second++;
+      }
+      if (second == 60) {
+        second = 0;
+        minute++;
+      }
+      if (minute == 60) {
+        minute = 0;
+        // hour++;
+      }
+      // document.getElementById('hour').innerText = returnData(hour);
+      document.getElementById("minute").innerText = returnData(minute);
+      document.getElementById("second").innerText = returnData(second);
+      // document.getElementById('millisecond').innerText = returnData(millisecond);
+    }
+
+    function returnData(input) {
+      return input > 10 ? input : `0${input}`;
+    }
+
+    function start() {
+      cron = setInterval(() => {
+        timer();
+      }, 10);
+    }
+
+    function ResetTime() 
+	{
+      // hour = 0;
+      minute = 0;
+      second = 0;
+      millisecond = 0;
+      // document.getElementById('hour').innerText = '00';
+      document.getElementById("minute").innerText = "00";
+      document.getElementById("second").innerText = "0";
+      // document.getElementById('millisecond').innerText = '000';
+    }
+
+    window.onload = (event) => {
+      getSrc();
+      start();
+    };
+    window.addEventListener("message", this.receiveMessage, false);
+	
+	
+	// Callback funtion to receive the value of the score
+    function receiveMessage(event) {
+      event = JSON.stringify(event.data);
+      event = JSON.parse(event);
+
+      if (JSON.parse(event).subject === "lti.ext.imathas.result") 
+	  {
+        //response = JSON.parse(event);
+        var iMathResult = JSON.parse(parseJwt(JSON.parse(event).jwt));
+        // console.log("iMathResult: " + iMathResult);
+        var score = JSON.parse(iMathResult).score;		
+		// To remove for the final version
+		document.getElementById("response").innerHTML = score;     
+		pushObj(score);
+      }
+    }
+
+    // Add the information when the student has answered a question
+    function pushObj(score) 
+	{
+	  // Object that contains the information about the answer	  
+	  old_score=questionsObjectList[counter].result;
+	  if (old_score==-1) // not answered yet
+	  {	  
+		questionsObjectList[counter].result=score;
+	  }
+	  questionsObjectList[counter].time_submit= minute * 60 + second;
+	  questionsObjectList[counter].timeStamp=Date.now();
+      ResetTime();
+    }
+
+    // Parse the JWT
+    function parseJwt(token) 
+	{
+      console.log("Token", token);
+      var base64Url = token.split(".")[1];
+      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      var jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return JSON.stringify(jsonPayload);
+    }
+	
+	
+    function getId() 
+	{
+      var i = document.getElementById("qID").value;
+      console.log(i);
+      var result = "0000000" + i.toString();
+      document.getElementById("frame").src =
+        "https://imathas.libretexts.org/imathas/embedq2.php?id=" + result;
+    }
+
+    function NextQuestion() 
+	{
+      if (counter < questionsObjectList.length) 
+	  {
+        counter++;
+		question_id=questionsObjectList[counter].id;
+        document.getElementById("frame").src =
+          "https://imathas.libretexts.org/imathas/embedq2.php?id=" + question_id;
+      } 
+	  else 
+	  {
+        alert("There are no more questions");
+      }
+      ResetTime();
+	  DisplayQuestionNumber();	
+    }
+	
+	
+	function ShowQuestion(c)
+	{
+		alert('Display Question ' + c);
+		question_id=questionsObjectList[c].id;
+        document.getElementById("frame").src =
+          "https://imathas.libretexts.org/imathas/embedq2.php?id=" + question_id;
+		ResetTime();
+		DisplayQuestionNumber();		
+	}
+	
+	function StartTest()
+	{
+		document.getElementById("section_question").style.display = "block";
+		ShowQuestion(counter);		
+	}
+	
+	
+	
+	function DisplayQuestionNumber()
+	{
+		document.getElementById("questionnum").innerHTML='Question (' + counter + '/' + questionsObjectList.length + ')';
+	}
+	
+	function SaveResults()
+	{
+	   alert("Submit the results");
+	   let str_results=JSON.stringify(questionsObjectList);	   
+	   console.log(str_results);
+	}
+	
+	
+	function HideQuestion()
+	{
+		document.getElementById("section_question").style.display = "none";
+	}
+	
+	function InitForm()
+	{
+		InitListQuestions();
+		HideQuestion();
+	}
+	
+	
+  </script>
+  
+  <body onload="InitForm()">
+	<h1>Assessment</h1>
+	
+	<!-- For debugging purpose to verify the answer -->
+    <p>Response from Imaths</p>
+    <div id="response"></div>
+    <!-- For debugging purpose -->
+	
+	<div>
+	<input id="next" name="next" type="button" value="Submit the test" onclick="SaveResults()" />
+	</div>
+	
+	<input id="next" name="next" type="button" value="Start the Assessment" onclick="StartTest()" />
+    <input id="next" name="next" type="button" value="Next Question" onclick="NextQuestion()" />
+    <div>
+	    <p id="questionnum"></p>
+		<span id="minute">00</span>:<span id="second">00</span>
+	</div>
+    <section id="section_question">
+      <iframe
+        style="
+          overflow: visible;
+          width: 100%;
+          height: 900px;
+          border: 1px solid black;
+        "
+        id="frame"
+        src="https://imathas.libretexts.org/imathas/embedq2.php?id=00000001"
+        title="LibreTexts"
+        scrolling="yes"
+      />
+    </section>
+	
+	
+	
+	
+	
+  </body>
+
+  
+</html>

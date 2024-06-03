@@ -18,27 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This is an example of the configuration that is required for the
- * site. Copy this file to the root of the source directory, make
- * the required updates and then rename it to `secrets.php`.
- */
+require_once "../bootstrap.php";
 
-// do not load the page directly -- only include it
-if (count(get_included_files()) === 1) {
-    header('HTTP/1.0 404 Not Found', true, 404);
-    die();
-}
+// create the directories that will keep track of the student progress in 'user_data'
+echo "Creating directory in: " . USER_DATA_DIR . "/Temporary Course-123/questions <br>";
+$directory_path = USER_DATA_DIR . "/Temporary Course-123/questions";
+mkdir($directory_path, 0777, true) or die("Failed to create directory.");
 
-const SECRET_KEY = "supersekret";
+echo "Creating directory in: " . USER_DATA_DIR . "/Temporary Course-123/openStax <br>";
+$directory_path = USER_DATA_DIR . "/Temporary Course-123/openStax";
+mkdir($directory_path, 0777, true) or die("Failed to create directory.");
 
-const VENDOR_DIR = "/var/www/vendor";
 
-const USER_DATA_DIR = "/var/www/user_data";
-
-// Fresno State PostgreSQL Database credentials
-const DB_HOST = 'localhost';
-const DB_PORT = 5432;
-const DB_NAME = "swa";
-const DB_USER = "scool";
-const DB_PASS = "supersekret";
+?>

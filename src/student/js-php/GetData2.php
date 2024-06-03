@@ -18,27 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This is an example of the configuration that is required for the
- * site. Copy this file to the root of the source directory, make
- * the required updates and then rename it to `secrets.php`.
- */
+	$x1=file_get_contents('../../assets/json_data/openStax.json');
+	$x2=file_get_contents('../../assets/json_data/static_questions_id.json');
+	$x3=file_get_contents('../../assets/json_data/static_questions_info.json');
+	$x4=file_get_contents('../../assets/json_data/Kmap.json');
+	
+	$array = ['ChapterList' => $x1,
+			  'StaticQuestionsID' => $x2 ,
+			  'StaticQuestionsInfo' => $x3,
+			  'kMap' => $x4];
+	echo json_encode($array);
 
-// do not load the page directly -- only include it
-if (count(get_included_files()) === 1) {
-    header('HTTP/1.0 404 Not Found', true, 404);
-    die();
-}
-
-const SECRET_KEY = "supersekret";
-
-const VENDOR_DIR = "/var/www/vendor";
-
-const USER_DATA_DIR = "/var/www/user_data";
-
-// Fresno State PostgreSQL Database credentials
-const DB_HOST = 'localhost';
-const DB_PORT = 5432;
-const DB_NAME = "swa";
-const DB_USER = "scool";
-const DB_PASS = "supersekret";
+?>
