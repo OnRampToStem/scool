@@ -24,6 +24,8 @@ if (count(get_included_files()) === 1) {
     die();
 }
 
+const USER_DATA_DIR = "/var/www/user_data";
+
 // Fresno State PostgreSQL Database credentials
 const DB_HOST = 'localhost';
 const DB_PORT = 5432;
