@@ -18,6 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * This is an example of the configuration that is required for the
+ * site. Copy this file to the root of the source directory, make
+ * the required updates and then rename it to `secrets.php`.
+ */
+
 // do not load the page directly -- only include it
 if (count(get_included_files()) === 1) {
     header('HTTP/1.0 404 Not Found', true, 404);
@@ -32,7 +38,3 @@ const DB_PORT = 5432;
 const DB_NAME = "swa";
 const DB_USER = "scool";
 const DB_PASS = "supersekret";
-
-// Attempt to connect to the PostgreSQL database
-$con = pg_connect("host=" . DB_HOST . " port=" . DB_PORT . " dbname=" . DB_NAME . " user=" . DB_USER . " password=" . DB_PASS)
-or die ("Could not connect to the database.\n");
