@@ -11,20 +11,5 @@ services:
       - type: bind
         source: temp/user_data
         target: /var/www/user_data
-    networks:
-      - scool_net
     ports:
       - "443:443"
-    restart: unless-stopped
-
-  scool_lti:
-    build: ../scool_lti
-    image: scool_lti
-    env_file:
-      - ../scool_lti/.env
-    networks:
-      - scool_net
-    restart: unless-stopped
-
-networks:
-  scool_net:

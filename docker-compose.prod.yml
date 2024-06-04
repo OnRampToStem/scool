@@ -1,0 +1,27 @@
+services:
+  scool:
+    build: .
+    image: scool
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: /var/www/user_data
+        target: /var/www/user_data
+    networks:
+      - scool_net
+    ports:
+      - "443:443"
+    restart: always
+
+  scool_lti:
+    build: ../scool_lti
+    image: scool_lti
+    env_file:
+      - ../scool_lti/.env
+    networks:
+      - scool_net
+    restart: always
+
+networks:
+  scool_net:
