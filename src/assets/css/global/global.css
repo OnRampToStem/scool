@@ -31,3 +31,7 @@ body .flex {
   justify-content: space-between;
   align-items: center;
 }
+
+.footer-bottom a:visited {
+  color: #e8e8e8;
+}

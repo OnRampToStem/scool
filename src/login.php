@@ -230,6 +230,7 @@ pg_close(DB_CONN);
             <input type="submit" name="submit" value="Login">
 
         </form>
+        <?= include "./snippets/footer.html" ?>
     </div>
 </body>
 
