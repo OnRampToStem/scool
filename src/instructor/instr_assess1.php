@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../bootstrap.php";
+
 // start the session //
 // loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
@@ -35,9 +37,6 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
 }
 
 $students = [];
-
-// connect to Fresno State PGSQL DB //
-require_once "../bootstrap.php";
 
 if ($_SESSION["type"] === "Instructor") {
     // get all students that belong to the instructor's currently selected course //
@@ -105,7 +104,7 @@ pg_close($con);
 // loop through the students //
 foreach ($students as &$student) {
     // read & decode the student's static questions JSON file (text => PHP assoc array) //
-    $json_filename = "../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $student["email"] . ".json";
+    $json_filename = USER_DATA_DIR . "/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $student["email"] . ".json";
     $json = file_get_contents($json_filename);
     $json_data = json_decode($json, true);
 

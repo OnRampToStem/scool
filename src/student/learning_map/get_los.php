@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
@@ -44,7 +46,7 @@ $sec_num = (int)$_POST["section"];
 
 
 // filepath
-$json_filename = "../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
+$json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
 // read the openStax.json file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array

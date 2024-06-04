@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
 session_start();
 
@@ -43,7 +45,7 @@ $chapters_data = [];
 
 
 // filepath
-$json_filename = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $user . ".json";
+$json_filename = USER_DATA_DIR . "/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $user . ".json";
 // read the file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
@@ -110,7 +112,7 @@ foreach($json_questions as $question){
 
 // reading through personalized openStax json file
 // filepath
-$json_filename = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/openStax/" . $user . ".json";
+$json_filename = USER_DATA_DIR . "/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/openStax/" . $user . ".json";
 // read the file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array

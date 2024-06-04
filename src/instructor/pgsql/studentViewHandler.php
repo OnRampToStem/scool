@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session //
 // (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id) //
 session_start();
@@ -127,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $rows = pg_num_rows($res);
 
         // begin writing the test student's static questions json file //
-        $filepath = "../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json";
+        $filepath = USER_DATA_DIR . "/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json";
         $questions_file = fopen($filepath, "w") or die("Unable to open file!");
 
         fwrite($questions_file, "[\n");
@@ -200,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         fwrite($questions_file, "]\n");
         fclose($questions_file);
-        chmod("../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json", 0777) or die("Could not modify questions json perms.");
+        chmod(USER_DATA_DIR . "/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/questions/" . $test_student["email"] . ".json", 0777) or die("Could not modify questions json perms.");
 
 
         // begin writing the test student's openStax json file //
@@ -210,7 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // decode the text into a PHP assoc array
         $json_data = json_decode($json, true);
 
-        $filepath = "../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json";
+        $filepath = USER_DATA_DIR . "/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json";
         $openStax_file = fopen($filepath, "w") or die("Unable to open file!");
 
         // begin writing
@@ -559,7 +561,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // finalizing writing
         fwrite($openStax_file, "\n]");
         fclose($openStax_file);
-        chmod("../../user_data/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json", 0777) or die("Could not modify openStax json perms.");
+        chmod(USER_DATA_DIR . "/" . $test_student["course_name"] . "-" . $test_student["course_id"] . "/openStax/" . $test_student["email"] . ".json", 0777) or die("Could not modify openStax json perms.");
 
         // unset all of the session variables & destroy the session for the instructor //
         $_SESSION = array();

@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../bootstrap.php";
+
 // start PHP session //
 // loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
@@ -45,7 +47,7 @@ ini_set('memory_limit', '256M');
 $main = []; // holds course names & students' filenames in those courses //
 
 // GETTING ALL COURSE DIRECTORIES INSIDE USER DATA DIRECTORY //
-if ($handle = opendir("../user_data")) { // open the user data directory //
+if ($handle = opendir(USER_DATA_DIR)) { // open the user data directory //
     // loop through the course directories inside the user data directory //
     while (false !== ($course_dir_name = readdir($handle))) {
         // exclude special directories //
@@ -57,7 +59,7 @@ if ($handle = opendir("../user_data")) { // open the user data directory //
 
 // GETTING ALL STUDENTS QUESTIONS FILENAMES //
 foreach ($main as $course_dir_name => $arr) {
-    $dynamic_dir_name = "../user_data/$course_dir_name/questions";
+    $dynamic_dir_name = USER_DATA_DIR . "/$course_dir_name/questions";
     if ($handle = opendir($dynamic_dir_name)) {
         // loop through files inside directory //
         while (false !== ($filename = readdir($handle))) {
@@ -75,7 +77,7 @@ foreach ($main as $course_name => $student_filename_arr) {
     $course = []; // holds sub-arrays containing questions answered by students //
 
     for ($i = 0; $i < count($student_filename_arr); $i++) {
-        $filepath = "../user_data/$course_name/questions/$student_filename_arr[$i]";
+        $filepath = USER_DATA_DIR . "/$course_name/questions/$student_filename_arr[$i]";
         $json_text = file_get_contents($filepath); // read txt from file //
         $json_data = json_decode($json_text, true); // text => PHP assoc arr //
 

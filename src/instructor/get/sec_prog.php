@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
 session_start();
 
@@ -47,7 +49,7 @@ $chapter = (int)$_POST["chapter"];
 
 
 // read and decode the user JSON file (text => PHP assoc array)
-$json_filename = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $user . ".json";
+$json_filename = USER_DATA_DIR . "/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/questions/" . $user . ".json";
 $json = file_get_contents($json_filename);
 $json_questions = json_decode($json, true);
 
@@ -90,7 +92,7 @@ foreach($json_questions as $question){
 
 
 // read and decode the openStax JSON file (text => PHP assoc array)
-$json_filename = "../../user_data/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/openStax/" . $user . ".json";
+$json_filename = USER_DATA_DIR . "/{$_SESSION['selected_course_name']}-{$_SESSION['selected_course_id']}/openStax/" . $user . ".json";
 $json = file_get_contents($json_filename);
 $json_openStax = json_decode($json, true);
 

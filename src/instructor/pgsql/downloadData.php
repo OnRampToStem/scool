@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session //
 // loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
@@ -39,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = [];
 
     foreach ($students as $student) {
-        $filepath = "../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student->email . ".json";
+        $filepath = USER_DATA_DIR . "/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student->email . ".json";
         $json_text = file_get_contents($filepath);
         $json_data = json_decode($json_text, true);
 

@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../bootstrap.php";
+
 // for display purposes
 header('Content-type: text/plain');
 
@@ -34,7 +36,7 @@ $new_qs = json_decode($json_text, true);
 // loop through the directory that contains all of the students static questions json files
 // insert the file names into the array
 $json_files = array();
-$dir = '../user_data/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions';
+$dir = USER_DATA_DIR . '/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions';
 if (!is_dir($dir)) {
     exit('Invalid diretory path');
 }
@@ -52,7 +54,7 @@ else {
 for ($h = 0; $h < count($json_files); $h++) {
 
     // filepath to old static questions json file
-    $filepath = "../user_data/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}";
+    $filepath = USER_DATA_DIR . "/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}";
     // read the json file to text
     $json_text = file_get_contents($filepath) or die('Unable to open file.');
     // decode the text into a PHP assoc array
@@ -61,7 +63,7 @@ for ($h = 0; $h < count($json_files); $h++) {
     // rewrite the file keeping the old data the same, but appending the new data
     // now write the updated data to another json file
     $c = 1;
-    $filepath = "../user_data/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}";
+    $filepath = USER_DATA_DIR . "/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}";
     $q_file = fopen($filepath, "w") or die("Unable to open file!");
     fwrite($q_file, "[\n");
 
@@ -210,7 +212,7 @@ for ($h = 0; $h < count($json_files); $h++) {
 
     fwrite($q_file, "]");
     fclose($q_file);
-    chmod("../user_data/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}", 0777) or die("Could not modify perms.\n");
+    chmod(USER_DATA_DIR . "/MATH 6 (13) - Precalculus-0966909fb1140dd434a160fe7d7d743e70c897e3/questions/{$json_files[$h]}", 0777) or die("Could not modify perms.\n");
 
 }
 

@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session //
 // (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id) //
 session_start();
@@ -71,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         echo "Starting update & rewrite process for " . $student_email . "\n";
 
         // create filepath //
-        $json_filename = "../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student_email . ".json";
+        $json_filename = USER_DATA_DIR . "/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student_email . ".json";
         // read the file to text //
         $json = file_get_contents($json_filename);
         // decode the text into a PHP assoc array //
@@ -87,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         }
 
         /* REWRITING USER QUESTIONS JSON FILE */
-        $myfile = fopen("../../user_data/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student_email . ".json", "w") or die("Unable to open file!");
+        $myfile = fopen(USER_DATA_DIR . "/" . $_SESSION['selected_course_name'] . "-" . $_SESSION['selected_course_id'] . "/questions/" . $student_email . ".json", "w") or die("Unable to open file!");
 
         fwrite($myfile, "[\n");
 

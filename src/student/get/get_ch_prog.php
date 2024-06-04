@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
@@ -37,7 +39,7 @@ if($_SESSION["type"] !== "Learner"){
 $chapters_data = []; // key represents chapter number, value is an array[ch name, ch question count, ch correct, ch complete, ch time spent]
 
 // filepath
-$json_filename = "../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION['email'] . ".json";
+$json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION['email'] . ".json";
 // read the file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
@@ -104,7 +106,7 @@ foreach($json_questions as $question){
 
 // reading through personalized openStax json file
 // filepath
-$json_filename = "../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
+$json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
 // read the file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array

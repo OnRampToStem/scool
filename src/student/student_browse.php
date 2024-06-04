@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
@@ -78,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $final_selected_questions .= "[";
 
     // filepath
-    $json_filename = "../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
+    $json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
     // read the file to text
     $json = file_get_contents($json_filename);
     // decode the text into a PHP assoc arr
@@ -245,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // get 'MaxNumberAssessment' from openStax.json
             // read and decode the openStax JSON file (text => PHP assoc array)
-            $json_filename = "../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION["email"] . ".json";
+            $json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION["email"] . ".json";
             $json = file_get_contents($json_filename);
             $json_data = json_decode($json, true);
 
@@ -377,7 +379,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // $final_selected_questions can now be parsed in the client-side to display data
 
             // read and decode the user JSON file (text => PHP assoc array)
-            $json_filename = "../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
+            $json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
             $json = file_get_contents($json_filename);
             $json_data = json_decode($json, true);
 
@@ -392,7 +394,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             /* REWRITING USER JSON FILE */
             // update user file with new content in $json_data
-            $myfile = fopen("../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json", "w") or die("Unable to open file!");
+            $myfile = fopen(USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json", "w") or die("Unable to open file!");
 
             fwrite($myfile, "[\n");
 
@@ -511,7 +513,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // start pathway if questions have already been selected
     else {
         // read and decode the user JSON file (text => PHP assoc array)
-        $json_filename = "../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
+        $json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION["email"] . ".json";
         $json = file_get_contents($json_filename);
         $json_data = json_decode($json, true);
 

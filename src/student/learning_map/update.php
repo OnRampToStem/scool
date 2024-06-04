@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // start the session (loggedIn, name, email, type, pic, course_name, course_id)
 session_start();
 
@@ -46,7 +48,7 @@ $arr3 = []; // $arr3 will be an assoc array holding: "ch" => number of questions
 
 
 // filepath
-$json_filename = "../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
+$json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json";
 // read the openStax.json file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
@@ -71,7 +73,7 @@ foreach($openStax as $chapter){
 
 
 // filepath
-$json_filename = "../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION['email'] . ".json";
+$json_filename = USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/questions/" . $_SESSION['email'] . ".json";
 // read the openStax.json file to text
 $json = file_get_contents($json_filename);
 // decode the text into a PHP assoc array
@@ -369,7 +371,7 @@ if(!$bbb && !$bb && !$b){
 // PROCEED TO REWRITE OPENSTAX JSON FILE
 echo "Now rewriting respective openStax json file\n";
 // rewrite user openStax json file (original data + modified data)
-$myfile = fopen("../../user_data/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json", "w") or die("Unable to open file!");
+$myfile = fopen(USER_DATA_DIR . "/" . $_SESSION['course_name'] . "-" . $_SESSION['course_id'] . "/openStax/" . $_SESSION['email'] . ".json", "w") or die("Unable to open file!");
 
 // begin writing
 fwrite($myfile, "[");
