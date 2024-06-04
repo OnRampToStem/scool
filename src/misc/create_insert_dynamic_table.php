@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 /*
     This PHP script will do the following:
     1. Create "dynamic_questions" PGSQL table if it does not already exist.
@@ -29,9 +31,6 @@ header('Content-type: text/plain');
 
 /* GLOBALS */
 $query = "";
-
-// connect to the db
-require_once "../../bootstrap.php";
 
 // create the "dynamic_questions" table if it does not exist in the PostgreSQL database
 // Note: "lo_tag" and "difficulty" are do not have constraint "not null" because some entries in

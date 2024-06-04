@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// start the session 
+// start the session
 // keys: (loggedIn, name, email, type, pic, course_name, course_id)
 // or
 // keys: (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
@@ -39,12 +39,11 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor"){
     exit;
 }
 
+require_once "../../bootstrap.php";
+
 // globals
 $los = []; // 1D array containing all unique learning outcomes in the 'questions' db
 $chs = []; // Associative array in the format: "chapter number" => "chapter name" ("1" => "Chapter One")
-
-// connect to the db
-require_once "../../bootstrap.php";
 
 // pg query
 $query = "SELECT tags FROM questions;";

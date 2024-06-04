@@ -18,8 +18,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-require_once "../../bootstrap.php";
-
 // start the session //
 // loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id //
 session_start();
@@ -35,6 +33,8 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     header("location: ../../register_login/logout.php");
     exit;
 }
+
+require_once "../../bootstrap.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $students = json_decode($_POST["students"]);

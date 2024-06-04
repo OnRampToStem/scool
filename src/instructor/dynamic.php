@@ -33,6 +33,8 @@ if ($_SESSION["type"] !== "Instructor" && $_SESSION["type"] !== "Mentor") {
     exit;
 }
 
+require_once "../bootstrap.php";
+
 /* PHP GLOBALS */
 $lo;
 $lo_quantity;
@@ -52,9 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $learningoutcome = $_POST["learningoutcome_selected"]; // text name of learning outcome selected
 
     $ready = true; // indicate form was submitted
-
-    // connect to the db
-    require_once "../bootstrap.php";
 
     // get rows at random with selected lo
     $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$lo}'

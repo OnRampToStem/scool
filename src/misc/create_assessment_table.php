@@ -18,11 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../../bootstrap.php";
+
 // for display purposes
 header('Content-type: text/plain');
-
-// connect to the db
-require_once "../../bootstrap.php";
 
 // creating the 'assessments' table, if it does not exist in the PostgreSQL database
 $query = "CREATE TABLE IF NOT EXISTS assessments (

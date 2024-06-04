@@ -18,11 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once "../bootstrap.php";
+
 // for display purposes
 header('Content-type: text/plain');
-
-echo "Connecting to PostgreSQL database.\n";
-require_once "../bootstrap.php";
 
 $query = "CREATE TABLE IF NOT EXISTS assessments_results (
     pkey SERIAL PRIMARY KEY,

@@ -48,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $los = [];          // array holding every learning outcome in the db
     $selected_los = []; // php associative array
 
-    // connect to the db
     require_once "../../bootstrap.php";
 
     // pg query
