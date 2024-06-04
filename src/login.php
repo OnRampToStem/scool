@@ -66,8 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // using pg_fetch_row, we now have access to database table data retrieved
             $row = pg_fetch_row($result);
 
-            // password hardcoded to password123
-            if ($password === "password123") {
+            if ($password === DEMO_PASSWORD) {
 
                 // create timestamp to be updated for last_signed_in attribute
                 $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));

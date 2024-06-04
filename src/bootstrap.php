@@ -24,10 +24,13 @@ if (count(get_included_files()) === 1) {
     die();
 }
 
-require_once "secrets.php";
+define("SECRET_KEY", getenv("SCOOL_SECRET_KEY"));
+define("VENDOR_DIR", getenv("SCOOL_VENDOR_DIR"));
+define("USER_DATA_DIR", getenv("SCOOL_USER_DATA_DIR"));
+define("DEMO_PASSWORD", getenv("SCOOL_DEMO_PASSWORD"));
 
 require VENDOR_DIR . "/autoload.php";
 
 // Attempt to connect to the PostgreSQL database
-$con = pg_connect("host=" . DB_HOST . " port=" . DB_PORT . " dbname=" . DB_NAME . " user=" . DB_USER . " password=" . DB_PASS)
+$con = pg_connect(getenv("SCOOL_DB_CONN_STRING"))
 or die ("Could not connect to the database.\n");

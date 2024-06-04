@@ -1,6 +1,6 @@
 .env
 
 .*/
-**/secrets.php
+src/test.php
 temp/
 vendor/
