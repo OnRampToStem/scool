@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // connect to the db //
     require_once "../../bootstrap.php";
 
+    $db_con = getDBConnection();
+
     // check if the instructor already owns a test student for the selected course //
     $query =
         "SELECT * FROM users
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             AND instructor = '" . $_SESSION["email"] . "'
             AND course_name='" . $_SESSION["selected_course_name"] . "'
             AND course_id='" . $_SESSION["selected_course_id"] . "';";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
     // test student already exists //
     if (pg_num_rows($res) === 1) {
@@ -66,9 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // login the test student //
         $query =
             "UPDATE users
-             SET last_signed_in = '" . $timestamp . "' 
+             SET last_signed_in = '" . $timestamp . "'
              WHERE email = '" . $row["email"] . "'";
-        pg_query($con, $query) or die(pg_last_error($con));
+        pg_query($db_con, $query) or die(pg_last_error($db_con));
 
         // start the session for the test student //
         session_start();
@@ -98,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         while (!$unique) {
             // check if the email is unique //
             $query = "SELECT * FROM users WHERE email='" . $unique_email . "';";
-            $res = pg_query($con, $query) or die(pg_last_error($con));
+            $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
             if (pg_num_rows($res) === 1) {
                 // email already exists - regenerate the unique email //
@@ -117,12 +119,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
              '" . $_SESSION["email"] . "', '" . $_SESSION["selected_course_name"] . "', '" . $_SESSION["selected_course_id"] . "', 'N/A', 'N/A', 'N/A', 'N/A',
              '" . $timestamp . "', '" . $timestamp . "')
              RETURNING *;";
-        $res = pg_query($con, $query) or die(pg_last_error($con));
+        $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
         $test_student = pg_fetch_assoc($res);
 
         // get all static questions from 'questions' table //
         $query = "SELECT * FROM questions";
-        $res = pg_query($con, $query) or die(pg_last_error($con));
+        $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
         $rows = pg_num_rows($res);
 
         // begin writing the test student's static questions json file //
@@ -134,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // loop to write to file
         $counter = 1;
         while ($row = pg_fetch_row($res)) {
-            // OPTIONS DATA MODIFICATIONS 
+            // OPTIONS DATA MODIFICATIONS
             // first remove { from options string $row[5]
             $row[5] = substr($row[5], 1);
             // then remove } from options string $row[5]
@@ -381,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $string .= "\n\t\t]";
                 $string .= "\n\t},"; //chapter comma here
 
-                // writing 
+                // writing
                 fwrite($openStax_file, $string);
             }
             // no comma
@@ -547,7 +549,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $string .= "\n\t\t]";
                 $string .= "\n\t}"; //no chapter comma here
 
-                // writing 
+                // writing
                 fwrite($openStax_file, $string);
             }
 
@@ -581,5 +583,5 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // close connection to the db //
-    pg_close($con);
+    pg_close($db_con);
 }

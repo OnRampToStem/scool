@@ -48,9 +48,10 @@ require_once "../bootstrap.php";
 $data = [];
 
 // get all courses in SCALE //
-$query = "SELECT DISTINCT course_name, course_id 
+$query = "SELECT DISTINCT course_name, course_id
           FROM assessments_results";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 while ($row = pg_fetch_assoc($res)) {
     $data[] = [
         "course_name" => $row["course_name"],
@@ -64,7 +65,7 @@ foreach ($data as &$course) {
     $query = "SELECT student_name, student_email, instructor_email, assessment_name, score, max_score, content, date_time_submitted
               FROM assessments_results
               WHERE course_name='" . pg_escape_string($course["course_name"]) . "' AND course_id='" . pg_escape_string($course["course_id"]) . "';";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
     $idx = 0;
     while ($row = pg_fetch_assoc($res)) {
         // set the static data //
@@ -91,7 +92,7 @@ foreach ($data as &$course) {
         $idx++;
     }
 }
-
+pg_close($db_con);
 //$data = json_encode($data, JSON_PRETTY_PRINT);
 //echo "<pre>" . $data . "</pre>";
 ?>

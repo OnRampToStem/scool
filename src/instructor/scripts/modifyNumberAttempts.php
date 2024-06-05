@@ -58,14 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // get all student emails in the instructor's currently selected course //
     require_once "../../bootstrap.php";
+    $db_con = getDBConnection();
     $student_emails = [];
-    $query = "SELECT email FROM users 
+    $query = "SELECT email FROM users
               WHERE instructor='{$_SESSION["email"]}' AND course_name='{$_SESSION["selected_course_name"]}'
               AND course_id='{$_SESSION["selected_course_id"]}'";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
     while ($row = pg_fetch_assoc($res)) {
         array_push($student_emails, $row["email"]);
     }
+    pg_close($db_con);
 
     // rewrite each student's static questions JSON file w/ the new number of attempts //
     foreach ($student_emails as $student_email) {

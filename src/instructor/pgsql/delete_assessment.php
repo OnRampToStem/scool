@@ -41,8 +41,8 @@ require_once "../../bootstrap.php";
 
 // query
 $query = "DELETE FROM assessments WHERE pkey = '{$pkey}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 echo "Successfully deleted assessment.";
-
-?>
+pg_close($db_con);

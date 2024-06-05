@@ -46,9 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // query
     $query = "INSERT INTO assessments(instructor, name, public, duration, open_date, open_time, close_date, close_time, content, course_name, course_id)
               VALUES('$instructor', '$assessment[2]', '$assessment[3]', '$assessment[4]', '$assessment[5]', '$assessment[6]', '$assessment[7]', '$assessment[8]', '$assessment[9]', '$course_name', '$course_id')";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
     echo "Successfully copied assessment.";
+    pg_close($db_con);
 }
-
-?>

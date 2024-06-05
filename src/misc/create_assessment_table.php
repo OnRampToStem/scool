@@ -38,10 +38,9 @@ $query = "CREATE TABLE IF NOT EXISTS assessments (
     course_name TEXT NOT NULL,
     course_id TEXT NOT NULL
 )";
-pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . "\n");
+$db_con = getDBConnection();
+pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . "\n");
 echo "The 'assessments' table has been successfully created or was already there!\n";
 
 echo "Closing connection to PostgreSQL database.";
-pg_close($con);
-
-?>
+pg_close($db_con);

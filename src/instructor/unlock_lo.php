@@ -43,6 +43,8 @@ $students = [];
 // connect to the db //
 require_once "../bootstrap.php";
 
+$db_con = getDBConnection();
+
 // get all students belonging to the instructor for the selected course //
 $query =
     "SELECT name, email FROM users
@@ -51,12 +53,13 @@ $query =
         AND course_name='" . $_SESSION["selected_course_name"] . "'
         AND course_id='" . $_SESSION["selected_course_id"] . "'
     ORDER BY name ASC;";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 if (pg_num_rows($res) > 0) {
     while ($row = pg_fetch_assoc($res)) {
         array_push($students, ["name" => $row["name"], "email" => $row["email"]]);
     }
 }
+pg_close($db_con);
 ?>
 
 <!DOCTYPE html>

@@ -39,12 +39,11 @@ require_once "../../bootstrap.php";
 $pkey = $_POST["pkey"];
 
 $query = "SELECT * FROM assessments WHERE pkey = '{$pkey}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 $data = pg_fetch_row($res);
 echo json_encode($data);
 
 //echo "Closing connection to PostgreSQL database.";
-pg_close($con);
-
-?>
+pg_close($db_con);

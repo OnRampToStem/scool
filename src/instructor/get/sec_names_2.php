@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// start the session 
+// start the session
 // keys: (loggedIn, name, email, type, pic, course_name, course_id)
 // or
 // keys: (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)
@@ -52,10 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // pg query
     $query = "SELECT tags FROM questions;";
-    $res = pg_query($con, $query);
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query);
     // error check the pg query
     if (!$res) {
-        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($db_con) . "\n";
+        pg_close($db_con);
         exit;
     }
     else {
@@ -66,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 array_push($los, $row[0]);
             }
         }
+        pg_close($db_con);
     }
 
     // loop through each learning outcome
@@ -114,5 +117,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // send back secs
     echo json_encode($secs);
 }
-
-?>

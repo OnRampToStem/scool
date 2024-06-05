@@ -55,11 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // insert question //
     $query = "INSERT into questions (title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty, selected, numcurrenttries, correct, datetime_started, datetime_answered, createdon)
               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'false', 0, null, null, null, CURRENT_TIMESTAMP)";
-    $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty]);
+    $db_con = getDBConnection();
+    $result = pg_query_params($db_con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty]);
     if ($result) {
         $inserted = true;
     } else {
-        die(pg_last_error($con));
+        die(pg_last_error($db_con));
     }
 }
 

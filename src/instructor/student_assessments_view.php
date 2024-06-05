@@ -36,6 +36,8 @@ if ($_SESSION["type"] !== "Instructor") {
 // connect to the db
 require_once "../bootstrap.php";
 
+$db_con = getDBConnection();
+
 // php globals
 $open_assessments = [];
 $future_assessments = [];
@@ -43,13 +45,13 @@ $past_assessments = [];
 
 // query to set the local time zone for the following queries
 $query = "SET TIME ZONE 'America/Los_Angeles'";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
 // query all open assessments
-$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}' 
+$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}'
           AND course_id = '{$_SESSION['selected_course_id']}' AND (open_date < CURRENT_DATE OR (open_date = CURRENT_DATE AND open_time <= CURRENT_TIME))
           AND (close_date > CURRENT_DATE OR (close_date = CURRENT_DATE AND close_time >= CURRENT_TIME))";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 while ($row = pg_fetch_row($res)) {
     $obj = new stdClass();
     $obj->pkey = $row[0];
@@ -68,10 +70,10 @@ while ($row = pg_fetch_row($res)) {
 }
 
 // query all future assessments
-$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}' 
+$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}'
           AND course_id = '{$_SESSION['selected_course_id']}' AND (open_date > CURRENT_DATE OR (open_date = CURRENT_DATE AND open_time > CURRENT_TIME))
           AND (close_date > CURRENT_DATE OR (close_date = CURRENT_DATE AND close_time > CURRENT_TIME))";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 while ($row = pg_fetch_row($res)) {
     $obj = new stdClass();
     $obj->pkey = $row[0];
@@ -90,10 +92,10 @@ while ($row = pg_fetch_row($res)) {
 }
 
 // query all past assessments
-$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}' 
+$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}'
           AND course_id = '{$_SESSION['selected_course_id']}' AND (open_date < CURRENT_DATE OR (open_date = CURRENT_DATE AND open_time < CURRENT_TIME))
   AND (close_date < CURRENT_DATE OR (close_date = CURRENT_DATE AND close_time < CURRENT_TIME))";
-$res = pg_query($con, $query) or die(pg_last_error($con));
+$res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 while ($row = pg_fetch_row($res)) {
     $obj = new stdClass();
     $obj->pkey = $row[0];
@@ -111,7 +113,7 @@ while ($row = pg_fetch_row($res)) {
     array_push($past_assessments, $obj);
 }
 
-pg_close($con);
+pg_close($db_con);
 
 ?>
 
@@ -261,7 +263,7 @@ pg_close($con);
         let past_clicked = false;
 
         const displayAssessments = () => {
-            // open assessments 
+            // open assessments
             const open_assessments = <?= json_encode($open_assessments); ?>;
             if (open_assessments.length > 0) {
                 let str = '<table class="assessments-tbl">';

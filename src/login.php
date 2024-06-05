@@ -55,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     /* VALIDATE CREDENTIALS */
     // if no input errors then continue
     if (empty($email_err) && empty($password_err)) {
-
+        $db_con = getDBConnection();
         // retrieve email and hashed password from the database, where email exists
-        $query = "SELECT name, email, type, pic, course_name, course_id FROM users WHERE email = '" . pg_escape_string(DB_CONN, $email) . "'";
-        $result = pg_query(DB_CONN, $query) or die("Cannot execute query: $query \n");
+        $query = "SELECT name, email, type, pic, course_name, course_id FROM users WHERE email = '" . pg_escape_string($db_con, $email) . "'";
+        $result = pg_query($db_con, $query) or die("Cannot execute query: $query \n");
 
         // email exists in the database, continue to password verification
         if (pg_num_rows($result) >= 1) {
@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // query
                 $query = "UPDATE users SET last_signed_in = '" . $timestamp . "' WHERE email = '" . $row[1] . "'";
-                pg_query(DB_CONN, $query) or die("Cannot execute query: $query \n");
+                pg_query($db_con, $query) or die("Cannot execute query: $query \n");
 
 
                 // distinguish between learner and mentor
@@ -124,11 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // email does not exist
             $login_err = "The email you entered does not exist.";
         }
+        pg_close($db_con);
     }
 }
-
-//echo "Closing connection to PostgreSQL database.\n";
-pg_close(DB_CONN);
 ?>
 
 <!DOCTYPE html>

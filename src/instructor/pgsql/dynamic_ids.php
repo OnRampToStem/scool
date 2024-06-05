@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // get rows at random with selected lo
         $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
                   order by random() limit '{$assessment_json[$i]["NumberQuestions"]}';";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+        $db_con = getDBConnection();
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
 
         // push data into array
         while ($row = pg_fetch_row($res)) {
@@ -98,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 array_push($dynamic_ids[$assessment_json[$i]["LearningOutcomeNumber"]], $row[0]);
             }
         }
-
+        pg_close($db_con);
     }
     //print_r($dynamic_ids);
     echo json_encode($dynamic_ids);

@@ -38,16 +38,18 @@ require_once "../bootstrap.php";
 
 $students = [];
 
+$db_con = getDBConnection();
+
 if ($_SESSION["type"] === "Instructor") {
     // get all students that belong to the instructor's currently selected course //
     $query =
         "SELECT pkey, name, email FROM users
          WHERE type = 'Learner' AND instructor = '{$_SESSION["email"]}' AND
-         course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}' 
+         course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}'
          ORDER BY name ASC;";
-    $res = pg_query($con, $query);
+    $res = pg_query($db_con, $query);
     if (!$res) {
-        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($db_con) . "\n";
         exit;
     } else {
         while ($row = pg_fetch_assoc($res)) {
@@ -67,9 +69,9 @@ if ($_SESSION["type"] === "Instructor") {
         "SELECT email FROM users
          WHERE type = 'Instructor' AND course_name LIKE '%{$_SESSION["selected_course_name"]}%' AND
          course_id LIKE '%{$_SESSION["selected_course_id"]}%'";
-    $res = pg_query($con, $query);
+    $res = pg_query($db_con, $query);
     if (!$res) {
-        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+        echo "Could not execute: " . $query . "\n Error: " . pg_last_error($db_con) . "\n";
         exit;
     } else {
         // get the instructor's email
@@ -79,11 +81,11 @@ if ($_SESSION["type"] === "Instructor") {
         $query =
             "SELECT pkey, name, email FROM users
              WHERE type = 'Learner' AND instructor = '{$instructor_email}' AND
-             course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}' 
+             course_name = '{$_SESSION["selected_course_name"]}' AND course_id = '{$_SESSION["selected_course_id"]}'
              ORDER BY name ASC;";
-        $res = pg_query($con, $query);
+        $res = pg_query($db_con, $query);
         if (!$res) {
-            echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+            echo "Could not execute: " . $query . "\n Error: " . pg_last_error($db_con) . "\n";
             exit;
         } else {
             while ($row = pg_fetch_assoc($res)) {
@@ -99,7 +101,7 @@ if ($_SESSION["type"] === "Instructor") {
         }
     }
 }
-pg_close($con);
+pg_close($db_con);
 
 // loop through the students //
 foreach ($students as &$student) {

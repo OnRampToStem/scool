@@ -19,7 +19,7 @@
  */
 
 /*
-    This PHP script will be used to take an input JSON file of math questions and 
+    This PHP script will be used to take an input JSON file of math questions and
     insert them directly into the PostgreSQL database, "questions" table.
 */
 
@@ -53,7 +53,8 @@ $query = "CREATE TABLE IF NOT EXISTS questions (
     datetime_answered TIMESTAMP,
     createdon TIMESTAMP
 )";
-pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
+$db_con = getDBConnection();
+pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . ".\n");
 echo "The questions table has been successfully created or was already there!\n";
 
 // create timestamp to be inserted for datetime_answered attribute
@@ -62,7 +63,7 @@ $timestamp = $date->format('Y-m-d H:i:s');
 
 // looping through each question
 foreach ($json_data as $element){
-    
+
     // replacing all '\n' to BR, to fix error upon displaying math question from database to client side
     if(strpos($element['text'], "\n")){
         $element['text'] = str_replace("\n", " BR ", $element['text']);
@@ -82,7 +83,7 @@ foreach ($json_data as $element){
     $options = "{ ";
     for($i = 0; $i < $arr_count; $i++){
         // replacing inner commas from the options with *%
-        // when accessing in the data we will replace the *% with the commas 
+        // when accessing in the data we will replace the *% with the commas
         if(strpos($element['options'][$i], ",")){
             $element['options'][$i] = str_replace(",", "*%", $element['options'][$i]);
         }
@@ -174,12 +175,10 @@ foreach ($json_data as $element){
     // inserting user values into table, (manually adding ' ' needed for PostgreSQL query strings / text)
     $query = "INSERT INTO questions(title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty, selected, numcurrenttries, correct, datetime_started, datetime_answered, createdon) VALUES ('" . $title . "', '" . $text . "', '" . $pic . "', '" . $num_tries . "', '" . $options  . "', '" . $right_answer  . "', '" . $is_image  . "', '" . $tags . "', '" . $difficulty . "', '" . $selected . "', " . $num_current_tries . ", " . $correct . ", " . $datetime_started . ", " . $datetime_answered . ", '" . $timestamp . "')";
     //echo "Your insert query is: " . $query . "\n";
-    pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
+    pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . ".\n");
 
 }
 echo "Inserted values into questions table successfully!\n";
 
 echo "Closing connection to PostgreSQL database.";
-pg_close($con);
-
-?>
+pg_close($db_con);

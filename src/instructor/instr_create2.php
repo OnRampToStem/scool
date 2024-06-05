@@ -102,11 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = "INSERT INTO assessments(instructor, name, public, duration, open_date, open_time, close_date, close_time, content, course_name, course_id)
               VALUES ('" . $_SESSION["email"] . "', '" . $name . "', '" . $public . "', " . $duration . ", '" . $open_date  . "', '" . $open_time . "', '" . $close_date  . "', '" . $close_time . "', '" . $json_content
         . "', '" . $_SESSION['selected_course_name'] . "', '" . $_SESSION['selected_course_id'] . "')";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
     $result = "Assessment creation was successful.";
 
-    pg_close($con);
+    pg_close($db_con);
 
     /* ONLY USED TO SAVE POST DATA AS A JSON FILE IN A SERVER DIRECTORY */
     /*

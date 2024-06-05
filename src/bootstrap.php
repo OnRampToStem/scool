@@ -31,8 +31,8 @@ define("DEMO_PASSWORD", getenv("SCOOL_DEMO_PASSWORD"));
 
 require VENDOR_DIR . "/autoload.php";
 
-// Attempt to connect to the PostgreSQL database
-$con = pg_connect(getenv("SCOOL_DB_CONN_STRING"))
-or die ("Could not connect to the database.\n");
-
-define("DB_CONN", $con);
+function getDBConnection() : PgSql\Connection {
+    $db_con = pg_connect(getenv("SCOOL_DB_CONN_STRING"))
+    or die ("Could not connect to the database.\n");
+    return $db_con;
+}

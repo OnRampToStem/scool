@@ -92,8 +92,8 @@ require_once "../../bootstrap.php";
 $query = "UPDATE assessments SET name = '{$name}', public = '{$public}', duration = '{$duration}', open_date = '{$open_date}',
           open_time = '{$open_time}', close_date = '{$close_date}', close_time = '{$close_time}', content = '{$json_content}'
           WHERE pkey = '{$pkey}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 echo "Successfully updated assessment.";
-
-?>
+pg_close($db_con);

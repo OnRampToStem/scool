@@ -47,10 +47,12 @@ $chs = []; // Associative array in the format: "chapter number" => "chapter name
 
 // pg query
 $query = "SELECT tags FROM questions;";
-$res = pg_query($con, $query);
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query);
 // error check the pg query
 if (!$res) {
-    echo "Could not execute: " . $query . "\n Error: " . pg_last_error($con) . "\n";
+    echo "Could not execute: " . $query . "\n Error: " . pg_last_error($db_con) . "\n";
+    pg_close($db_con);
     exit;
 }
 else {
@@ -61,6 +63,7 @@ else {
             array_push($los, $row[0]);
         }
     }
+    pg_close($db_con);
 }
 
 // loop through each learning outcome and extract just the chapter number
@@ -93,5 +96,3 @@ foreach ($openStax as $chapter){
 
 // send back chs
 echo json_encode($chs);
-
-?>

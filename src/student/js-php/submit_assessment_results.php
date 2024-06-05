@@ -50,11 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
     // query to insert results into 'assessments_results' table
     $query = "INSERT INTO assessments_results (assessment_name, instructor_email, student_email, student_name, course_name, course_id, score, max_score, content, date_time_submitted)
               VALUES ('{$assessment_name}', '{$instructor_email}', '{$_SESSION['email']}', '{$_SESSION['name']}', '{$_SESSION['course_name']}', '{$_SESSION['course_id']}', {$score}, {$max_score}, '{$content}', '{$date_time_submitted}')";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
 
     echo "Successfully inserted assessment result.";
 
-    pg_close($con);
+    pg_close($db_con);
 }
-
-?>

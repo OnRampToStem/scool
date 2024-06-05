@@ -42,15 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // connect to the db //
     require_once "../../bootstrap.php";
 
+    $db_con = getDBConnection();
+
     // get the instructor's email (based on the test student) //
     $query =
         "SELECT instructor FROM users
          WHERE name = 'Test Student'
             AND email = '" . $_SESSION["email"] . "'
-            AND type = 'Learner' 
+            AND type = 'Learner'
             AND course_name = '" . $_SESSION["course_name"] . "'
             AND course_id = '" . $_SESSION["course_id"] . "';";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
     if (pg_num_rows($res) === 1) {
         $row = pg_fetch_assoc($res);
@@ -67,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             AND type = 'Instructor'
             AND course_name LIKE '%" . $_SESSION["course_name"] . "%'
             AND course_id LIKE '%" . $_SESSION["course_id"] . "%';";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
 
     if (pg_num_rows($res) === 1) {
         // get the data //
@@ -80,9 +82,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // login the instructor //
         $query =
             "UPDATE users
-                SET last_signed_in = '" . $timestamp . "' 
+                SET last_signed_in = '" . $timestamp . "'
                 WHERE email = '" . $row["email"] . "';";
-        pg_query($con, $query) or die(pg_last_error($con));
+        pg_query($db_con, $query) or die(pg_last_error($db_con));
 
         // start the session for the instructor //
         session_start();
@@ -104,5 +106,5 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // close connection to the db //
-    pg_close($con);
+    pg_close($db_con);
 }

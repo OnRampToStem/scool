@@ -51,9 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // connect to the db
     require_once "../bootstrap.php";
 
+    $db_con = getDBConnection();
+
     // grab the assessment from 'assessments' table
     $query = "SELECT * FROM assessments WHERE pkey = {$pkey}";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
     $row = pg_fetch_row($res);
     array_push($assessment, $row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12]);
 
@@ -66,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // get rows at random with selected lo
         $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$assessment_json[$i]["LearningOutcomeNumber"]}'
                   order by random() limit '{$assessment_json[$i]["NumberQuestions"]}';";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
 
         // push data into array
         while ($row = pg_fetch_row($res)) {
@@ -104,6 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     }
+    pg_close($db_con);
     //print_r($dynamic_ids);
 }
 
@@ -300,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         const assessment = <?= json_encode($assessment); ?>; // contains main assessment data
         const dynamic_ids = <?= json_encode($dynamic_ids); ?>; // contains los with data for each lo, produced from assessment
         const sequence_question = []; // list of problem numbers fed to the imathas
-        let questionsObjectList = []; // sequence of questions with answers  
+        let questionsObjectList = []; // sequence of questions with answers
         const json_data = <?= json_encode($json_data); ?>;
 
 
@@ -547,14 +550,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // console.log("iMathResult: " + iMathResult);
                 var score = JSON.parse(iMathResult).score;
                 // To remove for the final version
-                //document.getElementById("response").innerHTML = score;     
+                //document.getElementById("response").innerHTML = score;
                 pushObj(score);
             }
         }
 
         // Add the information when the student has answered a question
         function pushObj(score) {
-            // Object that contains the information about the answer	  
+            // Object that contains the information about the answer
             let old_score = questionsObjectList[counter].result;
             // not answered yet
             if (old_score == -1) {
@@ -583,7 +586,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         ///////////////////////////////
-        // background functionalities 
+        // background functionalities
         ///////////////////////////////
 
         /* TIMER PORTION */

@@ -18,12 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-global $con;
 require_once "bootstrap.php";
 
+$db_con = getDBConnection();
+
 // prepare and execute query for getting all static questions from 'questions' table
-$query = "SELECT * FROM questions"; 
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$query = "SELECT * FROM questions";
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 $rows = pg_num_rows($res);
 
 // STATIC QUESTIONS
@@ -37,7 +38,7 @@ fwrite($questions_file, "[\n");
 // loop to write to file
 $counter = 1;
 while ($row = pg_fetch_row($res)) {
-    // OPTIONS DATA MODIFICATIONS 
+    // OPTIONS DATA MODIFICATIONS
     // first remove { from options string $row[5]
     $row[5] = substr($row[5], 1);
     // then remove } from options string $row[5]
@@ -60,7 +61,7 @@ while ($row = pg_fetch_row($res)) {
     if ($counter == $rows) {
         // no comma, because it is the last math question
         $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
-            
+
         // insert each option into $db_string
         for($i = 0; $i < $options_length; $i++){
             if($i == $options_length - 1){
@@ -70,7 +71,7 @@ while ($row = pg_fetch_row($res)) {
                 $db_string .= "\"$options_arr[$i]\",";
             }
         }
-            
+
         $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n}\n";
 
         // replacing the commas back in the options array
@@ -81,7 +82,7 @@ while ($row = pg_fetch_row($res)) {
     else {
         // normal write
         $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
-            
+
         // insert each option into $db_string
         for($i = 0; $i < $options_length; $i++){
             if($i == $options_length - 1){
@@ -91,7 +92,7 @@ while ($row = pg_fetch_row($res)) {
                 $db_string .= "\"$options_arr[$i]\",";
             }
         }
-            
+
         $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n},\n";
 
         // replacing the commas back in the options array
@@ -102,6 +103,8 @@ while ($row = pg_fetch_row($res)) {
 
     $counter++;
 }
+
+pg_close($db_con);
 
 fwrite($questions_file, "]\n");
 
@@ -297,7 +300,7 @@ foreach($json_data as $chapter){
         $string .= "\n\t\t]";
         $string .= "\n\t},";//chapter comma here
 
-        // writing 
+        // writing
         fwrite($openStax_file, $string);
     }
     // no comma
@@ -467,7 +470,7 @@ foreach($json_data as $chapter){
         $string .= "\n\t\t]";
         $string .= "\n\t}";//no chapter comma here
 
-        // writing 
+        // writing
         fwrite($openStax_file, $string);
     }
 
@@ -481,6 +484,3 @@ fwrite($openStax_file, "\n]");
 fclose($openStax_file);
 
 chmod(USER_DATA_DIR . "/Temporary Course-123/openStax/temp-student@gmail.com.json", 0777) or die("Could not modify openStax json perms.");
-
-
-?>

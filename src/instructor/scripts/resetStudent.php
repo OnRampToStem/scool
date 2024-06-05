@@ -49,14 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // delete the student //
     require_once "../../bootstrap.php";
+    $db_con = getDBConnection();
     $query = "DELETE FROM users WHERE email='" . pg_escape_string($student_email) . "' AND type='Learner';";
-    $res = pg_query($con, $query) or die(pg_last_error($con));
+    $res = pg_query($db_con, $query) or die(pg_last_error($db_con));
     if (pg_affected_rows($res) > 0) {
         $result = $student_email . " deleted successfully.";
     } else {
         $result = $student_email .  " not found or deletion failed.";
     }
-    pg_close($con);
+    pg_close($db_con);
 }
 
 ?>

@@ -36,10 +36,10 @@ $query = "CREATE TABLE IF NOT EXISTS assessments_results (
     content JSON NOT NULL,
     date_time_submitted TIMESTAMP NOT NULL
 )";
-pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+
+$db_con = getDBConnection();
+pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
 echo "The 'assessments_results' table has been successfully created or was already there!\n";
 
 echo "Disconnecting from PostgreSQL database.\n";
-pg_close($con);
-
-?>
+pg_close($db_con);

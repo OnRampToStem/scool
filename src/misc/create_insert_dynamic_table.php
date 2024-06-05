@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-require_once "../../bootstrap.php";
+require_once "../bootstrap.php";
 
 /*
     This PHP script will do the following:
@@ -45,7 +45,8 @@ $query = "CREATE TABLE IF NOT EXISTS dynamic_questions (
     lo_tag TEXT,
     difficulty TEXT
 )";
-pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
+$db_con = getDBConnection();
+pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . ".\n");
 echo "The dynamic_questions table has been successfully created or was already there!\n";
 
 
@@ -59,14 +60,12 @@ foreach ($json_data as $question){
 
     // inserting values into dynamic_questions table
     // (manually adding ' ' needed for PostgreSQL query strings / text)
-    $query = "INSERT INTO dynamic_questions(id, author, title_topic, title, title_number, problem_number, lo_tag, difficulty) 
+    $query = "INSERT INTO dynamic_questions(id, author, title_topic, title, title_number, problem_number, lo_tag, difficulty)
               VALUES ('" . $question['id'] . "', '" . $question['author'] . "', '" . $question['title_topic'] . "', '" . $question['title'] . "', '" . $question['title_number'] . "', '" . $question['problem_number']  . "', '" . $question['LOTag']  . "', '" . $question['DifficultyLevel'] . "')";
-    pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
+    pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . ".\n");
 
 }
 echo "Inserted values into dynamic_questions table successfully!\n";
 
 echo "Closing connection to PostgreSQL database.\n";
-pg_close($con);
-
-?>
+pg_close($db_con);

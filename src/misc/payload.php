@@ -23,7 +23,6 @@ global $token;
 global $obj;
 global $query;
 global $res;
-global $con;
 
 require_once "../bootstrap.php";
 
@@ -70,18 +69,19 @@ $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
 $timestamp = $date->format('Y-m-d H:i:s');
 
 /* Now begin process of analyzing sent data and determine what should be done with the data */
+$db_con = getDBConnection();
 
-/** 
- * 
- * INSTRUCTOR HANDLER 
- * 
+/**
+ *
+ * INSTRUCTOR HANDLER
+ *
  */
 if ($obj->roles[0] === "Instructor") {
     echo "User is of type 'Instructor'. <br>";
 
 	// check to see if Instructor's email already exists in the 'users' table
 	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
-	$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+	$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 	if (pg_num_rows($res) === 0) {
         echo "'Instructor' is not in the 'users' table. <br>";
@@ -89,11 +89,12 @@ if ($obj->roles[0] === "Instructor") {
         // Now we must check that there is not an Instructor with the same course_name and course_id as the incoming Instructor
         $query = "SELECT * FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
                   AND course_id LIKE '%{$obj->context->id}%'";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
         if (pg_num_rows($res) > 0) {
-            echo "We already have a user of type 'Instructor' for the course name: '{$obj->context->title}' and 
+            echo "We already have a user of type 'Instructor' for the course name: '{$obj->context->title}' and
                   course id: '{$obj->context->id}'. (Only 1 Instructor allowed per course name, course id) <br>";
+            pg_close($db_con);
             exit;
         }
         else {
@@ -108,14 +109,14 @@ if ($obj->roles[0] === "Instructor") {
             $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
                       VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
                       . "', '" . json_encode($course_id) . "', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
-            pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Inserted 'Instructor' into 'users' table successfully! <br>";
 
             // create the directories that will keep track of the student progress in 'user_data'
             echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions <br>";
             $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions";
             mkdir($directory_path, 0777, true) or die("Failed to create directory.");
-        
+
             echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax <br>";
             $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax";
             mkdir($directory_path, 0777, true) or die("Failed to create directory.");
@@ -135,7 +136,7 @@ if ($obj->roles[0] === "Instructor") {
             echo "Redirecting to Instructor Home Page. <br>";
             header("location: /instructor/instr_index1.php");
         }
-	}		
+	}
 	else {
         echo "'Instructor' is already in the 'users' table. <br>";
 
@@ -147,18 +148,19 @@ if ($obj->roles[0] === "Instructor") {
 
         // handle case 1 here
         $query = "SELECT type FROM users WHERE email='{$obj->email}'";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
         $stored_type = pg_fetch_result($res, 0, 0);
 
         if ($stored_type !== $obj->roles[0]) {
             echo "An account already exists with the current email, that is not of type 'Instructor'. <br>";
+            pg_close($db_con);
             exit;
         }
         else {
             // handle cases 2 - 4 here
             // compare current course name & course id to the one that is stored in the db
             $query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
-            $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             $course_name = json_decode(pg_fetch_result($res, 0, 0));
             $course_id = json_decode(pg_fetch_result($res, 0, 1));
 
@@ -173,14 +175,14 @@ if ($obj->roles[0] === "Instructor") {
                 // update data into the db
                 $query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
                         . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
                 echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Instructor'. <br>";
 
                 // create the new directories that will keep track of the student progress in 'user_data'
                 echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions <br>";
                 $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions";
                 mkdir($directory_path, 0777, true) or die("Failed to create directory.");
-            
+
                 echo "Creating directory in: " . USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax <br>";
                 $directory_path = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/openStax";
                 mkdir($directory_path, 0777, true) or die("Failed to create directory.");
@@ -206,7 +208,7 @@ if ($obj->roles[0] === "Instructor") {
 
                 // query to update Instructor's 'last_signed_in' field
                 $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
                 echo "Updated 'last_signed_in' of 'Instructor'. <br>";
 
                 echo "Starting Session. <br>";
@@ -227,17 +229,17 @@ if ($obj->roles[0] === "Instructor") {
         }
 	}
 }
-/** 
- * 
- * LEARNER HANDLER 
- * 
+/**
+ *
+ * LEARNER HANDLER
+ *
  */
 elseif ($obj->roles[0] === "Learner") {
     echo "User is of type 'Learner'. <br>";
 
 	// check to see if Learner's email already exists in the 'users' table
 	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
-	$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+	$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 	if (pg_num_rows($res) === 0) {
         echo "'Learner' is not in the 'users' table. <br>";
@@ -245,11 +247,12 @@ elseif ($obj->roles[0] === "Learner") {
 		// query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
 		$query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
 				  AND course_id LIKE '%{$obj->context->id}%'";
-		$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+		$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
         // check to make sure Instructor has created their account
         if (pg_num_rows($res) === 0) {
             echo "Can not create the 'Learner' account if corresponding Instructor has not created their account. <br>";
+            pg_close($db_con);
             exit;
         }
         else {
@@ -260,12 +263,12 @@ elseif ($obj->roles[0] === "Learner") {
             $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
                       VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '{$instr_email}', '{$obj->context->title}',
                       '{$obj->context->id}', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
-            pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+            pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Inserted 'Learner', into the 'users' table successfully! <br>";
 
             // prepare and execute query for getting all static questions from 'questions' table
-            $query = "SELECT * FROM questions"; 
-            $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+            $query = "SELECT * FROM questions";
+            $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
             $rows = pg_num_rows($res);
 
             // begin writing Learner's questions file
@@ -280,7 +283,7 @@ elseif ($obj->roles[0] === "Learner") {
             // loop to write to file
             $counter = 1;
             while ($row = pg_fetch_row($res)) {
-                // OPTIONS DATA MODIFICATIONS 
+                // OPTIONS DATA MODIFICATIONS
                 // first remove { from options string $row[5]
                 $row[5] = substr($row[5], 1);
                 // then remove } from options string $row[5]
@@ -303,7 +306,7 @@ elseif ($obj->roles[0] === "Learner") {
                 if ($counter == $rows) {
                     // no comma, because it is the last math question
                     $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
-                        
+
                     // insert each option into $db_string
                     for($i = 0; $i < $options_length; $i++){
                         if($i == $options_length - 1){
@@ -313,7 +316,7 @@ elseif ($obj->roles[0] === "Learner") {
                             $db_string .= "\"$options_arr[$i]\",";
                         }
                     }
-                        
+
                     $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n}\n";
 
                     // replacing the commas back in the options array
@@ -324,7 +327,7 @@ elseif ($obj->roles[0] === "Learner") {
                 else {
                     // normal write
                     $db_string = "{\n\"pkey\": $row[0], \n\"title\": \"$row[1]\", \n\"text\": \"$row[2]\", \n\"pic\": \"$row[3]\", \n\"numTries\": \"$row[4]\", \n\"options\": [";
-                        
+
                     // insert each option into $db_string
                     for($i = 0; $i < $options_length; $i++){
                         if($i == $options_length - 1){
@@ -334,7 +337,7 @@ elseif ($obj->roles[0] === "Learner") {
                             $db_string .= "\"$options_arr[$i]\",";
                         }
                     }
-                        
+
                     $db_string .= "\n\"rightAnswer\": $row[6], \n\"isImage\": $row[7], \n\"tags\": \"$row[8]\", \n\"difficulty\": \"$row[9]\", \n\"selected\": \"$row[10]\", \n\"numCurrentTries\": \"$row[11]\", \n\"correct\": \"$row[12]\", \n\"datetime_started\": \"$row[13]\", \n\"datetime_answered\": \"$row[14]\", \n\"createdOn\": \"$row[15]\"\n},\n";
 
                     // replacing the commas back in the options array
@@ -542,7 +545,7 @@ elseif ($obj->roles[0] === "Learner") {
                     $string .= "\n\t\t]";
                     $string .= "\n\t},";//chapter comma here
 
-                    // writing 
+                    // writing
                     fwrite($openStax_file, $string);
                 }
                 // no comma
@@ -712,7 +715,7 @@ elseif ($obj->roles[0] === "Learner") {
                     $string .= "\n\t\t]";
                     $string .= "\n\t}";//no chapter comma here
 
-                    // writing 
+                    // writing
                     fwrite($openStax_file, $string);
                 }
 
@@ -750,7 +753,7 @@ elseif ($obj->roles[0] === "Learner") {
 
         // check that the Learner has the same course_name, course_id from what is stored
         $query = "SELECT course_name, course_id FROM users WHERE email = '{$obj->email}'";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
         $temp_course_name = pg_fetch_result($res, 0, 0);
         $temp_course_id = pg_fetch_result($res, 0, 1);
 
@@ -758,7 +761,7 @@ elseif ($obj->roles[0] === "Learner") {
             // Learner is just trying to login
             // prepare and execute query to update Learner's 'last_signed_in' field
             $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-            pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Updated 'last_signed_in' of 'Learner'. <br>";
 
             echo "Starting Session. <br>";
@@ -780,22 +783,23 @@ elseif ($obj->roles[0] === "Learner") {
             // Learner is using the same email in another Canvas course to try to work on OR2STEM
             // (not currently allowed)
             echo "You can only join OR2STEM in a single course if you are a 'Learner'. <br>";
+            pg_close($db_con);
             exit;
         }
 	}
 }
-/** 
- * 
- * MENTOR HANDLER 
- * 
+/**
+ *
+ * MENTOR HANDLER
+ *
  */
 elseif ($obj->roles[0] === "Mentor") {
     echo "User is of type 'Mentor'. <br>";
     // A Mentor can be in many different classes (based on class name, class id)
-    
+
     // check to see if Mentor's email already exists in the 'users' table
 	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
-	$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+	$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 	if (pg_num_rows($res) === 0) {
         echo "'Mentor' is not in the 'users' table. <br>";
@@ -803,11 +807,12 @@ elseif ($obj->roles[0] === "Mentor") {
         // query to get data of the instructor that corresponds to the course_name & course_id
 		$query = "SELECT * FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
                   AND course_id LIKE '%{$obj->context->id}%'";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
         // check to make sure Instructor has created their account
         if (pg_num_rows($res) === 0) {
             echo "Can not create 'Mentor' account if corresponding Instructor has not created their account. <br>";
+            pg_close($db_con);
             exit;
         }
         else {
@@ -822,7 +827,7 @@ elseif ($obj->roles[0] === "Mentor") {
             $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
                       VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
                       . "', '" . json_encode($course_id) . "', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
-            pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Inserted 'Mentor' into 'users' table successfully! <br>";
 
             echo "Starting Session. <br>";
@@ -852,18 +857,19 @@ elseif ($obj->roles[0] === "Mentor") {
 
         // handle case 1 here
         $query = "SELECT type FROM users WHERE email='{$obj->email}'";
-        $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
         $stored_type = pg_fetch_result($res, 0, 0);
 
         if ($stored_type !== $obj->roles[0]) {
             echo "An account already exists with the current email, that is not of type 'Mentor'. <br>";
+            pg_close($db_con);
             exit;
         }
         else {
             // handle cases 2 - 4 here
             // compare current course_name & course_id to the one that is stored in the db
             $query = "SELECT course_name, course_id FROM users WHERE email='{$obj->email}'";
-            $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+            $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             $course_name = json_decode(pg_fetch_result($res, 0, 0));
             $course_id = json_decode(pg_fetch_result($res, 0, 1));
 
@@ -878,7 +884,7 @@ elseif ($obj->roles[0] === "Mentor") {
                 // update data for the Mentor
                 $query = "UPDATE users SET course_name = '" . json_encode($course_name) . "', course_id = '" . json_encode($course_id)
                         . "', last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
                 echo "Updated 'course_name', 'course_id', and 'last_signed_in' of 'Mentor'. <br>";
 
                 echo "Starting Session. <br>";
@@ -902,7 +908,7 @@ elseif ($obj->roles[0] === "Mentor") {
 
                 // update Mentor's 'last_signed_in' field
                 $query = "UPDATE users SET last_signed_in = '{$timestamp}' WHERE email = '{$obj->email}'";
-                pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($con) . "<br>");
+                pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
                 echo "Updated 'last_signed_in' of 'Mentor'. <br>";
 
                 echo "Starting Session. <br>";
@@ -923,14 +929,15 @@ elseif ($obj->roles[0] === "Mentor") {
         }
     }
 }
-/** 
- * 
- * ANY OTHER USER ROLE HANDLER 
- * 
+/**
+ *
+ * ANY OTHER USER ROLE HANDLER
+ *
  */
 else {
 	echo "User role of '{$obj->roles[0]}' is not currently accepted in OR2STEM. <br>";
+    pg_close($db_con);
 	exit;
 }
 
-?>
+pg_close($db_con);

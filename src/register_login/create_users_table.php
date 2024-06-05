@@ -31,9 +31,9 @@ $query = "CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE,
     unique_name TEXT NOT NULL UNIQUE,
     sub TEXT NOT NULL UNIQUE,
-    type TEXT NOT NULL,         
-    pic TEXT NOT NULL,          
-    instructor TEXT,            
+    type TEXT NOT NULL,
+    pic TEXT NOT NULL,
+    instructor TEXT,
     course_name TEXT NOT NULL,
     course_id TEXT NOT NULL,
     iat TEXT NOT NULL,
@@ -43,11 +43,12 @@ $query = "CREATE TABLE IF NOT EXISTS users (
     created_on TIMESTAMP NOT NULL,
     last_signed_in TIMESTAMP NOT NULL
 )";
-pg_query($con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($con) . ".\n");
+$db_con = getDBConnection();
+pg_query($db_con, $query) or die("Cannot execute query: {$query}.\n" . "Error: " . pg_last_error($db_con) . ".\n");
 echo "The 'users' table has been successfully created or was already there!\n";
 
 echo "Closing connection to PostgreSQL database.";
-pg_close($con);
+pg_close($db_con);
 
 /* DESCRIPTION OF 'users' TABLE */
 
@@ -55,7 +56,7 @@ pg_close($con);
 
 // name -> represents the full name of a user and is required
 
-// email -> represents the email of a user and is required and must be unique 
+// email -> represents the email of a user and is required and must be unique
     // meaning no 2 users can have the same email in the db
     // also implies a student can only be enrolled in one course - section pertaining to OR2STEM
 
@@ -81,5 +82,3 @@ pg_close($con);
 // created_on -> represents the timestamp of when a user was first inserted into the PostgreSQL db
 
 // last_signed_in -> represents the timestamp of when a user was last logged into OR2STEM webpage
-
-?>

@@ -58,7 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // get rows at random with selected lo
     $query = "SELECT problem_number FROM dynamic_questions WHERE lo_tag = '{$lo}'
               order by random() limit '{$lo_quantity}';";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($con) . "\n");
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query}\n" . pg_last_error($db_con) . "\n");
 
     if (pg_num_rows($res) === 0) $foundQuestions = false; // indicate no questions found
     else {
@@ -94,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $foundQuestions = true; // indicate questions found
     }
+    pg_close($db_con);
 }
 ?>
 
@@ -323,7 +325,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         /////////////////
-        // MAIN DRIVER //   
+        // MAIN DRIVER //
         /////////////////
 
         const initialize = () => {
@@ -394,7 +396,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // lo quantity
             document.getElementById("lo_quantity").value = dynamic_json[learningoutcomeNumber];
 
-            // chapter name 
+            // chapter name
             select = document.getElementById("chapter_options");
             document.getElementById("chapter_selected").value = select.options[select.selectedIndex].text;
 
@@ -451,7 +453,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // CHAPTER, SECTION, & LEARNING OUTCOME SELECTION //
         ////////////////////////////////////////////////////
 
-        // getting all chapters from openStax.json  
+        // getting all chapters from openStax.json
         let ch_req;
         let getChapterOptions = () => {
             console.log("Getting all chapter options...");
@@ -475,7 +477,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        // getting all sections from selected chapter from openStax.json  
+        // getting all sections from selected chapter from openStax.json
         let sec_req;
         let getSectionOptions = (chapterDigit) => {
             console.log("Getting all section options...");
@@ -509,7 +511,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        // getting all los from selected section from openStax.json    
+        // getting all los from selected section from openStax.json
         let lo_req;
         let getLoOptions = (chapterDigit, sectionDigit) => {
             console.log("Getting all learning outcome options...");

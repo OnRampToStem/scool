@@ -47,7 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // get all assessments
     $query = "SELECT * FROM assessments_results WHERE assessment_name = '{$assessment_name}' AND instructor_email = '{$_SESSION['email']}'
               AND course_name = '{$_SESSION['selected_course_name']}' AND course_id = '{$_SESSION['selected_course_id']}'";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+    $db_con = getDBConnection();
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 
     while($row = pg_fetch_row($res)){
         $assoc_arr = array(
@@ -60,11 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         array_push($data, $assoc_arr);
     }
-    
-    pg_close($con);
+
+    pg_close($db_con);
 
     echo json_encode($data);
 
 }
-
-?>

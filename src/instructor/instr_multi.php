@@ -41,9 +41,10 @@ $public_assessments = array();
 require_once "../bootstrap.php";
 
 // first query - instructor's assessments that were created for the selected_course_name and selected_course_id
-$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}' 
+$query = "SELECT * FROM assessments WHERE instructor = '{$_SESSION["email"]}' AND course_name = '{$_SESSION['selected_course_name']}'
           AND course_id = '{$_SESSION['selected_course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$db_con = getDBConnection();
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 while ($row = pg_fetch_row($res)) {
     $instr_assessments[$row[0]] = $row[2];
@@ -51,13 +52,13 @@ while ($row = pg_fetch_row($res)) {
 
 // second query - public assessments
 $query = "SELECT * FROM assessments WHERE public = 'Yes'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
 
 while ($row = pg_fetch_row($res)) {
     $public_assessments[$row[0]] = $row[2];
 }
 
-pg_close($con);
+pg_close($db_con);
 
 ?>
 
@@ -511,7 +512,7 @@ pg_close($con);
                     row_num++;
                 }
 
-                // since chapter name, section name, lo name data was not stored, we will retrieve it using the 
+                // since chapter name, section name, lo name data was not stored, we will retrieve it using the
                 // stored lo number, to then display on the respective dynamic table row
                 displayNames();
 
@@ -519,7 +520,7 @@ pg_close($con);
         }
 
 
-        // function to display names of ch, sec, lo 
+        // function to display names of ch, sec, lo
         let displayNames = () => {
             for (let i = 0; i < assessment_content.length; i++) {
                 // chapters
@@ -532,7 +533,7 @@ pg_close($con);
                 let idx2 = assessment_content[i].LearningOutcomeNumber.indexOf(".", idx1 + 1);
                 let sec = assessment_content[i].LearningOutcomeNumber.slice(idx1 + 1, idx2);
                 document.getElementById("sec_name_" + (i + 1)).innerHTML = ch + "." + sec + ". " + json_data_1[ch + "." + sec];
-                // los 
+                // los
                 document.getElementById("lo_name_" + (i + 1)).innerHTML = assessment_content[i].LearningOutcomeNumber + ". " + json_data_1[assessment_content[i].LearningOutcomeNumber];
             }
         }
@@ -619,7 +620,7 @@ pg_close($con);
             // now update the table's ids
             renameInputIds(parent);
         }
-        // function to loop through remaining table rows in table (if possible) and rename 
+        // function to loop through remaining table rows in table (if possible) and rename
         // attributes of input 'lonum_', 'questions_', and 'points_'
         let renameInputIds = (ele) => {
             // counter for modifying id value

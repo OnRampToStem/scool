@@ -34,15 +34,16 @@ if ($_SESSION["type"] !== "Instructor") {
     exit;
 }
 
+require_once "../bootstrap.php";
+
 // globals //
 $received_question = null;
 $question = null;
 $updated = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // connect to the db //
-    require_once "../bootstrap.php";
+$db_con = getDBConnection();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // get question by id //
     if (isset($_POST['questionId'])) {
         // input data //
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "SELECT pkey, title, text, pic, numtries, options, rightanswer, isimage, tags, difficulty
                   FROM questions
                   WHERE pkey = $1;";
-        $result = pg_query_params($con, $query, [$question_id]);
+        $result = pg_query_params($db_con, $query, [$question_id]);
         if ($result) {
             if (pg_num_rows($result) === 1) {
                 $received_question = true;
@@ -61,7 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $received_question = false;
             }
         } else {
-            die(pg_last_error($con));
+            $last_err = pg_last_error($db_con);
+            pg_close($db_con);
+            die($last_err);
         }
     }
 
@@ -83,15 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "UPDATE questions
                   SET title = $1, text = $2, pic = $3, numtries = $4, options = $5, rightanswer = $6, isimage = $7, tags = $8, difficulty = $9
                   WHERE pkey = $10;";
-        $result = pg_query_params($con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty, $q_id]);
+        $result = pg_query_params($db_con, $query, [$q_title, $q_text, $q_pic, $q_num_tries, $q_options, $q_right_answer, $q_is_image, $q_tags, $q_difficulty, $q_id]);
         if ($result) {
             $updated = true;
         } else {
-            die(pg_last_error($con));
+            $last_err = pg_last_error($db_con);
+            pg_close($db_con);
+            die($last_err);
         }
     }
 }
 
+pg_close($db_con);
 ?>
 
 <!DOCTYPE html>

@@ -41,10 +41,12 @@ $curr_date = date_format($curr_date, "Y-m-d"); //echo $curr_date, "\n";
 // connect to the db
 require_once "../bootstrap.php";
 
+$db_con = getDBConnection();
+
 // 1
 // grab instructor's email
 $query = "SELECT instructor FROM users WHERE email = '{$_SESSION["email"]}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 $instr_email = pg_fetch_result($res, 0);
 
 
@@ -53,7 +55,7 @@ $instr_email = pg_fetch_result($res, 0);
 $past_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND close_date <= '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 if (pg_num_rows($res) !== 0) {
     // loop through possible rows
     while ($row = pg_fetch_row($res)) {
@@ -69,7 +71,7 @@ $complete_assessments_arr = array();
 $complete_assessments_data = array();
 $query = "SELECT pkey, assessment_name, score, max_score, date_time_submitted FROM assessments_results WHERE instructor_email = '{$instr_email}' AND student_email = '{$_SESSION['email']}'
           AND course_name = '{$_SESSION['course_name']}' AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 if (pg_num_rows($res) !== 0) {
     // loop through possible rows
     while ($row = pg_fetch_row($res)) {
@@ -95,34 +97,12 @@ function check($value)
 $past_assessments = array_filter($past_assessments, 'check');
 //print_r($past_assessments);
 
-
-/*
-// 5
-// run a query for each past assessment
-$past_assessments_data = array();
-for ($i = 0; $i < count($past_assessments); $i++) {
-    $query = "SELECT pkey, close_date, close_time FROM assessments WHERE name = '{$past_assessments[$i]}' AND instructor = '{$instr_email}' AND course_name = '{$_SESSION['course_name']}'
-              AND course_id = '{$_SESSION['course_id']}'";
-    $res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
-    if (pg_num_rows($res) !== 0) {
-        while ($row = pg_fetch_row($res)) {
-            if (!isset($past_assessments_data[$row[0]])) {
-                $pst_assessments_data[$row[0]] = [];
-                array_push($past_assessments_data[$row[0]], $past_assessments[$i], $row[1], $row[2]);
-            }
-        }
-    }
-}
-print_r($past_assessments_data);
-*/
-
-
 // 6
 // grab all current assessments that belong to the Learner's instructor, course_name, and course_id
 $open_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date <= '{$curr_date}' AND close_date >= '{$curr_date}'
           AND course_name = '{$_SESSION['course_name']}' AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 // filter out the complete current assessments
 while ($row = pg_fetch_row($res)) {
     // filter by assessment_name
@@ -140,7 +120,7 @@ while ($row = pg_fetch_row($res)) {
 $future_assessments = array();
 $query = "SELECT * FROM assessments WHERE instructor = '{$instr_email}' AND open_date > '{$curr_date}' AND course_name = '{$_SESSION['course_name']}'
           AND course_id = '{$_SESSION['course_id']}'";
-$res = pg_query($con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($con) . "<br>");
+$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
 while ($row = pg_fetch_row($res)) {
     if (!isset($future_assessments[$row[0]])) {
         $future_assessments[$row[0]] = [];
@@ -148,7 +128,7 @@ while ($row = pg_fetch_row($res)) {
     }
 }
 
-
+pg_close($db_con);
 ?>
 
 <!DOCTYPE html>
@@ -367,7 +347,7 @@ while ($row = pg_fetch_row($res)) {
         }
 
 
-        // function to display past, open, and future assessments that were created by the student's 
+        // function to display past, open, and future assessments that were created by the student's
         // instructor for the student's 'course_name', 'course_id', and 'section_id'
         let displayAssessments = () => {
             // open assessments
@@ -514,7 +494,7 @@ while ($row = pg_fetch_row($res)) {
                     console.log(`Current Time: ${currentTime}`);
                     console.log(`Open Time: ${open_assessments[pkey][4]}`);
 
-                    // student can only start the assessment if the current time is greater than or equal to 
+                    // student can only start the assessment if the current time is greater than or equal to
                     // the open time of the assessment
                     if (currentTime >= open_assessments[pkey][4]) {
                         console.log("You are eligible to start the assessment.");
