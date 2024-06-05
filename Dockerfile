@@ -3,9 +3,11 @@ FROM php:8.3.4-apache-bookworm
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-		ca-certificates \
+        ca-certificates \
         libpq-dev \
         git \
+        zip \
+        unzip \
     && rm -rf /var/lib/apt/lists/* \
     && openssl req -x509 -nodes -batch -newkey rsa:2048 \
         -keyout /etc/ssl/private/server.key \
