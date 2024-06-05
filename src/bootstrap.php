@@ -36,3 +36,17 @@ function getDBConnection() : PgSql\Connection {
     or die ("Could not connect to the database.\n");
     return $db_con;
 }
+
+function getLogger() : Monolog\Logger {
+    $logLevel = getenv("SCOOL_LOG_LEVEL");
+    if (!$logLevel) {
+        $logLevel = "info";
+    }
+    $logName = __FILE__;
+    if (str_starts_with($logName, "/var/www/html")) {
+        $logName = substr($logName, strlen("/var/www/html"));
+    }
+    $log = new Monolog\Logger($logName);
+    $log->pushHandler(new Monolog\Handler\StreamHandler('php://stdout', Monolog\Level::fromName($logLevel)));
+    return $log;
+}
