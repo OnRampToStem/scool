@@ -163,7 +163,7 @@ if ($_SESSION["type"] !== "Learner") {
                         <p> 5241 N. Maple Ave. <br /> Fresno, CA 93740 <br /> Phone: 559-278-4240 <br /></p>
                     </div>
                 </div>
-                <?= include "../snippets/footer.html" ?>
+                <?php include "../snippets/footer.html" ?>
             </div>
         </footer>
     </div>

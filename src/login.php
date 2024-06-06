@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
     <div class="footer">
-        <?= include "./snippets/footer.html" ?>
+        <?php include "./snippets/footer.html" ?>
     </div>
 </body>
 
