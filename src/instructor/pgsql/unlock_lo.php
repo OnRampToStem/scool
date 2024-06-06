@@ -270,7 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $string .= "\n\t\t]";
                 $string .= "\n\t},"; //chapter comma here
 
-                // writing 
+                // writing
                 fwrite($myfile, $string);
             }
             // no comma
@@ -436,7 +436,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $string .= "\n\t\t]";
                 $string .= "\n\t}"; //no chapter comma here
 
-                // writing 
+                // writing
                 fwrite($myfile, $string);
             }
 

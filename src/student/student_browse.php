@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $chapter_selected = $_POST["chapter_selected"];                    // holds the chapter text selected (1. Functions)
     $section_selected = $_POST["section_selected"];                    // holds the section text selected (1.2. Domain and Range)
     $learningoutcome_selected = $_POST["learningoutcome_selected"];    // holds the lo text selected (1.2.3. Finding Domain and Range from Graphs)
-    $chapter_info_form = $_POST["chapter_info_form"];                  // temporarily hold the ch selected (1)   
+    $chapter_info_form = $_POST["chapter_info_form"];                  // temporarily hold the ch selected (1)
     $section_info_form = $_POST["section_info_form"];                  // temporarily hold the sec selected (1.2)
     $learningoutcome_info_form = $_POST["learningoutcome_info_form"];  // temporarily hold the lo selected (1.2.3)
     // starting the json response strings
@@ -228,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        // if $selected_questions only contains '[', this means that there was not any questions in the 
+        // if $selected_questions only contains '[', this means that there was not any questions in the
         // questions json file with the lo being searched for
         if ($selected_questions === "[") {
             //echo("No tags match in JSON file.\n");
@@ -1076,7 +1076,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
 
-        // parseData function used once at page load 
+        // parseData function used once at page load
         let parseData = () => {
             // parse the data from php
             obj = JSON.parse('<?= $final_selected_questions; ?>');
@@ -1107,7 +1107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // push the correct answer
                 correctAnswers.push(obj[i]["options"][correctIndex]);
 
-                // now shuffle the options 
+                // now shuffle the options
                 obj[i]["options"] = shuffle(obj[i]["options"]);
             }
         }
@@ -1892,7 +1892,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             console.log(sec);
             console.log(lo);
 
-            // now create XMLHttpRequest to get the names of ch, sec, lo that 
+            // now create XMLHttpRequest to get the names of ch, sec, lo that
             // was selected
             grabNames();
 

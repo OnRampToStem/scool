@@ -114,7 +114,7 @@ foreach($json_openStax as $openStaxCh){
                 for($j = 0; $j < count($openStaxCh["Sections"][$i]["LearningOutcomes"]); $j++){
 
                     $chapter_section_lo = (string)$openStaxCh["Index"] . "." . (string)$openStaxCh["Sections"][$i]["Index"] . "." . (string)$openStaxCh["Sections"][$i]["LearningOutcomes"][$j]["Index"];
-    
+
                     if(isset($sections_data [$chapter_section] [$chapter_section_lo])){
                         $sections_data [$chapter_section] [$chapter_section_lo] ["MaxNumberAccessment"] = $openStaxCh["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"];
                     }
@@ -138,7 +138,7 @@ foreach($sections_data as $key => $value){
         $pos = strpos($question["tags"], ".", strpos($question["tags"], ".") + strlen("."));
         $section = substr($question["tags"], 0, $pos);
 
-        
+
         // if chapter.section match
         if($section == $key){
             // if question is correct, increase ch correct count

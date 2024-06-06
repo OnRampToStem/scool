@@ -128,7 +128,7 @@ unset($main);
     <title>Download All</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script type="text/javascript">
-        const main = <?= json_encode($data); ?>; // converting php array to js array    
+        const main = <?= json_encode($data); ?>; // converting php array to js array
         let counter = 1;
 
         // loop through courses array

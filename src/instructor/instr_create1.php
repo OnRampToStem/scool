@@ -300,7 +300,7 @@ if ($_SESSION["type"] !== "Instructor") {
         }
 
 
-        /* functions to add or sub values of numLos, numQuestions, and numPoints 
+        /* functions to add or sub values of numLos, numQuestions, and numPoints
             also update display in client side of these values */
         let addNumLos = () => {
             // update numLos
@@ -495,7 +495,7 @@ if ($_SESSION["type"] !== "Instructor") {
             // now update the table's ids
             renameInputIds(parent);
         }
-        // function to loop through remaining table rows in table (if possible) and rename 
+        // function to loop through remaining table rows in table (if possible) and rename
         // attributes of input 'lonum_', 'questions_', and 'points_'
         let renameInputIds = (ele) => {
             // counter for modifying id value

@@ -75,7 +75,7 @@ foreach($json_questions as $question){
 }
 
 // sort chapters in ascending order
-ksort($chapters_data); 
+ksort($chapters_data);
 // will contain ch index values that have already been sorted
 $chapters_sorted = [];
 // will contain ch.sec index values that have already been sorted
@@ -84,7 +84,7 @@ $sections_sorted = [];
 foreach($json_questions as $question){
     // extracting only the chapter number out of the tag (1.2.3 => 1)
     $chapter = (int)strtok($question["tags"], ".");
-    // in order to sort the elements of the chapter, chapter must already exist in $chapters_data and 
+    // in order to sort the elements of the chapter, chapter must already exist in $chapters_data and
     // the chapter must not have been sorted already
     if(isset($chapters_data[$chapter]) && !in_array($chapter, $chapters_sorted)){
         array_push($chapters_sorted, $chapter);
@@ -134,7 +134,7 @@ foreach($json_openStax as $chapter){
 
                 // loop through inner inner LearningOutcomes array
                 for($j = 0; $j < count($chapter["Sections"][$i]["LearningOutcomes"]); $j++){
-                    
+
                     if(isset($chapters_data [$chapter["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"] . "." . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"]])){
                         //array_push($chapters_data [$chapter["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"] . "." . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"]], $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"]);
                         $chapters_data [$chapter["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"]] [$chapter["Index"] . "." . $chapter["Sections"][$i]["Index"] . "." . $chapter["Sections"][$i]["LearningOutcomes"][$j]["Index"]] ["MaxNumberAccessment"] = $chapter["Sections"][$i]["LearningOutcomes"][$j]["MaxNumberAssessment"];

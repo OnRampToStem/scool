@@ -55,7 +55,7 @@ foreach($json_openStax as $chapter){
     $chapters_data[$chapter["Index"]] = $chapter["Name"];
 }
 
-// send back chapters_data 
+// send back chapters_data
 echo json_encode($chapters_data);
 
 //print_r($chapters_data);

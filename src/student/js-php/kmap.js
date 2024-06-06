@@ -23,8 +23,8 @@ function GetNextRecommendedLO(tag)
 				{
 					taginfo=GetTagInformation(v2[j2]);
 					str+='<li class="clickable_li" onclick="testFxn(this)">';
-					str+=v2[j2] + '- <strong>Learning Outcome</strong>: ' + taginfo[2] 
-								+ ' of <strong>Section</strong>: ' + taginfo[1] + ' of <strong>Chapter</strong>: ' + taginfo[0]; 
+					str+=v2[j2] + '- <strong>Learning Outcome</strong>: ' + taginfo[2]
+								+ ' of <strong>Section</strong>: ' + taginfo[1] + ' of <strong>Chapter</strong>: ' + taginfo[0];
 					str+='</li>';
 				}
 				str+='</ul>';
@@ -57,8 +57,8 @@ function GetPreviousRecommendedLO(tag)
 				{
 					taginfo=GetTagInformation(v2[j2]);
 					str+='<li class="clickable_li" onclick="testFxn(this)">';
-					str+=v2[j2] + '- <strong>Learning Outcome</strong>: ' + taginfo[2] 
-								+ ' of <strong>Section</strong>: ' + taginfo[1] + ' of <strong>Chapter</strong>: ' + taginfo[0]; 
+					str+=v2[j2] + '- <strong>Learning Outcome</strong>: ' + taginfo[2]
+								+ ' of <strong>Section</strong>: ' + taginfo[1] + ' of <strong>Chapter</strong>: ' + taginfo[0];
 					str+='</li>';
 				}
 				str+='</ul>';

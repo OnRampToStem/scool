@@ -91,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         if($counter == $totalQuestions){
             // no comma, because it is the last math question
             $db_string = "{\n\"pkey\":" . $question["pkey"] . ", \n\"title\":\"" . $question["title"] . "\", \n\"text\":\"" . $question["text"] . "\", \n\"pic\":\"" . $question["pic"] . "\", \n\"numTries\":\"" . $question["numTries"] . "\", \n\"options\": [";
-                
+
             // insert each option into $db_string
             for($i = 0; $i < $options_length; $i++){
                 if($i == $options_length - 1){
@@ -141,7 +141,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     }
                 }
             }
-                
+
             $db_string .=  "\n\"tags\":\"" . $question["tags"] . "\", \n\"difficulty\":\"" . $question["difficulty"] . "\", \n\"selected\":\"" . $question["selected"] . "\", \n\"numCurrentTries\":\"" . $question["numCurrentTries"] . "\", \n\"correct\":\"" . $question["correct"] . "\", \n\"datetime_started\":\"" . $question["datetime_started"] . "\", \n\"datetime_answered\":\"" . $question["datetime_answered"] . "\", \n\"createdOn\":\"" . $question["createdOn"] . "\"\n}\n";
 
             fwrite($myfile, $db_string);
@@ -149,7 +149,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         else{
             // normal write
             $db_string = "{\n\"pkey\":" . $question["pkey"] . ", \n\"title\":\"" . $question["title"] . "\", \n\"text\":\"" . $question["text"] . "\", \n\"pic\":\"" . $question["pic"] . "\", \n\"numTries\":\"" . $question["numTries"] . "\", \n\"options\": [";
-                
+
             // insert each option into $db_string
             for($i = 0; $i < $options_length; $i++){
                 if($i == $options_length - 1){
@@ -199,7 +199,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     }
                 }
             }
-                
+
             $db_string .=  "\n\"tags\":\"" . $question["tags"] . "\", \n\"difficulty\":\"" . $question["difficulty"] . "\", \n\"selected\":\"" . $question["selected"] . "\", \n\"numCurrentTries\":\"" . $question["numCurrentTries"] . "\", \n\"correct\":\"" . $question["correct"] . "\", \n\"datetime_started\":\"" . $question["datetime_started"] . "\", \n\"datetime_answered\":\"" . $question["datetime_answered"] . "\", \n\"createdOn\":\"" . $question["createdOn"] . "\"\n},\n";
 
             fwrite($myfile, $db_string);

@@ -1,7 +1,7 @@
 * {
     background-color: black;
   }
-  
+
   /* HEADER STYLING */
   #OR2STEM-HEADER {
     color: white;
@@ -14,7 +14,7 @@
     text-decoration: none;
     transition-duration: 0.5s;
   }
-  
+
   #userProfile {
     float: right;
     margin-right: 15px;
@@ -62,12 +62,12 @@
   .show {
     display: block;
   }
-  
+
   .content-div {
     width: 100%;
     margin-bottom: 30px;
   }
-  
+
   /* MAIN */
   #main-div {
     margin: 0 auto;
@@ -99,14 +99,14 @@
     font-weight: bold;
 }
 
-  
+
   /* FOOTER STYLING */
   footer {
     border-top: 1px solid #000;
     background-color: black;
     padding: 50px 0 0 0;
   }
-  
+
   footer .container {
     padding: 0 40px;
     width: 100%;
@@ -115,19 +115,19 @@
     text-align: center;
     width: 1200px; /*should be changed according to the size of the screen*/
   }
-  
+
   footer .footer-top {
     padding: 30px 0;
     align-items: flex-start;
     flex-direction: row;
   }
-  
+
   footer .flex {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
   }
-  
+
   footer .footer-top h4 {
     border-bottom: 2px solid #fff;
     color: #fff;
@@ -146,7 +146,7 @@
     letter-spacing: 3px;
     margin-top: 15px;
   }
-  
+
   footer .footer-top .navigation {
     margin: 0;
     text-align: center;
@@ -182,4 +182,3 @@
     color: #fff;
     font-size: 14px;
   }
-  

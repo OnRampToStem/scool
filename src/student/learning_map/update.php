@@ -101,17 +101,17 @@ foreach($questions as $question){
     // summing number of chapters
     if(isset($arr3[strtok($question["tags"], ".")])){
         $arr3[strtok($question["tags"], ".")]++;
-    }   
+    }
     else{
         echo "Unknown ch in the static questions json file\n\n";
     }
 }
 
 
-// 1 
+// 1
 // LOOK TO OPEN NEXT POSSIBLE LEARNING OUTCOME IN THE CHAPTER.SECTION
 // THAT THE STUDENT CURRENTLY RESIDES IN
-// if $b remains as false then step 2 will run, if it is switches to true then no 
+// if $b remains as false then step 2 will run, if it is switches to true then no
 // more steps will run
 $b = false;
 // loop through each chapter
@@ -165,9 +165,9 @@ foreach($openStax as $key1 => $val1){
 
 
 // 2
-// LOOK TO OPEN NEXT POSSIBLE SECTION AND LEARNING OUTCOME IN THE CHAPTER THAT THE 
+// LOOK TO OPEN NEXT POSSIBLE SECTION AND LEARNING OUTCOME IN THE CHAPTER THAT THE
 // STUDENT CURRENTLY RESIDES IN
-// if $bb remains as false then step 3 will run, if it is switches to true then no 
+// if $bb remains as false then step 3 will run, if it is switches to true then no
 // more steps will run
 $bb = false;
 if(!$b){
@@ -186,7 +186,7 @@ if(!$b){
 
                 for($i = 1; $i < count($val1["Sections"]); $i++){
 
-                    if($val2["Index"] === ($sec_index + $i) && 
+                    if($val2["Index"] === ($sec_index + $i) &&
                        $arr2[strval($val1["Index"]) . "." . strval($val2["Index"])] !== 0)
                     {
                         // modification done here
@@ -252,7 +252,7 @@ if(!$b){
 // 3
 // LOOK TO OPEN NEXT POSSIBLE CHAPTER, SECTION, AND LEARNING OUTCOME THAT COMES RIGHT
 // AFTER THE CHAPTER THE STUDENT IS CURRENTLY IN
-// if $bbb remains as false then step 4 will run, if it is switches to true then no 
+// if $bbb remains as false then step 4 will run, if it is switches to true then no
 // more steps will run
 $bbb = false;
 if(!$bb && !$b){
@@ -295,7 +295,7 @@ if(!$bb && !$b){
 
                 for($j = 0; $j < count($val1["Sections"]); $j++){
 
-                    if($val2["Index"] === ($sec_index + $j) && 
+                    if($val2["Index"] === ($sec_index + $j) &&
                        $arr2[strval($val1["Index"]) . "." . strval($val2["Index"])] !== 0)
                     {
                         // modification done here
@@ -547,7 +547,7 @@ foreach($openStax as $chapter){
         $string .= "\n\t\t]";
         $string .= "\n\t},";//chapter comma here
 
-        // writing 
+        // writing
         fwrite($myfile, $string);
     }
     // no comma
@@ -717,7 +717,7 @@ foreach($openStax as $chapter){
         $string .= "\n\t\t]";
         $string .= "\n\t}";//no chapter comma here
 
-        // writing 
+        // writing
         fwrite($myfile, $string);
     }
 

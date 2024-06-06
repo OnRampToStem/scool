@@ -69,7 +69,7 @@ foreach($json_openStax as $chapter){
 
 //print_r($sections_data);
 
-// send back sections_data 
+// send back sections_data
 $json_encoded_sections_data = json_encode($sections_data);
 echo $json_encoded_sections_data;
 

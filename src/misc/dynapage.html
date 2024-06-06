@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head> 
+  <head>
   <title>On-RAMP to STEM - Assessment</title>
   </head>
-  
-  
+
+
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
@@ -15,31 +15,31 @@
     let second = 0;
     let millisecond = 0;
     let cron;
-	
+
 	// List of questions
-    var questionsObjectList = []; // sequence of questions with answers  
-    var counter = 0; // current index of the presented question	
-	
+    var questionsObjectList = []; // sequence of questions with answers
+    var counter = 0; // current index of the presented question
+
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
-	
+
 	// There should be an onload function that load the assessment
-	
-	
-	
-	
+
+
+
+
 	// Load assessement
-	
+
 	// l=[];
-	
+
 	// For each learning outcome, query the table of dynamic questions and retrieve all the questions for the given learning outcome
 	// Select randomly the n questions (in relation to what is specified for this learning outcome)
-	
-	//    add to the list of questions the object 
-	
-	
+
+	//    add to the list of questions the object
+
+
 	var sequence_question=["00000005","00000021","00000031","00000041","00000061","00000071"];
-	
+
 	function InitListQuestions()
 	{
 		var nquestions=sequence_question.length;
@@ -52,14 +52,14 @@
 				  result: -1,
 				  max_score: 1, // to be extracted from the assessment
 				  timeStamp: "",
-			};	
-			questionsObjectList.push(questionObject);	
+			};
+			questionsObjectList.push(questionObject);
 		}
 	}
-	
+
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
-	
+
     function getSrc() {
       axios
         .get("/imathas-api/imathas")
@@ -105,7 +105,7 @@
       }, 10);
     }
 
-    function ResetTime() 
+    function ResetTime()
 	{
       // hour = 0;
       minute = 0;
@@ -122,32 +122,32 @@
       start();
     };
     window.addEventListener("message", this.receiveMessage, false);
-	
-	
+
+
 	// Callback funtion to receive the value of the score
     function receiveMessage(event) {
       event = JSON.stringify(event.data);
       event = JSON.parse(event);
 
-      if (JSON.parse(event).subject === "lti.ext.imathas.result") 
+      if (JSON.parse(event).subject === "lti.ext.imathas.result")
 	  {
         //response = JSON.parse(event);
         var iMathResult = JSON.parse(parseJwt(JSON.parse(event).jwt));
         // console.log("iMathResult: " + iMathResult);
-        var score = JSON.parse(iMathResult).score;		
+        var score = JSON.parse(iMathResult).score;
 		// To remove for the final version
-		document.getElementById("response").innerHTML = score;     
+		document.getElementById("response").innerHTML = score;
 		pushObj(score);
       }
     }
 
     // Add the information when the student has answered a question
-    function pushObj(score) 
+    function pushObj(score)
 	{
-	  // Object that contains the information about the answer	  
+	  // Object that contains the information about the answer
 	  old_score=questionsObjectList[counter].result;
 	  if (old_score==-1) // not answered yet
-	  {	  
+	  {
 		questionsObjectList[counter].result=score;
 	  }
 	  questionsObjectList[counter].time_submit= minute * 60 + second;
@@ -156,7 +156,7 @@
     }
 
     // Parse the JWT
-    function parseJwt(token) 
+    function parseJwt(token)
 	{
       console.log("Token", token);
       var base64Url = token.split(".")[1];
@@ -172,9 +172,9 @@
       );
       return JSON.stringify(jsonPayload);
     }
-	
-	
-    function getId() 
+
+
+    function getId()
 	{
       var i = document.getElementById("qID").value;
       console.log(i);
@@ -183,24 +183,24 @@
         "https://imathas.libretexts.org/imathas/embedq2.php?id=" + result;
     }
 
-    function NextQuestion() 
+    function NextQuestion()
 	{
-      if (counter < questionsObjectList.length) 
+      if (counter < questionsObjectList.length)
 	  {
         counter++;
 		question_id=questionsObjectList[counter].id;
         document.getElementById("frame").src =
           "https://imathas.libretexts.org/imathas/embedq2.php?id=" + question_id;
-      } 
-	  else 
+      }
+	  else
 	  {
         alert("There are no more questions");
       }
       ResetTime();
-	  DisplayQuestionNumber();	
+	  DisplayQuestionNumber();
     }
-	
-	
+
+
 	function ShowQuestion(c)
 	{
 		alert('Display Question ' + c);
@@ -208,56 +208,56 @@
         document.getElementById("frame").src =
           "https://imathas.libretexts.org/imathas/embedq2.php?id=" + question_id;
 		ResetTime();
-		DisplayQuestionNumber();		
+		DisplayQuestionNumber();
 	}
-	
+
 	function StartTest()
 	{
 		document.getElementById("section_question").style.display = "block";
-		ShowQuestion(counter);		
+		ShowQuestion(counter);
 	}
-	
-	
-	
+
+
+
 	function DisplayQuestionNumber()
 	{
 		document.getElementById("questionnum").innerHTML='Question (' + counter + '/' + questionsObjectList.length + ')';
 	}
-	
+
 	function SaveResults()
 	{
 	   alert("Submit the results");
-	   let str_results=JSON.stringify(questionsObjectList);	   
+	   let str_results=JSON.stringify(questionsObjectList);
 	   console.log(str_results);
 	}
-	
-	
+
+
 	function HideQuestion()
 	{
 		document.getElementById("section_question").style.display = "none";
 	}
-	
+
 	function InitForm()
 	{
 		InitListQuestions();
 		HideQuestion();
 	}
-	
-	
+
+
   </script>
-  
+
   <body onload="InitForm()">
 	<h1>Assessment</h1>
-	
+
 	<!-- For debugging purpose to verify the answer -->
     <p>Response from Imaths</p>
     <div id="response"></div>
     <!-- For debugging purpose -->
-	
+
 	<div>
 	<input id="next" name="next" type="button" value="Submit the test" onclick="SaveResults()" />
 	</div>
-	
+
 	<input id="next" name="next" type="button" value="Start the Assessment" onclick="StartTest()" />
     <input id="next" name="next" type="button" value="Next Question" onclick="NextQuestion()" />
     <div>
@@ -278,12 +278,12 @@
         scrolling="yes"
       />
     </section>
-	
-	
-	
-	
-	
+
+
+
+
+
   </body>
 
-  
+
 </html>

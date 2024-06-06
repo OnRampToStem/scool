@@ -347,7 +347,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         /////////////////
-        // MAIN DRIVER //   
+        // MAIN DRIVER //
         /////////////////
         const initialize = () => {
             // always get the chapter options on each page load
@@ -527,7 +527,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // push the correct answer
                 correctAnswers.push(selectedQuestions[i]["options"][correctIndex]);
 
-                // now shuffle the options 
+                // now shuffle the options
                 selectedQuestions[i]["options"] = shuffle(selectedQuestions[i]["options"]);
             }
         }
@@ -591,7 +591,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // display question number out of total number of questions along with specific title
             document.getElementById("questionHeader").innerHTML = "Question " + (index + 1) + " / " + totalQuestions; // + selectedQuestions[index]["title"];
 
-            // display question text but first convert BR back to \n before displaying text 
+            // display question text but first convert BR back to \n before displaying text
             if (selectedQuestions[index]["text"].includes("BR")) {
                 selectedQuestions[index]["text"] = selectedQuestions[index]["text"].replaceAll("BR", "\n");
             }

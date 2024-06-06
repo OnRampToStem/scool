@@ -98,17 +98,17 @@ session_start();
                     <div class="intro-div">
                         <img id="img1" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2FxZxE5jt.jpg&f=1&nofb=1">
                         <p>
-                            The University California State University, Fresno was founded as Fresno State Normal School in 1911, became a teacher's college in 1921, and has offered advanced degrees since 1949. 
+                            The University California State University, Fresno was founded as Fresno State Normal School in 1911, became a teacher's college in 1921, and has offered advanced degrees since 1949.
                             The university's popular nickname is "Fresno State." Our mascot is the Bulldog.
                         </p>
                     </div>
 
                     <div class="intro-div">
                         <p>
-                            On-Ramp to STEM, a project funded by the California Education Learning Lab program, forms a partnership between Fresno State, Fresno City College, Clovis Community College, and University High School to improve learning outcomes in math courses, in particular college algebra and pre-calculus, by developing and implementing an open-source adaptive learning technology, and utilizing culturally responsive teaching pedagogy. 
-                            We focus on algebra and pre-calculus because they represent important, foundational courses at the start of the STEM pathway. 
-                            However, for many students, especially under-represented minorities and other first-generation or low-income students, these courses act as a roadblock; making it difficult for students to transition to a STEM major. 
-                            Thus, we seek to transform the culture of learning in math classrooms so students achieve greater fluency and self-efficacy in mathematics that is required throughout the STEM disciplines. 
+                            On-Ramp to STEM, a project funded by the California Education Learning Lab program, forms a partnership between Fresno State, Fresno City College, Clovis Community College, and University High School to improve learning outcomes in math courses, in particular college algebra and pre-calculus, by developing and implementing an open-source adaptive learning technology, and utilizing culturally responsive teaching pedagogy.
+                            We focus on algebra and pre-calculus because they represent important, foundational courses at the start of the STEM pathway.
+                            However, for many students, especially under-represented minorities and other first-generation or low-income students, these courses act as a roadblock; making it difficult for students to transition to a STEM major.
+                            Thus, we seek to transform the culture of learning in math classrooms so students achieve greater fluency and self-efficacy in mathematics that is required throughout the STEM disciplines.
                             Our hope is to build a proverbial "on-ramp" that makes STEM more accessible and closes the achievement gaps among student populations in the San Joaquin Valley.
                         </p>
                         <img id="img2" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.fresnostate.edu%2Fadminserv%2Ffacilitiesmanagement%2Fimages%2Fscience2%2F7.jpg&f=1&nofb=1">

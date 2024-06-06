@@ -201,7 +201,7 @@ session_start();
                     document.getElementById("footer-link").setAttribute("href", "../../student/student_index.php");
                     document.getElementById("footer-link-home").setAttribute("href", "../../student/student_index.php");
                     document.getElementById("footer-link-scale").setAttribute("href", "../../student/student_index.php");
-                }   
+                }
             }
 
 

@@ -142,9 +142,9 @@ session_start();
                     document.getElementById("footer-link").setAttribute("href", "../../student/student_index.php");
                     document.getElementById("footer-link-home").setAttribute("href", "../../student/student_index.php");
                     document.getElementById("footer-link-scale").setAttribute("href", "../../student/student_index.php");
-                }             
+                }
             }
-  
+
             // controlling the user profile dropdown
             /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
             let showDropdown = () => {

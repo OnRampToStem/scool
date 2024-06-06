@@ -31,4 +31,4 @@ session_destroy();
 
 // send user back to Fresno State Canvas
 header("location: https://fresnostate.instructure.com");
-?>  
+?>

@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// start the session 
+// start the session
 // keys: (loggedIn, name, email, type, pic, course_name, course_id)
 // or
 // keys: (loggedIn, name, email, type, pic, course_name, course_id, selected_course_name, selected_course_id)

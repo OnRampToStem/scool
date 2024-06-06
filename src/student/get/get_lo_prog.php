@@ -107,7 +107,7 @@ foreach($json_openStax as $openStaxCh){
                         $los_data [$ch_sec_lo] ["NumberComplete"] = 0;
                         // pushing in starting section time spent count
                         $los_data [$ch_sec_lo] ["TimeSpent"] = 0;
-        
+
                     }
                 }
             }
