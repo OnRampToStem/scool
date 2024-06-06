@@ -193,6 +193,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type="submit"]:hover {
             background-color: red;
         }
+
+        .footer {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -228,6 +232,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" name="submit" value="Login">
 
         </form>
+    </div>
+    <div class="footer">
         <?= include "./snippets/footer.html" ?>
     </div>
 </body>
