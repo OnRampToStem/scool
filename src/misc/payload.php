@@ -64,6 +64,12 @@ $obj = DecodeToken($token);
 // display received data on client side
 display($obj);
 
+// Canvas Test Student Blocker //
+if ($obj->email === "test_student@canvas.instructure.com") {
+    echo "Test Student transition from Canvas to SCALE not supported.";
+    exit;
+}
+
 // create timestamp to be inserted / updated for users when creating account & logging into account
 $date = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
 $timestamp = $date->format('Y-m-d H:i:s');
