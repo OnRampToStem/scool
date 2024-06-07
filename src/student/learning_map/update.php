@@ -31,7 +31,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 
 // if user account type is not 'Learner' then force logout
 if($_SESSION["type"] !== "Learner"){
-    header("location: ../../register_login/logout.php");
+    header("location: /register_login/logout.php");
     exit;
 }
 

@@ -35,7 +35,7 @@ if ($_SESSION["type"] === "Mentor") {
 
 // if user account type is not 'Instructor' then force logout
 if ($_SESSION["type"] !== "Instructor") {
-    header("location: ../register_login/logout.php");
+    header("location: /register_login/logout.php");
     exit;
 }
 

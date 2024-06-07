@@ -30,7 +30,7 @@ if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
 
 // force logout for non test students //
 if ($_SESSION["name"] !== "Test Student" || $_SESSION["type"] !== "Learner" || (strpos($_SESSION["email"], "test_student") === false) || (strpos($_SESSION["email"], "@canvas.instructure.com") === false)) {
-    header("location: ../../register_login/logout.php");
+    header("location: /register_login/logout.php");
     exit;
 }
 

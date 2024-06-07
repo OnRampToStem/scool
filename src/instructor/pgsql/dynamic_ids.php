@@ -32,13 +32,13 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 
 // if user account type is 'Mentor' redirect to main page
 if ($_SESSION["type"] === "Mentor") {
-    header("location: ../instr_index1.php");
+    header("location: /instructor/instr_index1.php");
     exit;
 }
 
 // if user account type is not 'Instructor' then force logout
 if($_SESSION["type"] !== "Instructor"){
-    header("location: ../../register_login/logout.php");
+    header("location: /register_login/logout.php");
     exit;
 }
 
