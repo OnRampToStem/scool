@@ -27,6 +27,18 @@ require_once "../bootstrap.php";
        into the PostgreSQL database table "dynamic_questions".
 */
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 header('Content-type: text/plain');
 
 /* GLOBALS */

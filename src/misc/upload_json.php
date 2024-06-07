@@ -23,6 +23,18 @@
     insert them directly into the PostgreSQL database, "questions" table.
 */
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin" && $_SESSION["type"] !== "Instructor") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 header('Content-type: text/plain');
 
 // read and decode the JSON file (text => PHP assoc array)

@@ -32,7 +32,7 @@ if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
 
 // user not 'Instructor' => force logout //
 if ($_SESSION["type"] !== "Instructor") {
-    header("location: ../../register_login/logout.php");
+    header("location: /register_login/logout.php");
     exit;
 }
 

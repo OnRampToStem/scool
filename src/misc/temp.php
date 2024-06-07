@@ -18,6 +18,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin" && $_SESSION["type"] !== "Instructor") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 // testing for observers
 
 // update users set course_name = '["Development MATH6 Pilot"]', course_id = '["cfd70b5da3ce9018402b66c1d4ecfdc6b9d6eeef"]' where pkey = 3;
@@ -49,6 +61,3 @@ $_SESSION["course_id"] = json_encode($course_id);
 
 echo "Redirecting to Instructor Home Page. <br>";
 header("location: instructor/instr_index1.php");
-
-
-?>

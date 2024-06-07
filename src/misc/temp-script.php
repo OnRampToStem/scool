@@ -18,8 +18,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// connect to the db
 require_once "../bootstrap.php";
+
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin" && $_SESSION["type"] !== "Instructor") {
+    header("location: /register_login/logout.php");
+    exit;
+}
 
 $db_con = getDBConnection();
 
@@ -485,6 +496,3 @@ fwrite($openStax_file, "\n]");
 fclose($openStax_file);
 
 chmod(USER_DATA_DIR . "/Temporary Course-123/openStax/temp-student@gmail.com.json", 0777) or die("Could not modify openStax json perms.");
-
-
-?>

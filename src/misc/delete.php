@@ -20,6 +20,18 @@
 
 require_once "../bootstrap.php";
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 // for deleting directories and files on the Fresno State server
 // first delete the files, then delete the directory
 echo "Deleting file<br>";

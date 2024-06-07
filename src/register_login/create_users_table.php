@@ -18,6 +18,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 // for display purposes
 header('Content-type: text/plain');
 

@@ -20,6 +20,18 @@
 
 require_once "../bootstrap.php";
 
+session_start();
+
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+    header("location: https://fresnostate.instructure.com");
+    exit;
+}
+
+if ($_SESSION["type"] !== "Admin") {
+    header("location: /register_login/logout.php");
+    exit;
+}
+
 // for display purposes
 header('Content-type: text/plain');
 
