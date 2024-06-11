@@ -45,9 +45,13 @@ $db_con = getDBConnection();
 
 // 1
 // grab instructor's email
-$query = "SELECT instructor FROM users WHERE email = '{$_SESSION["email"]}'";
-$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
-$instr_email = pg_fetch_result($res, 0);
+if ($_SESSION["course_name"] === DEMO_COURSE_TITLE) {
+    $instr_email = DEMO_INSTRUCTOR_EMAIL;
+} else {
+    $query = "SELECT instructor FROM users WHERE email = '{$_SESSION["email"]}'";
+    $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . pg_last_error($db_con) . "<br>");
+    $instr_email = pg_fetch_result($res, 0);
+}
 
 
 // 2

@@ -31,6 +31,7 @@ define("DEMO_PASSWORD", getenv("SCOOL_DEMO_PASSWORD"));
 const DEMO_COURSE_TITLE = "Demo";
 const DEMO_COURSE_ID = "123";
 const DEMO_STUDENT_LIMIT = 100;
+const DEMO_INSTRUCTOR_EMAIL = "demo-instructor@scool.fresnostate.edu";
 
 require VENDOR_DIR . "/autoload.php";
 

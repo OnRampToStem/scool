@@ -47,7 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (
         $_POST["email"] !== "student-marisa.cheung@calearninglab.org" && $_POST["email"] !== "observer-marisa.cheung@calearninglab.org" &&
         $_POST["email"] !== "student-nfo@calearninglab.org" && $_POST["email"] !== "observer-nfo@calearninglab.org" &&
-        $_POST["email"] !== "temp-instructor@gmail.com" && $_POST["email"] !== "temp-student@gmail.com"
+        $_POST["email"] !== "temp-instructor@gmail.com" && $_POST["email"] !== "temp-student@gmail.com" &&
+        $_POST["email"] !== DEMO_INSTRUCTOR_EMAIL
     ) {
         $email_err = "Only certain user emails can access this login page.";
     }
