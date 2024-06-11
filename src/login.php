@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <label id="email_label" for="email">Email</label>
                 <br>
-                <input type="email" id="email" name="email" value="<?= $email; ?>" required>
+                <input type="email" id="email" name="email" value="<?= $email; ?>" autofocus required>
                 <!-- Will display error here -->
                 <p class="input-error"><?= $email_err; ?></p>
             </div>
