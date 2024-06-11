@@ -41,16 +41,15 @@ function getDBConnection() : PgSql\Connection {
     return $db_con;
 }
 
-function getLogger() : Monolog\Logger {
+function getLogger(string $loggerName) : Monolog\Logger {
     $logLevel = getenv("SCOOL_LOG_LEVEL");
     if (!$logLevel) {
         $logLevel = "info";
     }
-    $logName = __FILE__;
-    if (str_starts_with($logName, "/var/www/html")) {
-        $logName = substr($logName, strlen("/var/www/html"));
+    if (str_starts_with($loggerName, "/var/www/html")) {
+        $loggerName = substr($loggerName, 13);
     }
-    $log = new Monolog\Logger($logName);
+    $log = new Monolog\Logger($loggerName);
     $log->pushHandler(new Monolog\Handler\StreamHandler('php://stdout', Monolog\Level::fromName($logLevel)));
     return $log;
 }

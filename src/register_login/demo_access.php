@@ -20,7 +20,7 @@
 
 require_once "../bootstrap.php";
 
-$log = getLogger();
+$log = getLogger(__FILE__);
 
 $subject = uniqid("guest-", true);
 $email = "{$subject}@scool.fresnostate.edu";

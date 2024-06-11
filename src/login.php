@@ -20,6 +20,8 @@
 
 require_once "bootstrap.php";
 
+$log = getLogger(__FILE__);
+
 // global variables and init with empty values
 $email = $password = "";
 $login_err = false;
@@ -27,16 +29,12 @@ $login_err = false;
 // processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    /*  EMAIL VALIDATION */
-    // check if email is empty
     if (empty(trim($_POST["email"]))) {
         $login_err = true;
     } else {
         $email = trim($_POST["email"]);
     }
 
-    /* PASSWORD VALIDATION */
-    // check if password is empty
     if (empty(trim($_POST["pwd"]))) {
         $login_err = true;
     } else {
@@ -50,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_POST["email"] !== "temp-instructor@gmail.com" && $_POST["email"] !== "temp-student@gmail.com" &&
         $_POST["email"] !== DEMO_INSTRUCTOR_EMAIL
     ) {
+        $log->warning("invalid email address", ["email" => $_POST["email"]]);
         $login_err = true;
     }
 
@@ -77,52 +76,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $query = "UPDATE users SET last_signed_in = '" . $timestamp . "' WHERE email = '" . $row[1] . "'";
                 pg_query($db_con, $query) or die("Cannot execute query: $query \n");
 
+                session_start();
 
-                // distinguish between learner and mentor
+                $_SESSION["loggedIn"] = true;
+                $_SESSION["name"] = $row[0];
+                $_SESSION["email"] = $row[1];
+                $_SESSION["type"] = $row[2];
+                $_SESSION["pic"] = $row[3];
+                $_SESSION["course_name"] = $row[4];
+                $_SESSION["course_id"] = $row[5];
+
+                $log->info("successful login", ["email" => $row[1], "type" => $row[2]]);
+
                 if ($row[2] === "Learner") {
-                    session_start();
-
-                    $_SESSION["loggedIn"] = true;
-                    $_SESSION["name"] = $row[0];
-                    $_SESSION["email"] = $row[1];
-                    $_SESSION["type"] = $row[2];
-                    $_SESSION["pic"] = $row[3];
-                    $_SESSION["course_name"] = $row[4];
-                    $_SESSION["course_id"] = $row[5];
-
                     header("location: student/student_index.php");
                 } else if ($row[2] === "Mentor") {
-                    session_start();
-
-                    $_SESSION["loggedIn"] = true;
-                    $_SESSION["name"] = $row[0];
-                    $_SESSION["email"] = $row[1];
-                    $_SESSION["type"] = $row[2];
-                    $_SESSION["pic"] = $row[3];
-                    $_SESSION["course_name"] = $row[4];
-                    $_SESSION["course_id"] = $row[5];
-
                     header("location: instructor/instr_index1.php");
                 } else if ($row[2] === "Instructor") {
-                    session_start();
-
-                    echo "Setting required session variables. <br>";
-                    $_SESSION["loggedIn"] = true;
-                    $_SESSION["name"] = $row[0];
-                    $_SESSION["email"] = $row[1];
-                    $_SESSION["type"] = $row[2];
-                    $_SESSION["pic"] = $row[3];
-                    $_SESSION["course_name"] = $row[4];
-                    $_SESSION["course_id"] = $row[5];
-
                     header("location: instructor/instr_index1.php");
+                } else {
+                    $log->error("unknown user type", ["type" => $row[2]]);
                 }
             } else {
-                // password is not valid
+                $log->warning("invalid password", ["email" => $_POST["email"]]);
                 $login_err = true;
             }
         } else {
-            // email does not exist
+            $log->warning("user with email address not found", ["email" => $_POST["email"]]);
             $login_err = true;
         }
         pg_close($db_con);
