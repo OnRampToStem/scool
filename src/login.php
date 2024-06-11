@@ -22,7 +22,7 @@ require_once "bootstrap.php";
 
 // global variables and init with empty values
 $email = $password = "";
-$email_err = $password_err = $login_err = "";
+$login_err = false;
 
 // processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     /*  EMAIL VALIDATION */
     // check if email is empty
     if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter your email.";
+        $login_err = true;
     } else {
         $email = trim($_POST["email"]);
     }
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     /* PASSWORD VALIDATION */
     // check if password is empty
     if (empty(trim($_POST["pwd"]))) {
-        $password_err = "Please enter your password.";
+        $login_err = true;
     } else {
         $password = trim($_POST["pwd"]);
     }
@@ -50,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_POST["email"] !== "temp-instructor@gmail.com" && $_POST["email"] !== "temp-student@gmail.com" &&
         $_POST["email"] !== DEMO_INSTRUCTOR_EMAIL
     ) {
-        $email_err = "Only certain user emails can access this login page.";
+        $login_err = true;
     }
 
     /* VALIDATE CREDENTIALS */
     // if no input errors then continue
-    if (empty($email_err) && empty($password_err)) {
+    if (!$login_err) {
         $db_con = getDBConnection();
         // retrieve email and hashed password from the database, where email exists
         $query = "SELECT name, email, type, pic, course_name, course_id FROM users WHERE email = '" . pg_escape_string($db_con, $email) . "'";
@@ -119,11 +119,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 // password is not valid
-                $login_err = "The password you entered is incorrect.";
+                $login_err = true;
             }
         } else {
             // email does not exist
-            $login_err = "The email you entered does not exist.";
+            $login_err = true;
         }
         pg_close($db_con);
     }
@@ -205,10 +205,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <img id="image_header" src="assets/img/or2stem.jpg" alt="Fresno State OR2STEM Logo" />
 
-        <!-- display login error here -->
         <?php
-        if (!empty($login_err)) {
-            echo '<div class="input-error">' . $login_err . '</div>';
+        if ($login_err) {
+            echo '<div class="input-error">Invalid username or password</div>';
         }
         ?>
 
@@ -218,16 +217,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label id="email_label" for="email">Email</label>
                 <br>
                 <input type="email" id="email" name="email" value="<?= $email; ?>" autofocus required>
-                <!-- Will display error here -->
-                <p class="input-error"><?= $email_err; ?></p>
             </div>
 
             <div class="form-group">
                 <label id="pwd_label" for="pwd">Password</label>
                 <br>
                 <input type="password" id="pwd" name="pwd" required>
-                <!-- Will display error here -->
-                <p class="input-error"><?= $password_err; ?></p>
             </div>
 
             <input type="submit" name="submit" value="Login">
