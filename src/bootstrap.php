@@ -28,6 +28,9 @@ define("SECRET_KEY", getenv("SCOOL_SECRET_KEY"));
 define("VENDOR_DIR", getenv("SCOOL_VENDOR_DIR"));
 define("USER_DATA_DIR", getenv("SCOOL_USER_DATA_DIR"));
 define("DEMO_PASSWORD", getenv("SCOOL_DEMO_PASSWORD"));
+const DEMO_COURSE_TITLE = "Demo";
+const DEMO_COURSE_ID = "123";
+const DEMO_STUDENT_LIMIT = 100;
 
 require VENDOR_DIR . "/autoload.php";
 

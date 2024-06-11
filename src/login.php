@@ -232,6 +232,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" name="submit" value="Login">
 
         </form>
+        <p>
+            <a href="/register_login/demo_access.php">Try it!</a>
+        </p>
     </div>
     <div class="footer">
         <?php include "./snippets/footer.html" ?>

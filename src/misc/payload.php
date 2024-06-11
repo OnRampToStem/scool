@@ -26,9 +26,6 @@ global $res;
 
 require_once "../bootstrap.php";
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 // checking for POST
 if (isset($_POST['token'])) {
 	$token = $_POST['token'];
@@ -37,10 +34,6 @@ if (isset($_POST['token'])) {
 else {
     echo "Error, no POST received. <br><br>";
     exit;
-}
-
-function DecodeToken($token) {
-    return JWT::decode($token, new Key(SECRET_KEY, "HS256"));
 }
 
 function display($obj) {
@@ -60,7 +53,7 @@ function display($obj) {
 }
 
 // decode the sent token
-$obj = DecodeToken($token);
+$obj = Firebase\JWT\JWT::decode($token, new Firebase\JWT\Key(SECRET_KEY, "HS256"));
 // display received data on client side
 display($obj);
 
@@ -243,34 +236,48 @@ if ($obj->roles[0] === "Instructor") {
 elseif ($obj->roles[0] === "Learner") {
     echo "User is of type 'Learner'. <br>";
 
-	// check to see if Learner's email already exists in the 'users' table
-	$query = "SELECT * FROM users WHERE email = '{$obj->email}'";
-	$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
+    if ($obj->context->title === DEMO_COURSE_TITLE) {
+        $user_exists = false;
+        $is_demo_user = true;
+    } else {
+        $query = "SELECT * FROM users WHERE email = '{$obj->email}'";
+        $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
+        $user_exists = pg_num_rows($res) !== 0;
+        $is_demo_user = false;
+    }
 
-	if (pg_num_rows($res) === 0) {
+	if (!$user_exists) {
         echo "'Learner' is not in the 'users' table. <br>";
 
-		// query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
-		$query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
+        if ($is_demo_user) {
+            $instr_email = null;
+        } else {
+            // query to get the email of the instructor that corresponds to the student (based on course_name & course_id)
+            $query = "SELECT email FROM users WHERE type = 'Instructor' AND course_name LIKE '%{$obj->context->title}%'
 				  AND course_id LIKE '%{$obj->context->id}%'";
-		$res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
+            $res = pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
+            if (pg_num_rows($res) === 0) {
+                $instr_email = null;
+            } else {
+                $instr_email = pg_fetch_result($res, 0, 0);
+            }
+        }
 
         // check to make sure Instructor has created their account
-        if (pg_num_rows($res) === 0) {
+        if (!$instr_email && !$is_demo_user) {
             echo "Can not create the 'Learner' account if corresponding Instructor has not created their account. <br>";
             pg_close($db_con);
             exit;
         }
         else {
-            // get the instructor's email
-            $instr_email = pg_fetch_result($res, 0, 0);
-
-            // prepare and execute query for inserting Learner in the 'users' table
-            $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+            if (!$is_demo_user) {
+                // prepare and execute query for inserting Learner in the 'users' table
+                $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
                       VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '{$instr_email}', '{$obj->context->title}',
                       '{$obj->context->id}', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
-            pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
-            echo "Inserted 'Learner', into the 'users' table successfully! <br>";
+                pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
+                echo "Inserted 'Learner', into the 'users' table successfully! <br>";
+            }
 
             // prepare and execute query for getting all static questions from 'questions' table
             $query = "SELECT * FROM questions";
@@ -281,6 +288,13 @@ elseif ($obj->roles[0] === "Learner") {
             echo "Now writing 'Learner's' own static questions json file. <br>";
 
             $filepath = USER_DATA_DIR . "/{$obj->context->title}-{$obj->context->id}/questions/{$obj->email}.json";
+
+            if ($is_demo_user) {
+                $demo_files = scandir(dirname($filepath));
+                if (count($demo_files) > DEMO_STUDENT_LIMIT) {
+                    die("Demo Student limit exceeded");
+                }
+            }
 
             $questions_file = fopen($filepath, "w") or die("Unable to open file!");
 
