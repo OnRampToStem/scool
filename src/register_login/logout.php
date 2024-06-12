@@ -18,17 +18,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//This PHP script will be used to log out a user from the system.
+require_once "../bootstrap.php";
 
-// initialize the session
 session_start();
 
-// unset all of the session variables
+if ($_SESSION["course_name"] === DEMO_COURSE_TITLE) {
+    $logout_url = "/login.php";
+} elseif (isset($_SESSION["logout_url"])) {
+    $logout_url = $_SESSION["logout_url"];
+} else {
+    $logout_url = "https://fresnostate.instructure.com";
+}
+
+// unset all session variables
 $_SESSION = array();
 
 // destroy the session.
 session_destroy();
 
-// send user back to Fresno State Canvas
-header("location: https://fresnostate.instructure.com");
-?>
+header("location: {$logout_url}");

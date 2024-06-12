@@ -85,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["pic"] = $row[3];
                 $_SESSION["course_name"] = $row[4];
                 $_SESSION["course_id"] = $row[5];
+                $_SESSION["logout_url"] = "/login.php";
 
                 $log->info("successful login", ["email" => $row[1], "type" => $row[2]]);
 
