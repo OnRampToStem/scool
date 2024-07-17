@@ -12,6 +12,12 @@ services:
       - scool_net
     ports:
       - "443:443"
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "us-west-2"
+        awslogs-group: "/apps/scool"
+        awslogs-stream: "web"
     restart: always
 
   scool_lti:
@@ -21,6 +27,14 @@ services:
       - ../scool_lti/.env
     networks:
       - scool_net
+    extra_hosts:
+      - "canvas.docker:10.20.95.27"
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "us-west-2"
+        awslogs-group: "/apps/scool"
+        awslogs-stream: "api"
     restart: always
 
 networks:
