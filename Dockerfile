@@ -16,8 +16,8 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
         -subj "/C=US/ST=California/L=Fresno/O=Fresno State/OU=TS/CN=scool.fresnostate.edu" \
     && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
     && docker-php-ext-install pgsql \
-    && groupmod -g 48 www-data \
-    && usermod -u 48 www-data
+    && groupmod -g 1000 www-data \
+    && usermod -u 1000 www-data
 
 COPY etc/apache2/sites-available/scool.conf /etc/apache2/sites-available/
 
