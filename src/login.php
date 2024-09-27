@@ -20,6 +20,8 @@
 
 require_once "bootstrap.php";
 
+header("cache-control: no-store");
+
 $log = getLogger(__FILE__);
 
 // global variables and init with empty values
