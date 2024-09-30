@@ -22,7 +22,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 COPY etc/apache2/sites-available/scool.conf /etc/apache2/sites-available/
 
 RUN mkdir /var/www/user_data \
-    && a2enmod ssl proxy proxy_http rewrite \
+    && a2enmod ssl proxy proxy_http rewrite remoteip \
     && a2dissite 000-default \
     && a2ensite scool \
     && service apache2 restart
