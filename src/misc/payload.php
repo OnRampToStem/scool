@@ -39,7 +39,6 @@ else {
 function display($obj) {
     echo "Name: {$obj->name} <br>";
     echo "Email: {$obj->email} <br>";
-    echo "Unique Name: {$obj->unique_name} <br>";
     echo "Sub: {$obj->sub} <br>";
 	echo "Role: {$obj->roles[0]} <br>";
     echo "Course Name: {$obj->context->title} <br>";
@@ -105,8 +104,8 @@ if ($obj->roles[0] === "Instructor") {
             $course_id = [$obj->context->id];
 
             // prepare and execute query for inserting Instructor in the 'users' table
-            $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
-                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
+            $query = "INSERT INTO users(name, email, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
                       . "', '" . json_encode($course_id) . "', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
             pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Inserted 'Instructor' into 'users' table successfully! <br>";
@@ -272,8 +271,8 @@ elseif ($obj->roles[0] === "Learner") {
         else {
             if (!$is_demo_user) {
                 // prepare and execute query for inserting Learner in the 'users' table
-                $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
-                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '{$instr_email}', '{$obj->context->title}',
+                $query = "INSERT INTO users(name, email, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '{$instr_email}', '{$obj->context->title}',
                       '{$obj->context->id}', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
                 pg_query($db_con, $query) or die("Cannot execute query: {$query}<br>" . "Error: " . pg_last_error($db_con) . "<br>");
                 echo "Inserted 'Learner', into the 'users' table successfully! <br>";
@@ -844,8 +843,8 @@ elseif ($obj->roles[0] === "Mentor") {
             $course_id = [$obj->context->id];
 
             // prepare and execute query for inserting Mentor in the 'users' table
-            $query = "INSERT INTO users(name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
-                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->unique_name}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
+            $query = "INSERT INTO users(name, email, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+                      VALUES('{$obj->name}', '{$obj->email}', '{$obj->sub}', '{$obj->roles[0]}', '{$obj->picture}', '', '" . json_encode($course_name)
                       . "', '" . json_encode($course_id) . "', '{$obj->iat}', '{$obj->exp}', '{$obj->iss}', '{$obj->aud}', '{$timestamp}', '{$timestamp}')";
             pg_query($db_con, $query) or die("Cannot execute query: {$query} <br>" . "Error: " . pg_last_error($db_con) . "<br>");
             echo "Inserted 'Mentor' into 'users' table successfully! <br>";

@@ -117,8 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         // register the test student //
         $query =
-            "INSERT INTO users (name, email, unique_name, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
-             VALUES ('Test Student', '" . $unique_email . "', '" . $unique_email . "', '" . $unique_sub . "', 'Learner', 'https://canvas.instructure.com/images/messages/avatar-50.png',
+            "INSERT INTO users (name, email, sub, type, pic, instructor, course_name, course_id, iat, exp, iss, aud, created_on, last_signed_in)
+             VALUES ('Test Student', '" . $unique_email . "', '" . $unique_sub . "', 'Learner', 'https://canvas.instructure.com/images/messages/avatar-50.png',
              '" . $_SESSION["email"] . "', '" . $_SESSION["selected_course_name"] . "', '" . $_SESSION["selected_course_id"] . "', 'N/A', 'N/A', 'N/A', 'N/A',
              '" . $timestamp . "', '" . $timestamp . "')
              RETURNING *;";

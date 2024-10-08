@@ -41,7 +41,6 @@ $query = "CREATE TABLE IF NOT EXISTS users (
     pkey SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    unique_name TEXT NOT NULL UNIQUE,
     sub TEXT NOT NULL UNIQUE,
     type TEXT NOT NULL,
     pic TEXT NOT NULL,

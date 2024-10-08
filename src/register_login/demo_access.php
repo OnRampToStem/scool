@@ -36,7 +36,6 @@ $payload = [
         "id" => DEMO_COURSE_ID,
         "title" => DEMO_COURSE_TITLE,
     ],
-    "unique_name" => $email,
     "picture" => "https://canvas.instructure.com/images/messages/avatar-50.png",
     "iss" => "https://scool.fresnostate.edu",
     "aud" => "https://scool.fresnostate.edu",
