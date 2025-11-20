@@ -1,7 +1,7 @@
 {
     "require": {
-        "firebase/php-jwt": "^6.10",
+        "firebase/php-jwt": "^6.11",
         "ext-pgsql": "*",
-        "monolog/monolog": "^3.6"
+        "monolog/monolog": "^3.9"
     }
 }
