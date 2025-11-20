@@ -1,0 +1,15 @@
+services:
+  composer-updates:
+    build: .
+    image: scool
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        cd /app
+        composer self-update
+        composer update
