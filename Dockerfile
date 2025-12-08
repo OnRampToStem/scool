@@ -1,4 +1,4 @@
-FROM php:8.4.14-apache-bookworm
+FROM php:8.5.0-apache-trixie
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
