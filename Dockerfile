@@ -1,5 +1,7 @@
 FROM php:8.5.3-apache-trixie
 
+LABEL org.opencontainers.image.source=https://github.com/OnRampToStem/scool
+
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
