@@ -34,3 +34,9 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - uses: actions/delete-package-versions@v5
+        with:
+          package-name: scool
+          package-type: container
+          min-versions-to-keep: 2
+          delete-only-untagged-versions: true
