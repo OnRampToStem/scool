@@ -1,4 +1,5 @@
-name: Build and Push to GHCR
+name: Build/Push/Deploy
+
 on:
   push:
     branches:
@@ -11,7 +12,7 @@ env:
   IMAGE_NAME: onramptostem/scool
 
 jobs:
-  build-push:
+  push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -40,3 +41,22 @@ jobs:
           package-type: container
           min-versions-to-keep: 2
           delete-only-untagged-versions: true
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - push
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.0.0
+        with:
+          aws-region: us-west-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+      - name: Run redeploy script
+        run: |
+          aws ssm send-command \
+            --instance-ids "${{ secrets.AWS_EC2_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Redeploy from GitHub Action" \
+            --parameters commands=/home/ec2-user/redeploy.sh \
+            --output text
