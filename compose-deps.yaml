@@ -1,7 +1,6 @@
 services:
   composer-updates:
-    build: .
-    image: scool
+    image: composer:2
     volumes:
       - type: bind
         source: ./
@@ -11,5 +10,4 @@ services:
       - -c
       - |
         cd /app
-        composer self-update
-        composer update
+        composer --ignore-platform-req=ext-pgsql update
