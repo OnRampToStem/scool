@@ -2,6 +2,7 @@ services:
   web:
     build: .
     image: scool
+    read_only: true
     env_file:
       - .env
     volumes:
@@ -11,6 +12,14 @@ services:
       - type: bind
         source: ../scool_user_data
         target: /var/www/user_data
+      - type: tmpfs
+        target: /var/run/apache2
+        tmpfs:
+          size: 25000000
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: 25000000
     ports:
       - "443:443"
 #    logging:
@@ -24,10 +33,9 @@ services:
   lti:
     build: ../scool_lti
     image: scool_lti
+    read_only: true
     env_file:
       - ../scool_lti/.env
-    extra_hosts:
-      - "canvas.docker:10.20.95.27"
 #    logging:
 #      driver: "awslogs"
 #      options:
