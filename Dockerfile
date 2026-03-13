@@ -1,16 +1,17 @@
-FROM php:8.5.3-apache-trixie
+FROM php:8.5.4-apache-trixie
 
 LABEL org.opencontainers.image.source=https://github.com/OnRampToStem/scool
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         ca-certificates \
         libpq-dev \
         git \
         zip \
         unzip \
-    && rm -rf /var/lib/apt/lists/* \
+    && apt-get dist-clean \
     && openssl req -x509 -nodes -batch -newkey rsa:2048 \
         -keyout /etc/ssl/private/server.key \
         -out /etc/ssl/certs/server.pem \
