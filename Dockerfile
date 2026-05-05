@@ -5,6 +5,7 @@ LABEL org.opencontainers.image.source=https://github.com/OnRampToStem/scool
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         libpq-dev \
