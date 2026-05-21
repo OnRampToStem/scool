@@ -65,5 +65,5 @@ jobs:
             --instance-ids "${{ secrets.AWS_EC2_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
             --comment "Redeploy from GitHub Action" \
-            --parameters commands=/home/ec2-user/redeploy.sh \
+            --parameters commands=/home/admin/redeploy.sh \
             --output text
