@@ -19,6 +19,7 @@
  */
 
 require_once "bootstrap.php";
+require_once "version.php";
 
 header("cache-control: no-store");
 
@@ -217,6 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="footer">
         <?php include "./snippets/footer.html" ?>
+        <span style="font-size: small;"><i>v<?php echo SCOOL_VERSION; ?></i></span>
     </div>
 </body>
 
