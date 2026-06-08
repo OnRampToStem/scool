@@ -24,4 +24,4 @@ if (count(get_included_files()) === 1) {
     die();
 }
 
-const SCOOL_VERSION = "2026.05.22";
+const SCOOL_VERSION = "2026.06.08";
