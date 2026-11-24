@@ -1,4 +1,4 @@
-FROM php:8.5.12-apache-trixie
+FROM php:8.6.0RC7-apache-trixie
 
 LABEL org.opencontainers.image.source=https://github.com/OnRampToStem/scool
 
